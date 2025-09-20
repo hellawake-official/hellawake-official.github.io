@@ -1,0 +1,44 @@
+body {
+  font: 400 1em/1.5 "Neuton";
+  background: #0a0a0a; /* Dark black background to match logo */
+  color: rgba(255, 255, 255, 0.2); /* Soft white for general text */
+  text-align: center;
+  margin: 0;
+}
+p {
+  text-transform: uppercase;
+  letter-spacing: 0.5em;
+  display: inline-block;
+  border-width: 4px 0;
+  border-style: double;
+  border-color: rgba(255, 255, 255, 0.2);
+  padding: 1.5em 0em;
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  width: 40em;
+  margin: 0 0 0 -20em;
+}
+p span {
+  font: 700 4em/1 "Oswald", sans-serif;
+  letter-spacing: 0;
+  padding: 0.25em 0 0.325em;
+  display: block;
+  margin: 0 auto;
+  text-shadow: 0 0 60px rgba(139, 0, 0, 0.8); /* Dark red glow for the letters */ /* Clip Background Image */
+  background: url(https://i.ibb.co/NnbZwKL8/animated-text-fill.png) repeat-y;
+  -webkit-background-clip: text;
+  background-clip: text; /* Animate Background Image */
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: aitf 80s linear infinite; /* Activate hardware acceleration for smoother animations */
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+} /* Animate Background Image */
+@-webkit-keyframes aitf {
+  0% {
+      background-position: 0% 50%;
+  }
+  100% {
+      background-position: 100% 50%;
+  }
+}
