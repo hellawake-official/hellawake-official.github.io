@@ -698,7 +698,7 @@ function initEpisodesPage() {
       if(displayTitle) displayTitle.textContent=ep.title;
       if(descTitle) descTitle.textContent=`S${currentSeason} E${idx+1} : ${ep.title}`;
       if(descText) descText.textContent=ep.desc||'';
-      if(downloadBtn){downloadBtn.href=ep.book||'#'; downloadBtn.style.display=ep.book?'':'none';}
+      if(downloadBtn){ if(ep.book){ var bookTitle = encodeURIComponent('S'+currentSeason+' E'+(idx+1)+': '+ep.title); downloadBtn.href='reader.html?book='+encodeURIComponent(ep.book)+'&title='+bookTitle; downloadBtn.style.display=''; } else { downloadBtn.style.display='none'; } }
       if(prevBtn) prevBtn.disabled=idx===0;
       if(nextBtn) nextBtn.disabled=idx===eps.length-1;
       if(overlay) overlay.style.display='none';
