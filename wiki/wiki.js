@@ -1,4 +1,3 @@
-
 /* ── LOCKED ICON ── */
 function lockedBadge() {
   return '<span class="locked-badge" title="CLASSIFIED">🔒</span>';
