@@ -290,7 +290,7 @@ const SITE = {
           "redacted": false
         }
       ],
-      "bio": "DHD field operative assigned to reconnaissance and rapid response. Deployed alongside Flame and squad leader Hoosier. First encounter with Skullborn activity led to a direct ambush — survived a train bombing and assassination attempt in Episode 1 with backup from Bloopy and Vag.\n\nCarries something heavy. Doesn't show it on the job.",
+      "bio": "DHD field operative assigned to reconnaissance and rapid response. Deployed alongside Zack and squad leader Hoosier. First encounter with Skullborn activity led to a direct ambush — survived a train bombing and assassination attempt in Episode 1 with backup from Bloopy and Vag.\n\nCarries something heavy. Doesn't show it on the job.",
       "echoEntry": {
         "show": false,
         "text": ""
@@ -329,15 +329,15 @@ const SITE = {
           "redacted": false
         }
       ],
-      "bio": "Squad leader for the recon team deployed to investigate Skullborn activity in Episode 1. Held position at the ambush site alongside Flame, successfully subduing a Death Grin prisoner — though interrogation yielded nothing. The base wasn't empty. It was a trap.",
+      "bio": "Squad leader for the recon team deployed to investigate Skullborn activity in Episode 1. Held position at the ambush site alongside Zack, successfully subduing a Death Grin prisoner — though interrogation yielded nothing. The base wasn't empty. It was a trap.\n\nSparse with words. Heavy with everything he doesn't say.",
       "echoEntry": {
         "show": false,
         "text": ""
       }
     },
     {
-      "id": "flame",
-      "name": "FLAME",
+      "id": "zack",
+      "name": "ZACK",
       "faction": "dhd",
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "ACTIVE",
@@ -350,6 +350,11 @@ const SITE = {
         {
           "label": "ID",
           "value": "DHD-OP-111",
+          "redacted": false
+        },
+        {
+          "label": "Callsign",
+          "value": "FLAME",
           "redacted": false
         },
         {
@@ -368,7 +373,7 @@ const SITE = {
           "redacted": false
         }
       ],
-      "bio": "Combat operative under Hoosier's command. Stayed behind to engage the Death Grins when the ambush was triggered, allowing Reever to break for headquarters. Helped subdue the prisoner at the forest base.",
+      "bio": "Combat operative under Hoosier's command. Known in the field as Flame. Stayed behind to engage the Death Grins when the ambush was triggered, allowing Reever to break for headquarters. Chaotic in a fight. Effective for exactly that reason.\n\nHelped subdue the prisoner at the forest base.",
       "echoEntry": {
         "show": false,
         "text": ""
@@ -471,7 +476,7 @@ const SITE = {
         },
         {
           "label": "Role",
-          "value": "Support Operative",
+          "value": "Combat Operative",
           "redacted": false
         },
         {
@@ -485,7 +490,7 @@ const SITE = {
           "redacted": false
         }
       ],
-      "bio": "Rapid response operative who arrived with Vag to back up Reever during the train station attack in Episode 1. Drove off the assassin before capture was possible.",
+      "bio": "Rapid response operative who arrived with Vag to back up Reever during the train station attack in Episode 1. Drove off the assassin before capture was possible.\n\nMore to her than what's on file.",
       "echoEntry": {
         "show": false,
         "text": ""
@@ -510,7 +515,7 @@ const SITE = {
         },
         {
           "label": "Role",
-          "value": "Support Operative",
+          "value": "Combat Operative",
           "redacted": false
         },
         {
@@ -524,7 +529,357 @@ const SITE = {
           "redacted": false
         }
       ],
-      "bio": "Arrived with Bloopy to assist Reever at the train station. The assassin escaped before either operative could make a capture.",
+      "bio": "Arrived with Bloopy to assist Reever at the train station. The assassin escaped before either operative could make a capture. Dry. Steady. Doesn't waste words.",
+      "echoEntry": {
+        "show": false,
+        "text": ""
+      }
+    },
+    {
+      "id": "john-miller",
+      "name": "JOHN MILLER",
+      "faction": "skull",
+      "factionLabel": "SKULLBORN — OPERATIVE",
+      "status": "ACTIVE // THREAT",
+      "visible": true,
+      "rank": "",
+      "locked": true,
+      "hidden": false,
+      "image": "",
+      "stats": [
+        {
+          "label": "ID",
+          "value": "CLASSIFIED",
+          "redacted": true
+        },
+        {
+          "label": "Faction",
+          "value": "Skullborn — Field Operative",
+          "redacted": false
+        },
+        {
+          "label": "Background",
+          "value": "CLASSIFIED // REDACTED",
+          "redacted": true
+        },
+        {
+          "label": "Threat Level",
+          "value": "EXTREME",
+          "redacted": false
+        }
+      ],
+      "bio": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nIdentity confirmed as Skullborn operative. First appearance: train station — Episode 1. Targeted Reever directly. Driven off by Bloopy and Vag before mission completion.\n\nBackground and true allegiance: REDACTED UNDER DIRECTIVE-9.",
+      "echoEntry": {
+        "show": false,
+        "text": ""
+      }
+    },
+    {
+      "id": "naira",
+      "name": "NAIRA",
+      "faction": "unknown",
+      "factionLabel": "UNCONFIRMED",
+      "status": "UNKNOWN",
+      "visible": true,
+      "rank": "",
+      "locked": true,
+      "hidden": false,
+      "image": "",
+      "stats": [
+        {
+          "label": "Known Connection",
+          "value": "REEVER // LIAM",
+          "redacted": false
+        },
+        {
+          "label": "Last Known Status",
+          "value": "UNCONFIRMED",
+          "redacted": true
+        },
+        {
+          "label": "Location",
+          "value": "UNKNOWN",
+          "redacted": true
+        }
+      ],
+      "bio": "CLASSIFIED // ACCESS RESTRICTED\n\nAppears in the photograph carried by Reever — alongside Reever and Liam Hill. Relationship to both subjects: REDACTED.\n\nCurrent whereabouts unknown. No active file. No confirmed status.",
+      "echoEntry": {
+        "show": false,
+        "text": ""
+      }
+    },
+    {
+      "id": "taito-a.",
+      "name": "TAITO A.",
+      "faction": "dhd",
+      "factionLabel": "DAWN HORIZON DIV.",
+      "status": "ACTIVE",
+      "visible": true,
+      "rank": "",
+      "locked": true,
+      "hidden": false,
+      "image": "",
+      "stats": [
+        {
+          "label": "ID",
+          "value": "DHD-OP-CLASSIFIED",
+          "redacted": true
+        },
+        {
+          "label": "Unit",
+          "value": "Field Operations",
+          "redacted": false
+        },
+        {
+          "label": "Clearance",
+          "value": "Level 3",
+          "redacted": false
+        }
+      ],
+      "bio": "CLASSIFIED // EPISODE LOCK\n\nDHD operative. Emberwake rank. File locked pending further episode release.",
+      "echoEntry": {
+        "show": false,
+        "text": ""
+      }
+    },
+    {
+      "id": "ender",
+      "name": "ENDER",
+      "faction": "dhd",
+      "factionLabel": "DAWN HORIZON DIV.",
+      "status": "ACTIVE",
+      "visible": true,
+      "rank": "",
+      "locked": true,
+      "hidden": false,
+      "image": "",
+      "stats": [
+        {
+          "label": "ID",
+          "value": "DHD-OP-CLASSIFIED",
+          "redacted": true
+        },
+        {
+          "label": "Unit",
+          "value": "Field Operations",
+          "redacted": false
+        },
+        {
+          "label": "Known Connection",
+          "value": "CLASSIFIED // REDACTED",
+          "redacted": true
+        },
+        {
+          "label": "Clearance",
+          "value": "Level 2",
+          "redacted": false
+        }
+      ],
+      "bio": "CLASSIFIED // EPISODE LOCK\n\nDHD operative. Kindling rank. Known connection to other operatives: REDACTED. File locked pending further episode release.",
+      "echoEntry": {
+        "show": false,
+        "text": ""
+      }
+    },
+    {
+      "id": "zephyrus-swedan",
+      "name": "ZEPHYRUS SWEDAN",
+      "faction": "dhd",
+      "factionLabel": "DAWN HORIZON DIV.",
+      "status": "UNCONFIRMED",
+      "visible": true,
+      "rank": "",
+      "locked": true,
+      "hidden": false,
+      "image": "",
+      "stats": [
+        {
+          "label": "ID",
+          "value": "DHD-OP-CLASSIFIED",
+          "redacted": true
+        },
+        {
+          "label": "Role",
+          "value": "CLASSIFIED",
+          "redacted": true
+        },
+        {
+          "label": "Status",
+          "value": "UNCONFIRMED // LAST CHECK-IN UNKNOWN",
+          "redacted": true
+        }
+      ],
+      "bio": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nBrimstone rank operative. Current assignment and location: CLASSIFIED. Last confirmed status: UNVERIFIED.\n\nFile locked pending further episode release.",
+      "echoEntry": {
+        "show": false,
+        "text": ""
+      }
+    },
+    {
+      "id": "clyde-forger",
+      "name": "CLYDE FORGER",
+      "faction": "dhd",
+      "factionLabel": "DAWN HORIZON DIV.",
+      "status": "ACTIVE",
+      "visible": true,
+      "rank": "",
+      "locked": true,
+      "hidden": false,
+      "image": "",
+      "stats": [
+        {
+          "label": "ID",
+          "value": "DHD-OP-CLASSIFIED",
+          "redacted": true
+        },
+        {
+          "label": "Role",
+          "value": "Field Operative",
+          "redacted": false
+        },
+        {
+          "label": "Clearance",
+          "value": "Level 4",
+          "redacted": false
+        }
+      ],
+      "bio": "CLASSIFIED // EPISODE LOCK\n\nBrimstone rank operative. File locked pending further episode release.",
+      "echoEntry": {
+        "show": false,
+        "text": ""
+      }
+    },
+    {
+      "id": "corvin",
+      "name": "CORVIN",
+      "faction": "dhd",
+      "factionLabel": "DAWN HORIZON DIV.",
+      "status": "ACTIVE",
+      "visible": true,
+      "rank": "",
+      "locked": true,
+      "hidden": false,
+      "image": "",
+      "stats": [
+        {
+          "label": "ID",
+          "value": "DHD-OP-CLASSIFIED",
+          "redacted": true
+        },
+        {
+          "label": "Role",
+          "value": "Senior Operations",
+          "redacted": false
+        },
+        {
+          "label": "Clearance",
+          "value": "Level 5",
+          "redacted": false
+        }
+      ],
+      "bio": "CLASSIFIED // EPISODE LOCK\n\nSolaris rank. Senior operations. File locked pending further episode release.",
+      "echoEntry": {
+        "show": false,
+        "text": ""
+      }
+    },
+    {
+      "id": "davan",
+      "name": "DAVAN",
+      "faction": "dhd",
+      "factionLabel": "DAWN HORIZON DIV.",
+      "status": "ACTIVE",
+      "visible": true,
+      "rank": "",
+      "locked": true,
+      "hidden": false,
+      "image": "",
+      "stats": [
+        {
+          "label": "ID",
+          "value": "DHD-OP-CLASSIFIED",
+          "redacted": true
+        },
+        {
+          "label": "Role",
+          "value": "Intelligence Lead",
+          "redacted": false
+        },
+        {
+          "label": "Clearance",
+          "value": "Level 6",
+          "redacted": false
+        }
+      ],
+      "bio": "CLASSIFIED // EPISODE LOCK\n\nAurora Sentinel rank. Intelligence operations. File locked pending further episode release.",
+      "echoEntry": {
+        "show": false,
+        "text": ""
+      }
+    },
+    {
+      "id": "kane",
+      "name": "KANE",
+      "faction": "dhd",
+      "factionLabel": "DAWN HORIZON DIV.",
+      "status": "ACTIVE",
+      "visible": true,
+      "rank": "",
+      "locked": true,
+      "hidden": false,
+      "image": "",
+      "stats": [
+        {
+          "label": "ID",
+          "value": "DHD-OP-CLASSIFIED",
+          "redacted": true
+        },
+        {
+          "label": "Role",
+          "value": "CLASSIFIED",
+          "redacted": true
+        },
+        {
+          "label": "Clearance",
+          "value": "Level 7 // MAXIMUM",
+          "redacted": false
+        }
+      ],
+      "bio": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nHalo Ascendant rank. File locked. Do not query further.",
+      "echoEntry": {
+        "show": false,
+        "text": ""
+      }
+    },
+    {
+      "id": "aenya-blake-carter",
+      "name": "AENYA BLAKE CARTER",
+      "faction": "dhd",
+      "factionLabel": "DAWN HORIZON DIV.",
+      "status": "ACTIVE",
+      "visible": true,
+      "rank": "",
+      "locked": true,
+      "hidden": false,
+      "image": "",
+      "stats": [
+        {
+          "label": "Designation",
+          "value": "ABC",
+          "redacted": false
+        },
+        {
+          "label": "Role",
+          "value": "CLASSIFIED",
+          "redacted": true
+        },
+        {
+          "label": "Clearance",
+          "value": "Level 7 // MAXIMUM",
+          "redacted": false
+        }
+      ],
+      "bio": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nHalo Ascendant rank. File locked. Do not query further.",
       "echoEntry": {
         "show": false,
         "text": ""
@@ -541,7 +896,7 @@ const SITE = {
       "stats": [
         {
           "label": "KNOWN OPERATIVES",
-          "value": "REEVER / HOOSIER / FLAME / BLOOPY / VAG"
+          "value": "REEVER / HOOSIER / ZACK / BLOOPY / VAG"
         },
         {
           "label": "HEADQUARTERS",
@@ -645,9 +1000,73 @@ const SITE = {
       "locked": true,
       "hidden": false,
       "body": "FILE LOCKED // CLEARANCE LEVEL INSUFFICIENT // THIS ENTRY PREDATES THE HELLAWAKE INITIATIVE // DO NOT QUERY FURTHER"
+    },
+    {
+      "id": "the-photograph",
+      "term": "THE PHOTOGRAPH",
+      "classified": true,
+      "locked": true,
+      "hidden": false,
+      "body": "CLASSIFIED // ACCESS RESTRICTED\n\nA photograph carried by Reever. Three individuals: Reever, Liam Hill, and a third subject — identity REDACTED. Taken shortly before a significant event. Details of that event: CLASSIFIED.\n\nDuring the Episode 1 train bombing, blood from Reever's wound fell across the photograph — obscuring the face of one of the subjects."
+    },
+    {
+      "id": "the-promise",
+      "term": "THE PROMISE",
+      "classified": true,
+      "locked": true,
+      "hidden": false,
+      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nReference to an unconfirmed event involving Reever and Liam Hill prior to the series. Nature of the promise: REDACTED. Current status: UNKNOWN."
+    },
+    {
+      "id": "subject-289",
+      "term": "SUBJECT 289",
+      "classified": true,
+      "locked": true,
+      "hidden": false,
+      "body": "CLASSIFIED // DIRECTIVE-9 LOCK\n\nDesignation used internally within the HELLAWAKE initiative. Cross-references with HWK-SUBJECT-07. Further details withheld pending clearance."
+    },
+    {
+      "id": "power-dominion",
+      "term": "POWER DOMINION",
+      "classified": true,
+      "locked": true,
+      "hidden": false,
+      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nSkullborn internal faction. Designation and function: REDACTED. Known personnel: CLASSIFIED. File locked pending further episode release."
+    },
+    {
+      "id": "science-dominion",
+      "term": "SCIENCE DOMINION",
+      "classified": true,
+      "locked": true,
+      "hidden": false,
+      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nSkullborn internal faction. Believed to oversee experimental programmes including the HELLAWAKE initiative. Known personnel: CLASSIFIED. File locked pending further episode release."
+    },
+    {
+      "id": "dhd-rank-structure",
+      "term": "DHD RANK STRUCTURE",
+      "classified": true,
+      "locked": true,
+      "hidden": false,
+      "body": "CLASSIFIED // INTERNAL DOCUMENT\n\nFull rank structure of the Dawn Horizon Division: REDACTED. Partial information available to cleared operatives only. File locked pending further episode release."
     }
   ],
   "timeline": [
+    {
+      "year": "BEFORE YEAR 0",
+      "title": "THE FIRST WAR",
+      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nEvents predating the HELLAWAKE initiative. A conflict that shaped the current state of the world. Key figures involved: REDACTED. Outcome: PARTIAL VICTORY // DETAILS WITHHELD.",
+      "classified": true,
+      "locked": true,
+      "hidden": false
+    },
+    {
+      "year": "BEFORE YEAR 0",
+      "title": "THE FOUNDING",
+      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nThe Dawn Horizon Division is established. Founder: Keshava. Circumstances of founding: REDACTED. What preceded it: CLASSIFIED UNDER DIRECTIVE-9.",
+      "classified": true,
+      "locked": true,
+      "hidden": false
+    },
     {
       "year": "YEAR 0",
       "title": "THE TAKING",
@@ -702,6 +1121,14 @@ const SITE = {
       "body": "Liam Hill is alive and moving. The DHD doesn't know he exists. The Skullborns know exactly what he is. The gap between those two facts is where the story lives.",
       "classified": false,
       "locked": false,
+      "hidden": false
+    },
+    {
+      "year": "UNKNOWN",
+      "title": "[REDACTED EVENT]",
+      "body": "CLASSIFIED // THIS EVENT HAS NOT YET BEEN RECORDED IN THE ARCHIVE // CLEARANCE LEVEL INSUFFICIENT // DO NOT QUERY FURTHER",
+      "classified": true,
+      "locked": true,
       "hidden": false
     }
   ],
