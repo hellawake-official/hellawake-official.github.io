@@ -1,0 +1,569 @@
+
+/* ── LOCKED ICON ── */
+function lockedBadge() {
+  return '<span class="locked-badge" title="CLASSIFIED">🔒</span>';
+}
+function lockedCard() {
+  return '<div class="wiki-card locked-card"><div class="wiki-card-img-placeholder">🔒 CLASSIFIED</div><div class="wiki-card-body"><span class="wiki-card-tag">ACCESS RESTRICTED</span><div class="wiki-card-title">[REDACTED]</div></div></div>';
+}
+
+
+/* ── RANK HELPERS ── */
+function getRankLabel(factionType, rankId) {
+  if (!rankId) return '';
+  var faction = (SITE.factions || []).find(function(f) { return f.type === factionType || f.id === factionType; });
+  if (!faction || !faction.ranks) return rankId;
+  var rank = faction.ranks.find(function(r) { return r.id === rankId; });
+  return rank ? rank.label : rankId;
+}
+function getRankDesc(factionType, rankId) {
+  if (!rankId) return '';
+  var faction = (SITE.factions || []).find(function(f) { return f.type === factionType || f.id === factionType; });
+  if (!faction || !faction.ranks) return '';
+  var rank = faction.ranks.find(function(r) { return r.id === rankId; });
+  return rank ? rank.desc : '';
+}
+
+/* HELLAWAKE WIKI — wiki.js */
+
+/* ── LOGO PATH (wiki is one level deep) ── */
+const ASSET_ROOT = '../';
+
+function wikiApplyBranding() {
+  if (SITE.branding?.accentColor) document.documentElement.style.setProperty('--accent', SITE.branding.accentColor);
+  document.querySelectorAll('.wiki-logo-img').forEach(el => { if (SITE.branding?.logoImage) el.src = ASSET_ROOT + SITE.branding.logoImage; });
+  // Apply light mode default
+  if (SITE.wikiConfig?.lightModeDefault) document.body.classList.add('light-mode');
+}
+
+/* ── THEME TOGGLE ── */
+function initThemeToggle() {
+  // Apply saved theme immediately (flash prevention already done in head)
+  var saved = localStorage.getItem('hw_wiki_theme');
+  var isLight = saved === 'light';
+  if (isLight) {
+    document.documentElement.classList.add('wiki-light');
+    document.body.classList.add('light-mode');
+  } else {
+    document.documentElement.classList.remove('wiki-light');
+    document.body.classList.remove('light-mode');
+  }
+  var btn = document.getElementById('wiki-theme-btn');
+  if (btn) {
+    updateThemeBtn();
+    btn.addEventListener('click', function() {
+      var nowLight = document.body.classList.toggle('light-mode');
+      document.documentElement.classList.toggle('wiki-light', nowLight);
+      localStorage.setItem('hw_wiki_theme', nowLight ? 'light' : 'dark');
+      updateThemeBtn();
+    });
+  }
+}
+function updateThemeBtn() {
+  var btn = document.getElementById('wiki-theme-btn');
+  if (!btn) return;
+  var isLight = document.body.classList.contains('light-mode');
+  btn.textContent = isLight ? 'DARK MODE' : 'LIGHT MODE';
+}
+
+/* ── READING PROGRESS BAR ── */
+function initReadingProgress() {
+  const bar = document.getElementById('reading-progress');
+  if (!bar) return;
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const pct = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+    bar.style.width = Math.min(pct, 100) + '%';
+  });
+}
+
+/* ── INTERCEPTED TRANSMISSION ── */
+function buildTransmission(containerId) {
+  const el = document.getElementById(containerId);
+  const txs = SITE.wikiConfig?.interceptedTransmissions || [];
+  if (!el || !txs.length) return;
+  function pick() {
+    const t = txs[Math.floor(Math.random()*txs.length)];
+    el.querySelector('.transmission-text').textContent = t;
+  }
+  el.innerHTML = `<span class="transmission-label">INTERCEPTED //</span><span class="transmission-text"></span><button class="transmission-refresh" onclick="this.parentElement.querySelector('.transmission-text').textContent=window._txPick()">↻ NEW</button>`;
+  window._txPick = () => txs[Math.floor(Math.random()*txs.length)];
+  pick();
+}
+
+/* ── TOPBAR ── */
+function buildWikiTopbar(activePage) {
+  const pages = [
+    { key:'home',       label:'Wiki Home',   href:'index.html'      },
+    { key:'characters', label:'Characters',  href:'characters.html' },
+    { key:'factions',   label:'Factions',    href:'factions.html'   },
+    { key:'lore',       label:'Lore',         href:'lore.html'       },
+    { key:'timeline',   label:'Timeline',    href:'timeline.html'   },
+    { key:'episodes',   label:'Episodes',    href:'episodes.html'   },
+    { key:'world',      label:'World',       href:'world.html'      },
+  ];
+  const nav = document.getElementById('wiki-topbar-nav');
+  if (nav) nav.innerHTML = pages.map(p => `<a href="${p.href}" data-page="${p.key}" class="${p.key===activePage?'active':''}">${p.label}</a>`).join('');
+}
+
+/* ── SIDEBAR ── */
+function buildWikiSidebar(activePage) {
+  const el = document.getElementById('wiki-sidebar');
+  if (!el) return;
+  const totalEps = (SITE.episodes?.seasons||[]).reduce((a,s)=>a+s.episodes.length,0);
+  const sections = [
+    { section:'Navigation' },
+    { key:'home',       label:'Wiki Home',     href:'index.html',      badge:'' },
+    { section:'Story' },
+    { key:'characters', label:'Characters',    href:'characters.html', badge:String((SITE.personnel||[]).filter(c=>c.visible!==false).length) },
+    { key:'factions',   label:'Factions',      href:'factions.html',   badge:String((SITE.factions||[]).length) },
+    { key:'lore',       label:'Lore',           href:'lore.html',       badge:String((SITE.lore||[]).length) },
+    { key:'timeline',   label:'Timeline',      href:'timeline.html',   badge:String((SITE.timeline||[]).length) },
+    { section:'Media' },
+    { key:'episodes',   label:'Episode Guide', href:'episodes.html',   badge:String(totalEps) },
+    { section:'World' },
+    { key:'world',      label:'World & Setting',href:'world.html',     badge:'' },
+  ];
+  el.innerHTML = sections.map(s => {
+    if (s.section) return `<div class="wiki-sidebar-section">${s.section}</div>`;
+    return `<a href="${s.href}" class="wiki-sidebar-link ${s.key===activePage?'active':''}" data-page="${s.key}">${s.label}${s.badge?`<span class="badge">${s.badge}</span>`:''}</a>`;
+  }).join('');
+}
+
+/* ── BOOK READER ── */
+function openBookReader(pdfSrc, title) {
+  if (!SITE.wikiConfig?.showBookReader) return;
+  let overlay = document.getElementById('book-reader-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'book-reader-overlay';
+    overlay.className = 'book-reader-overlay';
+    overlay.innerHTML = `
+      <div class="book-reader-header">
+        <span class="book-reader-title" id="book-reader-title"></span>
+        <button class="book-reader-close" onclick="closeBookReader()">CLOSE [X]</button>
+      </div>
+      <iframe class="book-reader-frame" id="book-reader-frame"></iframe>`;
+    document.body.appendChild(overlay);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBookReader(); });
+  }
+  document.getElementById('book-reader-title').textContent = title || 'ARCHIVE DOCUMENT';
+  document.getElementById('book-reader-frame').src = ASSET_ROOT + pdfSrc;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+window.closeBookReader = function() {
+  const overlay = document.getElementById('book-reader-overlay');
+  if (overlay) { overlay.classList.remove('open'); document.getElementById('book-reader-frame').src = ''; }
+  document.body.style.overflow = '';
+};
+
+
+/* ── WIKI SEARCH ── */
+function buildWikiSearch() {
+  var bar = document.getElementById('wiki-search-bar');
+  if (!bar) return;
+
+  // Build search index from SITE data
+  var index = [];
+
+  (SITE.personnel || []).filter(function(c) { return c.visible !== false && !c.locked && !c.hidden; }).forEach(function(c) {
+    index.push({ type: 'CHARACTER', title: c.name, snippet: c.bio ? c.bio.substring(0,120) : '', href: 'character.html?id=' + c.id, tags: [c.factionLabel, c.status] });
+  });
+
+  (SITE.factions || []).forEach(function(f) {
+    index.push({ type: 'FACTION', title: f.name, snippet: f.body ? f.body.substring(0,120) : '', href: 'faction.html?id=' + f.id, tags: [f.subtitle] });
+  });
+
+  (SITE.lore || []).filter(function(e) { return !e.locked && !e.classified && !e.hidden; }).forEach(function(e) {
+    index.push({ type: 'LORE', title: e.term, snippet: e.body ? e.body.substring(0,120) : '', href: 'lore.html', tags: [] });
+  });
+
+  (SITE.timeline || []).filter(function(e) { return !e.locked && !e.classified && !e.hidden; }).forEach(function(e) {
+    index.push({ type: 'TIMELINE', title: e.title, snippet: e.body ? e.body.substring(0,120) : '', href: 'timeline.html', tags: [e.year] });
+  });
+
+  var seasons = SITE.episodes && SITE.episodes.seasons || [];
+  seasons.forEach(function(s) {
+    (s.episodes || []).filter(function(ep) { return !ep.comingSoon && ep.yt; }).forEach(function(ep, i) {
+      index.push({ type: 'EPISODE', title: 'S' + s.season + ' E' + (i+1) + ': ' + ep.title, snippet: ep.desc ? ep.desc.substring(0,120) : '', href: 'episodes.html', tags: [ep.time] });
+    });
+  });
+
+  // DOM refs
+  var input = document.getElementById('wiki-search-input');
+  var results = document.getElementById('wiki-search-results');
+  if (!input || !results) return;
+
+  function highlight(text, q) {
+    if (!q) return text;
+    var safe = q.split('').map(function(c){return c.replace(/[-\/^$*+?.()|{}\[\]\\]/,'\\$&');}).join(''); var re = new RegExp('(' + safe + ')','gi');
+    return text.replace(re, '<mark>$1</mark>');
+  }
+
+  function doSearch(q) {
+    q = q.trim();
+    if (q.length < 2) { results.style.display = 'none'; return; }
+    var ql = q.toLowerCase();
+    var hits = index.filter(function(item) {
+      return item.title.toLowerCase().includes(ql) ||
+             item.snippet.toLowerCase().includes(ql) ||
+             item.tags.some(function(t) { return t && t.toLowerCase().includes(ql); });
+    }).slice(0, 12);
+
+    if (!hits.length) {
+      results.innerHTML = '<div class="wiki-search-empty">NO RESULTS FOR "' + q.toUpperCase() + '"</div>';
+      results.style.display = 'block';
+      return;
+    }
+
+    results.innerHTML = '<div class="wiki-search-count">' + hits.length + ' RESULT' + (hits.length!==1?'S':'') + '</div>' +
+      hits.map(function(item) {
+        return '<a class="wiki-search-result" href="' + item.href + '">' +
+          '<div class="ws-type">' + item.type + '</div>' +
+          '<div>' +
+            '<div class="ws-title">' + highlight(item.title, q) + '</div>' +
+            '<div class="ws-snippet">' + highlight(item.snippet, q) + (item.snippet.length >= 120 ? '...' : '') + '</div>' +
+          '</div>' +
+        '</a>';
+      }).join('');
+    results.style.display = 'block';
+  }
+
+  input.addEventListener('input', function() { doSearch(this.value); });
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { results.style.display = 'none'; input.value = ''; }
+    if (e.key === 'Enter') {
+      var first = results.querySelector('.wiki-search-result');
+      if (first) window.location.href = first.getAttribute('href');
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('#wiki-search-bar')) results.style.display = 'none';
+  });
+}
+
+
+/* ── WIKI EASTER EGG TRIGGERS ── */
+function initWikiEasterEggs() {
+  var eggs = (SITE.easterEggs || []).filter(function(e) { return e.enabled; });
+  if (!eggs.length) return;
+
+  // Key sequence buffer
+  var keyBuffer = '';
+  document.addEventListener('keydown', function(e) {
+    if (e.key.length !== 1) return;
+    keyBuffer += e.key.toUpperCase();
+    if (keyBuffer.length > 20) keyBuffer = keyBuffer.slice(-20);
+    eggs.filter(function(egg) { return egg.triggerType === 'keysequence'; }).forEach(function(egg) {
+      if (keyBuffer.endsWith(egg.triggerValue.toUpperCase())) {
+        keyBuffer = '';
+        wikiFireEgg(egg);
+      }
+    });
+  });
+
+  // Click count triggers (logo 7 clicks etc.)
+  eggs.filter(function(egg) { return egg.triggerType === 'clickcount'; }).forEach(function(egg) {
+    var parts = egg.triggerValue.split('//');
+    var selector = parts[0] ? parts[0].trim() : null;
+    var target = parseInt(parts[1]) || 3;
+    if (!selector) return;
+    var count = 0;
+    // Try both .wiki-logo-img and .nav-logo
+    var selectors = [selector, '.wiki-topbar-logo', '.wiki-logo-img'];
+    selectors.forEach(function(sel) {
+      document.querySelectorAll(sel).forEach(function(el) {
+        el.addEventListener('click', function(e) {
+          count++;
+          if (count >= target) { count = 0; wikiFireEgg(egg); }
+        });
+      });
+    });
+  });
+}
+
+function wikiFireEgg(egg) {
+  if (egg.responseType === 'redirect') {
+    // From wiki pages, terminal.html is in same folder
+    var dest = egg.responseContent;
+    // If path starts with wiki/, strip it since we're already in wiki/
+    if (dest.startsWith('wiki/')) dest = dest.replace('wiki/', '');
+    setTimeout(function() { window.location.href = dest; }, 300);
+    return;
+  }
+  // For other types, just redirect to terminal
+  window.location.href = 'terminal.html';
+}
+
+/* ── WIKI HOME ── */
+function buildWikiHome() {
+  const container = document.getElementById('wiki-home-sections');
+  if (!container) return;
+  const totalEps = (SITE.episodes?.seasons||[]).reduce((a,s)=>a+s.episodes.length,0);
+  const sections = [
+    { key:'characters', title:'Characters',    desc:'Personnel files and operative dossiers.',  href:'characters.html', count:(SITE.personnel||[]).filter(c=>c.visible!==false).length+' entries' },
+    { key:'factions',   title:'Factions',      desc:'The Skullborns, the DHD, and beyond.',     href:'factions.html',   count:(SITE.factions||[]).length+' factions' },
+    { key:'lore',       title:'Lore',           desc:'Terminology, events, and classified files.',href:'lore.html',      count:(SITE.lore||[]).length+' entries' },
+    { key:'timeline',   title:'Timeline',      desc:'In-universe chronological events.',         href:'timeline.html',   count:(SITE.timeline||[]).length+' events' },
+    { key:'episodes',   title:'Episode Guide', desc:'Full episode synopses and details.',        href:'episodes.html',   count:totalEps+' episodes' },
+    { key:'world',      title:'World',         desc:'The setting, factions, and the war.',       href:'world.html',      count:'' },
+  ];
+  container.innerHTML = sections.map(s =>
+    `<a href="${s.href}" class="wiki-section-card">
+      <div class="wiki-section-card-icon">${s.title.substring(0,2).toUpperCase()}</div>
+      <div class="wiki-section-card-title">${s.title}</div>
+      <div class="wiki-section-card-desc">${s.desc}</div>
+      ${s.count?`<div class="wiki-section-card-count">${s.count}</div>`:''}
+    </a>`).join('');
+}
+
+/* ── CHARACTERS PAGE ── */
+function buildCharactersPage() {
+  var grid = document.getElementById('characters-grid');
+  if (!grid) return;
+  var all = (SITE.personnel || []).filter(function(c){ return !c.hidden; });
+  grid.innerHTML = all.map(function(char) {
+    // Locked character
+    if (char.locked) {
+      return '<div class="wiki-card locked-card"><div class="wiki-card-faction-bar ' + char.faction + '"></div>' +
+        '<div class="wiki-card-img-placeholder">🔒</div>' +
+        '<div class="wiki-card-body"><span class="wiki-card-tag">' + char.factionLabel + '</span>' +
+        '<div class="wiki-card-title">[CLASSIFIED]</div>' +
+        '<div class="wiki-card-desc">Access restricted.</div></div></div>';
+    }
+    if (char.visible === false) return '';
+    var imgPath = char.image ? ASSET_ROOT + char.image : null;
+    var rankLabel = getRankLabel(char.faction, char.rank);
+    return '<a href="character.html?id=' + char.id + '" class="wiki-card">' +
+      '<div class="wiki-card-faction-bar ' + char.faction + '"></div>' +
+      (imgPath ? '<img class="wiki-card-img" src="' + imgPath + '" alt="' + char.name + '">' : '<div class="wiki-card-img-placeholder">IMAGE PENDING</div>') +
+      '<div class="wiki-card-body">' +
+        '<span class="wiki-card-tag">' + char.factionLabel + (rankLabel ? ' // ' + rankLabel.toUpperCase() : '') + '</span>' +
+        '<div class="wiki-card-title">' + char.name + '</div>' +
+        '<div class="wiki-card-desc">' + char.bio.split('\n')[0].substring(0,100) + '...</div>' +
+      '</div></a>';
+  }).join('');
+}
+
+/* ── CHARACTER DETAIL ── */
+function buildCharacterDetail() {
+  const id = new URLSearchParams(window.location.search).get('id');
+  const char = (SITE.personnel||[]).find(c=>c.id===id);
+  const crumb = document.getElementById('char-breadcrumb-name');
+  if (crumb) crumb.textContent = char ? char.name : '—';
+  const detail = document.getElementById('char-detail');
+  if (!detail) return;
+  if (!char) { detail.innerHTML='<p style="color:var(--muted);padding:40px;">Character not found.</p>'; return; }
+  document.title = `${char.name} — HELLAWAKE WIKI`;
+
+  const imgPath = char.image ? ASSET_ROOT + char.image : null;
+  const statsRows = (char.stats||[]).map(s =>
+    `<tr><td>${s.label}</td><td class="${s.redacted?'redacted':''}">${s.redacted?'[REDACTED]':s.value}</td></tr>`
+  ).join('');
+  const echoHTML = char.echoEntry?.show ? `<div class="char-echo-box"><p><b style="color:#6a5a8a;letter-spacing:2px;font-size:0.75rem;">ECHO</b> — ${char.echoEntry.text}</p></div>` : '';
+
+  // Find related characters (same faction)
+  const related = (SITE.personnel||[]).filter(c=>c.id!==id && c.faction===char.faction && c.visible!==false).slice(0,3);
+  const relatedHTML = related.length ? `
+    <div style="margin-top:36px;padding-top:20px;border-top:1px solid var(--border);">
+      <div style="font-size:10px;letter-spacing:3px;color:var(--dim);margin-bottom:14px;">RELATED PERSONNEL</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        ${related.map(r=>`<a href="character.html?id=${r.id}" style="background:var(--surface2);border:1px solid var(--border);padding:8px 14px;text-decoration:none;color:var(--text);font-family:var(--font-display);font-size:0.75rem;letter-spacing:2px;transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">${r.name}</a>`).join('')}
+      </div>
+    </div>` : '';
+
+  var rankLabel = getRankLabel(char.faction, char.rank);
+  var rankDesc = getRankDesc(char.faction, char.rank);
+  detail.innerHTML = `
+    <div class="char-profile">
+      <div>
+        <div class="char-profile-img">${imgPath?`<img src="${imgPath}" alt="${char.name}">`:'<span class="char-img-placeholder">IMAGE FILE PENDING</span>'}</div>
+      </div>
+      <div>
+        <div class="char-profile-name">${char.name}</div>
+        <span class="char-profile-faction">${char.factionLabel}</span>
+        ${rankLabel ? `<span class="char-rank-badge">${rankLabel.toUpperCase()}</span>` : ''}
+        ${rankDesc ? `<div class="char-rank-desc">${rankDesc}</div>` : ''}
+        <span class="char-profile-status ${char.faction}">STATUS: ${char.status}</span>
+        <table class="char-stats-table">${statsRows}</table>
+        <p class="char-bio">${char.bio}</p>
+        ${echoHTML}
+        ${relatedHTML}
+      </div>
+    </div>`;
+}
+
+/* ── FACTIONS PAGE ── */
+function buildFactionsPage() {
+  var container = document.getElementById('factions-container');
+  if (!container) return;
+  container.innerHTML = (SITE.factions || []).map(function(f) {
+    var statsHTML = (f.stats || []).map(function(s) {
+      return '<div class="faction-stat-cell"><span class="fsl">' + s.label + '</span><span class="fsv">' + s.value + '</span></div>';
+    }).join('');
+    return '<a href="faction.html?id=' + f.id + '" class="wiki-card" style="display:block;text-decoration:none;margin-bottom:16px;">' +
+      '<div class="faction-block ' + f.type + '-block" style="margin-bottom:0;cursor:pointer;">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">' +
+          '<div>' +
+            '<div class="faction-block-title">' + f.name + '</div>' +
+            '<span class="faction-block-sub">' + f.subtitle + '</span>' +
+          '</div>' +
+          '<span style="font-size:0.65rem;letter-spacing:3px;color:var(--accent);opacity:0.7;padding-top:6px;white-space:nowrap;">VIEW →</span>' +
+        '</div>' +
+        '<p class="faction-block-body">' + f.body + '</p>' +
+        '<div class="faction-stats-row">' + statsHTML + '</div>' +
+      '</div>' +
+    '</a>';
+  }).join('');
+}
+
+
+/* ── FACTION DETAIL ── */
+function buildFactionDetail() {
+  var id = new URLSearchParams(window.location.search).get('id');
+  var faction = (SITE.factions || []).find(function(f) { return f.id === id; });
+  var crumb = document.getElementById('faction-breadcrumb-name');
+  if (crumb) crumb.textContent = faction ? faction.name : '—';
+  var detail = document.getElementById('faction-detail');
+  if (!detail) return;
+  if (!faction) { detail.innerHTML = '<p style="color:var(--muted);padding:40px;">Faction not found.</p>'; return; }
+  document.title = faction.name + ' — HELLAWAKE WIKI';
+
+  var statsHTML = (faction.stats || []).map(function(s) {
+    return '<div class="faction-stat-cell"><span class="fsl">' + s.label + '</span><span class="fsv">' + s.value + '</span></div>';
+  }).join('');
+
+  // Rank ladder
+  var ranksHTML = '';
+  if (faction.ranks && faction.ranks.length) {
+    ranksHTML = '<div class="faction-ranks-section">' +
+      '<div class="faction-ranks-title">RANK STRUCTURE</div>' +
+      '<div class="rank-ladder">' +
+      faction.ranks.map(function(r, i) {
+        // Find members with this rank
+        var rankMembers = (SITE.personnel || []).filter(function(c) {
+          return c.faction === faction.type && c.rank === r.id && c.visible !== false && !c.locked;
+        });
+        var memberNames = rankMembers.map(function(c) { return c.name; }).join(', ');
+        return '<div class="rank-row">' +
+          '<div class="rank-index">' + String(faction.ranks.length - i).padStart(2,'0') + '</div>' +
+          '<div class="rank-info">' +
+            '<div class="rank-label">' + r.label.toUpperCase() + '</div>' +
+            '<div class="rank-desc">' + r.desc + '</div>' +
+            (memberNames ? '<div class="rank-members">↳ ' + memberNames + '</div>' : '') +
+          '</div>' +
+        '</div>';
+      }).join('') +
+      '</div></div>';
+  }
+
+  // Members grouped by rank
+  var allMembers = (SITE.personnel || []).filter(function(c) {
+    return c.faction === faction.type && !c.hidden;
+  });
+  var membersHTML = '<div class="faction-members-section">' +
+    '<div style="font-size:10px;letter-spacing:3px;color:var(--dim);margin-bottom:16px;">KNOWN PERSONNEL</div>' +
+    '<div class="wiki-card-grid">' +
+    allMembers.map(function(c) {
+      if (c.locked) {
+        return '<div class="wiki-card locked-card">' +
+          '<div class="wiki-card-faction-bar ' + c.faction + '"></div>' +
+          '<div class="wiki-card-img-placeholder">🔒</div>' +
+          '<div class="wiki-card-body"><span class="wiki-card-tag">CLASSIFIED</span>' +
+          '<div class="wiki-card-title">[REDACTED]</div></div></div>';
+      }
+      if (c.visible === false) return '';
+      var imgPath = c.image ? ASSET_ROOT + c.image : null;
+      var rankLabel = getRankLabel(c.faction, c.rank);
+      return '<a href="character.html?id=' + c.id + '" class="wiki-card">' +
+        '<div class="wiki-card-faction-bar ' + c.faction + '"></div>' +
+        (imgPath ? '<img class="wiki-card-img" src="' + imgPath + '" alt="' + c.name + '">' : '<div class="wiki-card-img-placeholder">IMAGE PENDING</div>') +
+        '<div class="wiki-card-body">' +
+          '<span class="wiki-card-tag">' + (rankLabel ? rankLabel.toUpperCase() + ' // ' : '') + 'STATUS: ' + c.status + '</span>' +
+          '<div class="wiki-card-title">' + c.name + '</div>' +
+        '</div></a>';
+    }).join('') +
+    '</div></div>';
+
+  detail.innerHTML =
+    '<div class="faction-block ' + faction.type + '-block">' +
+      '<div class="faction-block-title">' + faction.name + '</div>' +
+      '<span class="faction-block-sub">' + faction.subtitle + '</span>' +
+      '<p class="faction-block-body">' + faction.body + '</p>' +
+      '<div class="faction-stats-row">' + statsHTML + '</div>' +
+    '</div>' +
+    ranksHTML + membersHTML;
+}
+
+/* ── LORE PAGE ── */
+function buildLorePage() {
+  const container = document.getElementById('lore-container');
+  if (!container) return;
+  container.innerHTML = (SITE.lore||[]).map(e=>`
+    <div class="lore-entry ${e.classified?'classified':''}">
+      <div class="lore-entry-term">${e.term}</div>
+      <div class="lore-entry-body">${e.classified?'[ACCESS RESTRICTED]':e.body}</div>
+    </div>`).join('');
+}
+
+/* ── TIMELINE PAGE ── */
+function buildTimelinePage() {
+  const container = document.getElementById('timeline-container');
+  if (!container) return;
+  container.innerHTML = (SITE.timeline||[]).map(entry=>`
+    <div class="tl-row ${entry.classified?'classified':''}">
+      <div class="tl-row-year">${entry.year}</div>
+      <div class="tl-row-dot"></div>
+      <div class="tl-row-content">
+        <div class="tl-row-title">${entry.title}</div>
+        <div class="tl-row-body">${entry.classified?'[CLASSIFIED // ACCESS DENIED]':entry.body}</div>
+      </div>
+    </div>`).join('');
+}
+
+/* ── EPISODE GUIDE PAGE ── */
+function buildEpisodeGuidePage() {
+  const container = document.getElementById('episode-guide-container');
+  if (!container) return;
+  container.innerHTML = '';
+  (SITE.episodes?.seasons||[]).forEach(season=>{
+    if(!season.episodes.length) return;
+    const sec = document.createElement('div');
+    sec.className = 'ep-guide-season';
+    sec.innerHTML = `<div class="ep-guide-season-title">SEASON ${season.season}</div>`;
+    season.episodes.forEach((ep,i)=>{
+      const locked = ep.comingSoon || !ep.yt;
+      const card = document.createElement('div');
+      card.className = `ep-guide-card ${locked?'ep-guide-locked':''}`;
+      const bookBtn = (ep.book && SITE.wikiConfig?.showBookReader) ? `<a class="ep-book-btn" onclick="event.stopPropagation();openBookReader('${ep.book}','S${season.season} E${i+1}: ${ep.title}')">📖 BOOK VERSION</a>` : '';
+      card.innerHTML = `
+        <div>${ep.yt?`<img class="ep-guide-thumb" src="https://img.youtube.com/vi/${ep.yt}/mqdefault.jpg" alt="${ep.title}" onerror="this.style.background='var(--surface2)'">`:`<div class="ep-guide-thumb"></div>`}</div>
+        <div>
+          <span class="ep-guide-num">S${season.season} E${i+1}</span>
+          <div class="ep-guide-title">${ep.title}${locked?' — COMING SOON':''}</div>
+          <div class="ep-guide-desc">${ep.desc||''}</div>
+          <div class="ep-guide-meta">${ep.time?`<span>RUNTIME: ${ep.time}</span>`:''}${bookBtn}</div>
+        </div>`;
+      if (!locked) card.onclick = () => { window.location.href = '../episodes.html'; };
+      sec.appendChild(card);
+    });
+    container.appendChild(sec);
+  });
+}
+
+/* ── WORLD PAGE ── */
+function buildWorldPage() {
+  const container = document.getElementById('world-container');
+  if (!container) return;
+  const loreInit = (SITE.lore||[]).find(e=>e.id==='hellawake-initiative');
+  const blocks = [
+    { title:'THE SETTING', content:'The world of HELLAWAKE is seven years past a turning point nobody fully understands yet. Infrastructure runs. People work. The war between the Dawn Horizon Division and the Skullborns is covert by design — most civilians have no idea it is happening. That invisibility is a weapon for both sides.' },
+    { title:'THE HELLAWAKE INITIATIVE', content: loreInit?.body || '' },
+    { title:'THE WAR', content:(SITE.factions||[]).map(f=>`<b style="color:var(--accent)">${f.name}</b> — ${f.body}`).join('<br><br>') },
+    { title:'KEY TERMINOLOGY', content:(SITE.lore||[]).filter(e=>!e.classified).map(e=>`<b style="color:var(--accent)">${e.term}</b><br><span style="color:var(--muted);font-size:13px;">${e.body}</span>`).join('<br><br>') },
+  ];
+  container.innerHTML = blocks.filter(b=>b.content).map(b=>
+    `<div class="world-block"><div class="world-block-title">${b.title}</div><div class="world-block-body">${b.content}</div></div>`
+  ).join('');
+}

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HELLAWAKE // SECURE TERMINAL</title>
+<link rel="stylesheet" href="wiki.css">
+<script>(function(){var t=localStorage.getItem('hw_wiki_theme');if(t==='light'){document.documentElement.classList.add('wiki-light');var s=document.documentElement.style;s.setProperty('--bg','#ffffff');s.setProperty('--surface','#f7f7f5');s.setProperty('--surface2','#efefec');s.setProperty('--text','#1a1a1a');s.setProperty('--muted','#6b6b6b');s.setProperty('--border','rgba(0,0,0,0.09)');}})();</script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; background:#000; overflow:hidden; }
+#terminal-page {
+  width:100%; height:100vh;
+  background:#0c0c0c;
+  display:flex; flex-direction:column;
+  font-family:'Courier New', Consolas, monospace;
+}
+.t-titlebar {
+  background:#1a1a1a; border-bottom:1px solid #2a2a2a;
+  padding:6px 16px; display:flex; align-items:center; justify-content:space-between;
+  flex-shrink:0;
+}
+.t-titlebar-left { display:flex; align-items:center; gap:10px; }
+.t-titlebar-title { font-size:0.7rem; color:#c0c0c0; letter-spacing:0; }
+.t-back {
+  font-size:0.65rem; color:#555; text-decoration:none;
+  letter-spacing:1px; transition:color 0.2s;
+}
+.t-back:hover { color:#aaa; }
+.t-body {
+  flex:1; padding:16px 20px; overflow-y:auto;
+  display:flex; flex-direction:column;
+}
+.t-output { flex:1; margin-bottom:12px; }
+.t-line {
+  font-size:0.8rem; line-height:1.7; color:#c0c0c0;
+  display:block; white-space:pre-wrap;
+}
+.t-line.dim    { color:#555; }
+.t-line.bright { color:#fff; font-weight:bold; }
+.t-line.error  { color:#ff4444; }
+.t-line.accent { color:#e8521a; }
+.t-line.blank  { display:block; height:1.7em; }
+.t-input-row {
+  display:flex; align-items:center;
+  border-top:1px solid #1a1a1a; padding-top:12px; flex-shrink:0;
+}
+.t-prompt { color:#c0c0c0; font-size:0.8rem; white-space:nowrap; user-select:none; flex-shrink:0; }
+.t-input {
+  background:transparent; border:none; outline:none;
+  color:#fff; font-family:'Courier New', Consolas, monospace;
+  font-size:0.8rem; flex:1; caret-color:#fff;
+  text-transform:uppercase; padding:0 0 0 4px; letter-spacing:1px;
+}
+.t-input::placeholder { color:#333; text-transform:none; letter-spacing:0; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+</style>
+</head>
+<body>
+<div id="terminal-page">
+  <div class="t-titlebar">
+    <div class="t-titlebar-left">
+      <span class="t-titlebar-title">HELLAWAKE.EXE — DIRECTIVE-9 ACCESS TERMINAL</span>
+    </div>
+    <a href="../index.html" class="t-back">✕ EXIT</a>
+  </div>
+  <div class="t-body">
+    <div class="t-output" id="t-output"></div>
+    <div class="t-input-row">
+      <span class="t-prompt" id="t-prompt">C:\HELLAWAKE\DIRECTIVE9&gt;&nbsp;</span>
+      <input type="text" class="t-input" id="t-input" placeholder="type access code and press ENTER" maxlength="30" autocomplete="off" spellcheck="false">
+    </div>
+  </div>
+</div>
+
+<script src="../content.js"></script>
+<script>
+var output = document.getElementById('t-output');
+var input  = document.getElementById('t-input');
+var locked = false;
+
+function print(text, cls, delay) {
+  return new Promise(function(resolve) {
+    setTimeout(function() {
+      var line = document.createElement('span');
+      line.className = 't-line' + (cls ? ' ' + cls : '');
+      if (text === '') { line.className = 't-line blank'; }
+      else { line.textContent = text; }
+      output.appendChild(line);
+      output.scrollTop = output.scrollHeight;
+      resolve();
+    }, delay || 0);
+  });
+}
+
+function printLines(lines) {
+  var p = Promise.resolve();
+  lines.forEach(function(l) {
+    p = p.then(function() { return print(l[0], l[1], l[2] || 60); });
+  });
+  return p;
+}
+
+function typewriter(text, cls, speed) {
+  return new Promise(function(resolve) {
+    var line = document.createElement('span');
+    line.className = 't-line' + (cls ? ' ' + cls : '');
+    output.appendChild(line);
+    var i = 0;
+    var interval = setInterval(function() {
+      line.textContent += text[i];
+      i++;
+      output.scrollTop = output.scrollHeight;
+      if (i >= text.length) { clearInterval(interval); resolve(); }
+    }, speed || 18);
+  });
+}
+
+// Boot sequence
+async function boot() {
+  locked = true;
+  input.placeholder = '';
+  await printLines([
+    ['Microsoft Windows [Version 10.0.HELLAWAKE]', 'dim', 0],
+    ['(c) Dawn Horizon Division. All rights reserved.', 'dim', 80],
+    ['', '', 160],
+    ['C:\\HELLAWAKE> auth --clearance=9 --protocol=DIRECTIVE9', '', 240],
+    ['', '', 360],
+  ]);
+  await print('Initialising secure channel...', 'dim', 400);
+  await new Promise(r => setTimeout(r, 600));
+  await print('Encryption layer: ACTIVE', 'dim', 0);
+  await new Promise(r => setTimeout(r, 400));
+  await print('Session ID: ' + Math.random().toString(36).substring(2,10).toUpperCase(), 'dim', 0);
+  await new Promise(r => setTimeout(r, 500));
+  await print('', '', 0);
+  await print('DIRECTIVE-9 ARCHIVE — CLEARANCE LEVEL 9 REQUIRED', 'bright', 0);
+  await print('Enter access code to proceed.', '', 0);
+  await print('', '', 0);
+  locked = false;
+  input.placeholder = 'type access code and press ENTER';
+  input.focus();
+}
+
+function addInputEcho(val) {
+  var line = document.createElement('span');
+  line.className = 't-line';
+  line.textContent = 'C:\\HELLAWAKE\\DIRECTIVE9> ' + val;
+  output.appendChild(line);
+}
+
+function fireEgg(egg) {
+  var content = egg.responseContent || '';
+  if (egg.responseType === 'newsflash') {
+    printLines([
+      ['', '', 0],
+      [content, 'accent', 0],
+      ['', '', 0],
+    ]);
+    return;
+  }
+  // text or glitch — typewriter output
+  print('', '', 0).then(function() {
+    print('ACCESS GRANTED', 'bright', 0).then(function() {
+      print('Decrypting archive...', 'dim', 200).then(function() {
+        print('', '', 0);
+        var lines = content.split('\n');
+        var p = Promise.resolve();
+        lines.forEach(function(l) {
+          p = p.then(function() { return typewriter(l || ' ', '', 12); });
+        });
+      });
+    });
+  });
+}
+
+input.addEventListener('keydown', function(e) {
+  if (e.key !== 'Enter' || locked) return;
+  var val = input.value.trim().toUpperCase();
+  if (!val) return;
+  input.value = '';
+  addInputEcho(val);
+
+  // Check easter egg codes
+  var eggs = (SITE.easterEggs || []).filter(function(eg) {
+    return eg.enabled && eg.triggerType === 'code';
+  });
+  var match = eggs.find(function(eg) {
+    return eg.triggerValue.toUpperCase() === val;
+  });
+
+  if (match) {
+    fireEgg(match);
+    return;
+  }
+
+  // Check main directive-9 unlock
+  if (val === (SITE.directive9 && SITE.directive9.code || '').toUpperCase()) {
+    print('', '', 0);
+    print('ACCESS GRANTED // DIRECTIVE-9 PARTIAL DECRYPT', 'bright', 0);
+    print('', '', 0);
+    var paras = SITE.directive9.paragraphs || [];
+    var p = Promise.resolve();
+    paras.forEach(function(para, i) {
+      p = p.then(function() {
+        return typewriter(para, i === paras.length - 1 ? 'dim' : '', 14);
+      }).then(function() { return print('', '', 0); });
+    });
+    return;
+  }
+
+  // Unknown code
+  print("'" + val + "' is not recognised as a valid access code.", 'error', 0);
+  print('', '', 0);
+});
+
+boot();
+</script>
+</body>
+</html>

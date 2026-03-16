@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HELLAWAKE | ADMIN</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Backgrounds — clear 5-step hierarchy */
+  --bg:       #0d0d0d;
+  --surface:  #141414;
+  --surface2: #1c1c1c;
+  --surface3: #242424;
+  --surface4: #2e2e2e;
+
+  /* Borders */
+  --border:   rgba(255,255,255,0.07);
+  --border-h: rgba(255,255,255,0.16);
+
+  /* Accent — orange that actually pops */
+  --accent:   #f04e1a;
+  --accent-s: rgba(240,78,26,0.1);
+  --accent-m: #d04015;
+  --accent-dim: rgba(240,78,26,0.25);
+
+  /* Text */
+  --text:     #e8e8e8;
+  --text-2:   #a0a0a0;
+  --muted:    #606060;
+  --dim:      #383838;
+
+  /* Status */
+  --red:   #ef4444;
+  --green: #22c55e;
+  --blue:  #3b82f6;
+
+  --font:'Inter',sans-serif;
+  --r:6px;
+  --hh:54px;
+  --nw:210px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+
+/* LOGIN — terminal style */
+#login-screen{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:22px;}
+#login-screen h1{font-size:0.8rem;letter-spacing:10px;color:var(--accent);font-weight:400;text-shadow:0 0 30px rgba(240,78,26,0.4);}
+#pw-input{background:none;border:none;border-bottom:1px solid #2a2a2a;color:var(--accent);font-family:var(--font);font-size:1.1rem;letter-spacing:6px;text-align:center;width:240px;padding:12px 0;outline:none;transition:border-color 0.3s;}
+#pw-input:focus{border-bottom-color:var(--accent);}
+#pw-input::placeholder{color:#1a1a1a;letter-spacing:3px;}
+#login-screen>button{background:none;border:1px solid #222;color:#444;font-family:var(--font);letter-spacing:4px;font-size:0.65rem;padding:8px 28px;transition:all 0.3s;cursor:pointer;}
+#login-screen>button:hover{border-color:var(--accent);color:var(--accent);}
+#login-error{font-size:0.65rem;color:#8B0000;letter-spacing:3px;display:none;}
+
+/* SHELL */
+#admin{display:none;min-height:100vh;}
+.admin-header{background:var(--surface);border-bottom:2px solid var(--accent-dim);padding:0 20px;height:var(--hh);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:12px;}
+.admin-header h1{font-size:13px;font-weight:600;color:var(--text-2);white-space:nowrap;letter-spacing:0.3px;}
+.admin-header h1 span{color:var(--accent);}
+.header-btns{display:flex;gap:6px;align-items:center;flex-shrink:0;}
+.unsaved-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:none;margin-right:6px;box-shadow:0 0 8px var(--accent);}
+.unsaved-dot.show{display:inline-block;}
+.admin-search{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);color:var(--text);font-family:var(--font);font-size:12px;padding:6px 10px;outline:none;width:180px;transition:border-color 0.15s;}
+.admin-search:focus{border-color:var(--accent);}
+.search-results{position:absolute;top:calc(var(--hh) + 2px);left:50%;transform:translateX(-50%);background:var(--surface);border:1px solid var(--border);border-radius:var(--r);width:280px;z-index:200;display:none;max-height:260px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.5);}
+.search-result-item{padding:9px 14px;font-size:12px;cursor:pointer;border-bottom:1px solid var(--border);transition:0.15s;}
+.search-result-item:hover{background:var(--surface2);color:var(--accent);}
+.btn{background:var(--surface3);border:1px solid var(--border);color:var(--text-2);font-family:var(--font);font-size:11.5px;font-weight:500;padding:7px 13px;border-radius:var(--r);transition:all 0.15s;cursor:pointer;white-space:nowrap;}
+.btn:hover{background:var(--surface4);border-color:var(--border-h);color:var(--text);}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600;box-shadow:0 2px 12px var(--accent-s);}
+.btn.primary:hover{background:var(--accent-m);box-shadow:0 4px 20px rgba(240,78,26,0.3);}
+.btn.danger{color:var(--red);border-color:rgba(224,82,82,0.3);}
+.btn.danger:hover{background:rgba(224,82,82,0.08);}
+
+/* LAYOUT */
+.admin-body{display:flex;}
+.admin-nav{width:var(--nw);background:var(--bg);border-right:1px solid var(--border);padding:12px 0;flex-shrink:0;overflow-y:auto;position:sticky;top:var(--hh);height:calc(100vh - var(--hh));}
+.nav-section{font-size:9px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;padding:16px 16px 6px;}
+.nav-item{padding:8px 16px;font-size:12.5px;color:var(--text-2);transition:all 0.12s;cursor:pointer;position:relative;}
+.nav-item:hover{color:var(--text);background:var(--surface2);}
+.nav-item.active{color:var(--accent);background:var(--accent-s);font-weight:600;}
+.nav-item.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);border-radius:0 2px 2px 0;}
+.admin-content{flex:1;overflow-y:auto;padding:28px 36px;background:var(--surface);}
+.panel{display:none;}.panel.active{display:block;}
+.panel-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px;letter-spacing:-0.3px;}
+.panel-desc{font-size:12.5px;color:var(--text-2);margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+
+/* FORM */
+.field{margin-bottom:15px;}
+.field label{display:block;font-size:10.5px;font-weight:600;color:var(--text-2);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.8px;}
+.field input,.field textarea,.field select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);color:var(--text);font-family:var(--font);font-size:13px;padding:9px 11px;outline:none;transition:all 0.15s;resize:vertical;}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent);background:var(--surface3);box-shadow:0 0 0 3px var(--accent-s);}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7280'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;}
+.field textarea{min-height:80px;line-height:1.6;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.url-wrap{position:relative;}.url-wrap input{padding-right:66px;}
+.paste-btn{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:var(--surface3);border:1px solid var(--border);color:var(--muted);font-family:var(--font);font-size:10px;padding:2px 7px;border-radius:3px;cursor:pointer;transition:0.15s;}
+.paste-btn:hover{border-color:var(--accent);color:var(--accent);}
+.checkbox-row{display:flex;align-items:center;gap:8px;padding:3px 0;}
+.checkbox-row input[type=checkbox]{width:14px;height:14px;accent-color:var(--accent);}
+.checkbox-row label{font-size:12.5px;color:var(--muted);margin:0;}
+.color-row{display:flex;align-items:center;gap:10px;}
+.color-row input[type=color]{width:36px;height:30px;padding:2px;border:1px solid var(--border);border-radius:var(--r);background:var(--surface2);cursor:pointer;}
+.color-row input[type=text]{flex:1;}
+.section-label{font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;margin:20px 0 10px;}
+.array-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:14px 14px 14px 18px;margin-bottom:8px;position:relative;border-left:3px solid var(--accent);}
+.array-item .item-title{font-size:10px;font-weight:700;color:var(--accent);letter-spacing:1.5px;margin-bottom:12px;text-transform:uppercase;}
+.item-actions{position:absolute;top:10px;right:10px;display:flex;gap:4px;}
+.item-actions button{background:var(--surface2);border:1px solid var(--border);color:var(--dim);font-family:var(--font);font-size:10px;padding:2px 7px;border-radius:3px;cursor:pointer;transition:0.15s;}
+.item-actions button:hover{background:rgba(224,82,82,0.08);border-color:rgba(224,82,82,0.4);color:var(--red);}
+.item-actions button.move-btn:hover{background:var(--accent-s);border-color:var(--accent);color:var(--accent);}
+.add-btn{width:100%;background:none;border:1px dashed var(--border);border-radius:var(--r);color:var(--dim);font-family:var(--font);font-size:11.5px;padding:9px;cursor:pointer;transition:0.15s;margin-top:3px;}
+.add-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-s);}
+.stats-row{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end;margin-bottom:7px;}
+.stats-row .field{margin-bottom:0;}
+.info-bar{background:var(--accent-s);border:1px solid var(--accent-dim);border-left:3px solid var(--accent);border-radius:var(--r);padding:10px 14px;margin-bottom:20px;font-size:12px;color:var(--text-2);line-height:1.6;}
+.upload-zone{border:2px dashed var(--border);border-radius:var(--r);padding:36px 24px;text-align:center;transition:0.2s;cursor:pointer;}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--accent);background:var(--accent-s);box-shadow:inset 0 0 40px rgba(240,78,26,0.04);}
+.upload-zone p{font-size:12.5px;color:var(--muted);margin-bottom:12px;}
+.upload-zone input[type=file]{display:none;}
+.upload-result{margin-top:12px;padding:12px 14px;background:var(--surface2);border:1px solid var(--border);border-left:2px solid var(--green);border-radius:var(--r);display:none;}
+.upload-result .path{font-size:12.5px;color:var(--text);word-break:break-all;margin-bottom:8px;font-family:monospace;}
+.download-panel{background:var(--surface2);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:var(--r);padding:24px;margin-top:24px;}
+.download-panel h3{font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:8px;}
+.download-panel p{font-size:12.5px;color:var(--muted);line-height:1.7;margin-bottom:14px;}
+.download-panel ol{font-size:12.5px;color:var(--muted);line-height:2;padding-left:18px;}
+.download-panel code{background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-size:11px;color:var(--accent);}
+.divider{border:none;border-top:1px solid var(--border);margin:20px 0;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <h1>HELLAWAKE // ADMIN ACCESS</h1>
+  <input type="password" id="pw-input" placeholder="ENTER CODE" autocomplete="off">
+  <button onclick="tryLogin()">AUTHENTICATE</button>
+  <div id="login-error">ACCESS DENIED</div>
+</div>
+
+<div id="admin">
+  <div class="admin-header" style="position:relative;">
+    <h1><span>Hellawake</span> — Archive Admin <span class="unsaved-dot" id="unsaved-dot"></span></h1>
+    <input type="text" class="admin-search" id="admin-search" placeholder="Search fields..." oninput="doSearch(this.value)" autocomplete="off">
+    <div class="search-results" id="search-results"></div>
+    <div class="header-btns">
+      <button class="btn" onclick="loadFromStorage()">↺ Reload</button>
+      <button class="btn" onclick="saveToStorage()">Save draft</button>
+      <button class="btn" onclick="exportBackup()">Export JSON</button>
+      <button class="btn primary" onclick="downloadContentJS()">⬇ Download content.js</button>
+    </div>
+  </div>
+  <div class="admin-body">
+    <nav class="admin-nav">
+      <div class="nav-section">Global</div>
+      <div class="nav-item active" onclick="showPanel('meta')">Meta & Status</div>
+      <div class="nav-item" onclick="showPanel('branding')">Branding</div>
+      <div class="nav-item" onclick="showPanel('nav-editor')">Nav Links</div>
+      <div class="nav-item" onclick="showPanel('headings')">Section Headings</div>
+      <div class="nav-item" onclick="showPanel('socials')">Social Links</div>
+      <div class="nav-item" onclick="showPanel('announcement')">Announcement</div>
+      <div class="nav-item" onclick="showPanel('countdown')">Countdown</div>
+      <div class="nav-section">Main Site</div>
+      <div class="nav-item" onclick="showPanel('synopsis')">Synopsis</div>
+      <div class="nav-item" onclick="showPanel('news')">News Ticker</div>
+      <div class="nav-item" onclick="showPanel('media')">Media Section</div>
+      <div class="nav-item" onclick="showPanel('gallery')">Gallery</div>
+      <div class="nav-item" onclick="showPanel('audio')">Audio</div>
+      <div class="nav-item" onclick="showPanel('credits')">Credits</div>
+      <div class="nav-item" onclick="showPanel('episodes')">Episodes</div>
+      <div class="nav-section">Wiki</div>
+      <div class="nav-item" onclick="showPanel('personnel')">Characters</div>
+      <div class="nav-item" onclick="showPanel('factions')">Factions</div>
+      <div class="nav-item" onclick="showPanel('lore')">Lore / Glossary</div>
+      <div class="nav-item" onclick="showPanel('timeline')">Timeline</div>
+      <div class="nav-item" onclick="showPanel('directive9')">Directive-9</div>
+      <div class="nav-item" onclick="showPanel('wiki-config')">Wiki Settings</div>
+      <div class="nav-section">Tools</div>
+      <div class="nav-item" onclick="showPanel('easter-eggs')">Easter Eggs</div>
+      <div class="nav-item" onclick="showPanel('uploader')">Image Uploader</div>
+      <div class="nav-item" onclick="showPanel('deploy')">Deploy</div>
+      <div class="nav-item" onclick="showPanel('settings')">Settings</div>
+    </nav>
+    <div class="admin-content">
+
+      <div class="panel active" id="panel-meta">
+        <div class="panel-title">Meta & Status</div>
+        <div class="panel-desc">Page titles, social preview, and sidebar status counters.</div>
+        <div class="field-row"><div class="field"><label>Page Title</label><input id="meta-title"></div><div class="field"><label>Project Status</label><input id="status-projectStatus"></div></div>
+        <div class="field-row"><div class="field"><label>Episodes Released</label><input id="status-episodesReleased"></div><div class="field"><label>Episodes Total</label><input id="status-episodesTotal"></div></div>
+        <hr class="divider">
+        <div class="field"><label>OG Title</label><input id="meta-ogTitle"></div>
+        <div class="field"><label>OG Description</label><textarea id="meta-ogDescription" style="min-height:60px;"></textarea></div>
+        <div class="field url-wrap"><label>OG Image Path</label><input id="meta-ogImage"><button class="paste-btn" onclick="pasteField('meta-ogImage')">PASTE</button></div>
+        <div class="field url-wrap"><label>Favicon Path</label><input id="meta-favicon"><button class="paste-btn" onclick="pasteField('meta-favicon')">PASTE</button></div>
+      </div>
+
+      <div class="panel" id="panel-branding">
+        <div class="panel-title">Branding</div>
+        <div class="panel-desc">Logo, hero, accent color, loader text, and news bar label.</div>
+        <div class="field url-wrap"><label>Logo Image Path</label><input id="brand-logoImage"><button class="paste-btn" onclick="pasteField('brand-logoImage')">PASTE</button></div>
+        <div class="field url-wrap"><label>Hero Background Image</label><input id="brand-heroBackground"><button class="paste-btn" onclick="pasteField('brand-heroBackground')">PASTE</button></div>
+        <div class="field-row"><div class="field"><label>Hero BG Opacity (0–1)</label><input id="brand-heroBackgroundOpacity" type="number" min="0" max="1" step="0.01"></div><div class="field"><label>Hero Logo Width (e.g. 55%)</label><input id="brand-heroLogoWidth"></div></div>
+        <div class="field"><label>Accent Color</label><div class="color-row"><input type="color" id="brand-accentColorPicker" oninput="document.getElementById('brand-accentColor').value=this.value;markUnsaved();"><input type="text" id="brand-accentColor" placeholder="#ff3c00" oninput="document.getElementById('brand-accentColorPicker').value=this.value;markUnsaved();"></div></div>
+        <hr class="divider">
+        <div class="field"><label>Loader Tagline</label><input id="brand-loaderTagline"></div>
+        <div class="field-row"><div class="field"><label>Enter Button Text</label><input id="brand-enterBtnText"></div><div class="field"><label>Enter Button Link</label><input id="brand-enterBtnLink"></div></div>
+        <div class="field"><label>News Bar Label</label><input id="brand-newsBarLabel"></div>
+      </div>
+
+      <div class="panel" id="panel-nav-editor">
+        <div class="panel-title">Nav Links</div>
+        <div class="panel-desc">Sidebar navigation links. Label is the display text, Href is the anchor or page path.</div>
+        <div id="nav-list"></div>
+        <button class="add-btn" onclick="addNavItem()">+ ADD NAV LINK</button>
+      </div>
+
+      <div class="panel" id="panel-headings">
+        <div class="panel-title">Section Headings</div>
+        <div class="panel-desc">The large heading text at the top of each section.</div>
+        <div class="field-row"><div class="field"><label>Synopsis</label><input id="h-synopsis"></div><div class="field"><label>Media</label><input id="h-media"></div></div>
+        <div class="field-row"><div class="field"><label>Renders / Gallery</label><input id="h-renders"></div><div class="field"><label>Wiki Gateway</label><input id="h-wikiGateway"></div></div>
+        <div class="field-row"><div class="field"><label>Audio</label><input id="h-audio"></div><div class="field"><label>Credits</label><input id="h-credits"></div></div>
+        <div class="field-row"><div class="field"><label>Watch (episodes section)</label><input id="h-watch"></div></div>
+      </div>
+
+      <div class="panel" id="panel-socials">
+        <div class="panel-title">Social Links</div>
+        <div class="panel-desc">Leave blank to hide. Icons appear in the sidebar.</div>
+        <div class="field"><label>YouTube URL</label><input id="soc-youtube"></div>
+        <div class="field"><label>Discord URL</label><input id="soc-discord"></div>
+        <div class="field"><label>Instagram URL</label><input id="soc-instagram"></div>
+        <div class="field"><label>Twitter / X URL</label><input id="soc-twitter"></div>
+      </div>
+
+      <div class="panel" id="panel-announcement">
+        <div class="panel-title">Announcement Banner</div>
+        <div class="panel-desc">Optional full-width banner shown above the site.</div>
+        <div class="checkbox-row" style="margin-bottom:18px;"><input type="checkbox" id="ann-enabled"><label for="ann-enabled">Show announcement banner</label></div>
+        <div class="field"><label>Message Text</label><input id="ann-text"></div>
+        <div class="field"><label>Style</label><select id="ann-style"><option value="alert">Alert (red)</option><option value="info">Info (teal)</option><option value="warning">Warning (yellow)</option></select></div>
+      </div>
+
+      <div class="panel" id="panel-countdown">
+        <div class="panel-title">Episode Countdown</div>
+        <div class="panel-desc">Live countdown timer. Auto-hides when it hits zero.</div>
+        <div class="checkbox-row" style="margin-bottom:18px;"><input type="checkbox" id="cd-enabled"><label for="cd-enabled">Show countdown</label></div>
+        <div class="field"><label>Label Text</label><input id="cd-label"></div>
+        <div class="field"><label>Target Date & Time</label><input id="cd-targetDate" type="datetime-local"></div>
+      </div>
+
+      <div class="panel" id="panel-synopsis">
+        <div class="panel-title">Synopsis</div>
+        <div class="panel-desc">Series description on the homepage.</div>
+        <div class="field"><label>Tags (comma separated)</label><input id="synopsis-tags-input"></div>
+        <div class="field url-wrap"><label>Poster Image</label><input id="synopsis-poster"><button class="paste-btn" onclick="pasteField('synopsis-poster')">PASTE</button></div>
+        <div class="field"><label>Poster Tag Label</label><input id="synopsis-posterTag"></div>
+        <hr class="divider">
+        <div class="section-label">Paragraphs</div>
+        <div id="synopsis-paras-list"></div>
+        <button class="add-btn" onclick="addSynopsisPara()">+ ADD PARAGRAPH</button>
+      </div>
+
+      <div class="panel" id="panel-news">
+        <div class="panel-title">News Ticker</div>
+        <div class="panel-desc">Items scroll across the bottom bar, separated by //.</div>
+        <div id="news-list"></div>
+        <button class="add-btn" onclick="addNewsItem()">+ ADD ITEM</button>
+      </div>
+
+      <div class="panel" id="panel-media">
+        <div class="panel-title">Media Section</div>
+        <div class="panel-desc">Main video player and playlist sidebar.</div>
+        <div class="section-label">Main Video</div>
+        <div class="field"><label>Type</label><select id="media-mainType"><option value="youtube">YouTube</option><option value="local">Local file</option></select></div>
+        <div class="field url-wrap"><label>YouTube URL / Video ID / Local path</label><input id="media-mainSrc"><button class="paste-btn" onclick="pasteField('media-mainSrc')">PASTE</button></div>
+        <div class="field"><label>Placeholder Label (when no video)</label><input id="media-mainLabel"></div>
+        <hr class="divider">
+        <div class="section-label">Playlist Items</div>
+        <div id="playlist-list"></div>
+        <button class="add-btn" onclick="addPlaylistItem()">+ ADD PLAYLIST ITEM</button>
+      </div>
+
+      <div class="panel" id="panel-gallery">
+        <div class="panel-title">Gallery</div>
+        <div class="panel-desc">Images and videos. Category key must match a gallery category below.</div>
+        <div class="section-label">Filter Categories</div>
+        <div id="gcat-list"></div>
+        <button class="add-btn" onclick="addGalleryCat()">+ ADD CATEGORY</button>
+        <hr class="divider">
+        <div class="section-label">Gallery Items</div>
+        <div id="gallery-list"></div>
+        <button class="add-btn" onclick="addGalleryItem()">+ ADD ITEM</button>
+      </div>
+
+      <div class="panel" id="panel-personnel">
+        <div class="panel-title">Personnel</div>
+        <div class="panel-desc">Character cards. Set Visible off to hide without deleting.</div>
+        <div id="personnel-list"></div>
+        <button class="add-btn" onclick="addPersonnel()">+ ADD CHARACTER</button>
+      </div>
+
+      <div class="panel" id="panel-factions">
+        <div class="panel-title">Factions</div>
+        <div class="panel-desc">Faction cards shown on the wiki Factions page.</div>
+        <div id="factions-list"></div>
+        <button class="add-btn" onclick="addFaction()">+ ADD FACTION</button>
+      </div>
+
+      <div class="panel" id="panel-directive9">
+        <div class="panel-title">Directive-9</div>
+        <div class="panel-desc">The locked easter egg panel. Visitors enter the code to unlock.</div>
+        <div class="field-row"><div class="field"><label>Access Code</label><input id="d9-code"></div><div class="field"><label>Locked Label</label><input id="d9-lockedLabel"></div></div>
+        <div class="field"><label>Unlocked Label</label><input id="d9-unlockedLabel"></div>
+        <hr class="divider">
+        <div class="section-label">Unlocked Paragraphs</div>
+        <div id="d9-paras-list"></div>
+        <button class="add-btn" onclick="addD9Para()">+ ADD PARAGRAPH</button>
+      </div>
+
+      <div class="panel" id="panel-lore">
+        <div class="panel-title">Lore & Glossary</div>
+        <div class="panel-desc">World Archive entries. Classified entries show redacted styling.</div>
+        <div id="lore-list-admin"></div>
+        <button class="add-btn" onclick="addLoreEntry()">+ ADD ENTRY</button>
+      </div>
+
+      <div class="panel" id="panel-timeline">
+        <div class="panel-title">Timeline</div>
+        <div class="panel-desc">In-universe chronological events.</div>
+        <div id="timeline-list"></div>
+        <button class="add-btn" onclick="addTimelineEntry()">+ ADD ENTRY</button>
+      </div>
+
+      <div class="panel" id="panel-audio">
+        <div class="panel-title">Audio</div>
+        <div class="panel-desc">Tracks with a src path will actually play via HTML5 audio.</div>
+        <div class="section-label">Tracks</div>
+        <div id="tracks-list"></div>
+        <button class="add-btn" onclick="addTrack()">+ ADD TRACK</button>
+        <hr class="divider">
+        <div class="section-label">Voice Chips</div>
+        <div id="chips-list"></div>
+        <button class="add-btn" onclick="addChip()">+ ADD VOICE CHIP</button>
+      </div>
+
+      <div class="panel" id="panel-episodes">
+        <div class="panel-title">Episodes</div>
+        <div class="panel-desc">Season and episode data. No YouTube ID + comingSoon checked = locked state.</div>
+        <div id="seasons-list"></div>
+        <button class="add-btn" onclick="addSeason()">+ ADD SEASON</button>
+      </div>
+
+      <div class="panel" id="panel-credits">
+        <div class="panel-title">Credits</div>
+        <div class="panel-desc">Staff roles at the bottom of the archive.</div>
+        <div id="credits-list"></div>
+        <button class="add-btn" onclick="addCredit()">+ ADD CREDIT</button>
+      </div>
+
+      <div class="panel" id="panel-easter-eggs">
+        <div class="panel-title">Easter Eggs</div>
+        <div class="panel-desc">Hidden interactions triggered by codes, key sequences, click counts, or the Konami code. Enabled eggs are active on the live site.</div>
+        <div class="info-bar">Code-type eggs fire when typed into the Secure Terminal input. Keyboard sequences fire when typed anywhere on the page. Click count fires when an element is clicked N times rapidly.</div>
+        <div id="easter-eggs-list"></div>
+        <button class="add-btn" onclick="addEasterEgg()">+ ADD EASTER EGG</button>
+      </div>
+
+
+      <div class="panel" id="panel-wiki-config">
+        <div class="panel-title">Wiki Config</div>
+        <div class="panel-desc">Settings for the wiki section and intercepted transmissions.</div>
+        <div class="field-row">
+          <div class="checkbox-row"><input type="checkbox" id="wiki-lightModeDefault"><label for="wiki-lightModeDefault">Light mode as wiki default</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="wiki-showBookReader"><label for="wiki-showBookReader">Show book reader on episode pages</label></div>
+        </div>
+        <hr class="divider">
+        <div class="section-label">Intercepted Transmissions</div>
+        <div class="info-bar">Random quotes shown in the "INTERCEPTED //" bar on wiki pages.</div>
+        <div id="transmissions-list"></div>
+        <button class="add-btn" onclick="addTransmission()">+ ADD TRANSMISSION</button>
+      </div>
+
+      <div class="panel" id="panel-uploader">
+        <div class="panel-title">Image Uploader</div>
+        <div class="panel-desc">Upload images directly to GitHub. Token saved in localStorage only.</div>
+        <div class="field-row"><div class="field"><label>GitHub Username</label><input id="gh-user"></div><div class="field"><label>Repository Name</label><input id="gh-repo"></div></div>
+        <div class="field"><label>Personal Access Token</label><input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx"></div>
+        <div class="field"><label>Upload Path (folder in repo)</label><input id="gh-path" value="assets/images"></div>
+        <button class="btn" style="margin-bottom:20px;" onclick="saveGHConfig()">Save GitHub Config</button>
+        <hr class="divider">
+        <div class="upload-zone" id="upload-zone">
+          <p>DRAG & DROP IMAGE OR CLICK TO BROWSE</p>
+          <input type="file" id="file-input" accept="image/*" onchange="handleFileSelect(this.files[0])">
+          <button class="btn" onclick="document.getElementById('file-input').click()">Browse files</button>
+          <div class="upload-result" id="upload-result"><div class="path" id="upload-path"></div><button class="btn" onclick="copyUploadPath()">Copy path</button></div>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-deploy">
+        <div class="panel-title">Deploy</div>
+        <div class="panel-desc">Download content.js and push to GitHub to publish.</div>
+        <div class="download-panel">
+          <h3>How to update the live site</h3>
+          <ol>
+            <li>Click <strong>⬇ Download content.js</strong> in the top bar</li>
+            <li>Go to your GitHub repo → find <code>content.js</code> → pencil icon</li>
+            <li>Select all → paste → Commit changes</li>
+            <li>GitHub Pages rebuilds in ~30 seconds</li>
+          </ol>
+        </div>
+        <div class="download-panel">
+          <h3>Preview generated content.js</h3>
+          <button class="btn primary" onclick="previewContentJS()">Generate preview</button>
+          <textarea id="preview-output" style="width:100%;min-height:300px;margin-top:16px;background:#050505;border:1px solid var(--border);color:#555;font-family:monospace;font-size:0.75rem;padding:12px;display:none;border-radius:var(--r);"></textarea>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-settings">
+        <div class="panel-title">Settings</div>
+        <div class="panel-desc">Admin password, backups, and data management.</div>
+        <div class="section-label">Change Admin Password</div>
+        <div class="info-bar">Password stored in localStorage only. Does not affect the live site.</div>
+        <div class="field-row"><div class="field"><label>New Password</label><input type="password" id="new-pw-1"></div><div class="field"><label>Confirm</label><input type="password" id="new-pw-2"></div></div>
+        <button class="btn primary" onclick="changePassword()" style="margin-bottom:8px;">Change Password</button>
+        <div id="pw-change-msg" style="font-size:12px;color:var(--green);display:none;margin-bottom:16px;">Password updated.</div>
+        <hr class="divider">
+        <div class="section-label">Backup & Restore</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+          <button class="btn" onclick="exportBackup()">Export backup (.json)</button>
+          <button class="btn" onclick="document.getElementById('import-file').click()">Import backup (.json)</button>
+          <input type="file" id="import-file" accept=".json" style="display:none" onchange="importBackup(this)">
+        </div>
+        <hr class="divider">
+        <div class="section-label">Reset</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn danger" onclick="clearDraft()">Clear saved draft</button>
+          <button class="btn danger" onclick="resetToSITE()">Reset to SITE defaults</button>
+          <button class="btn danger" onclick="resetWatched()">Reset watched episodes</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="content.js"></script>
+<script>
+/* ============================================================
+   HELLAWAKE ADMIN — clean rewrite, no syntax errors
+   ============================================================ */
+
+const DEFAULT_PW = 'HELLAWAKE2024';
+
+function tryLogin() {
+  var entered = document.getElementById('pw-input').value.trim();
+  var stored = localStorage.getItem('hw_admin_pw') || DEFAULT_PW;
+  if (entered === stored) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin').style.display = 'block';
+    initAdmin();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+  }
+}
+document.getElementById('pw-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') tryLogin();
+});
+
+/* ── NAV ── */
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+  var panel = document.getElementById('panel-' + id);
+  if (panel) panel.classList.add('active');
+  if (event && event.target) event.target.classList.add('active');
+}
+
+/* ── UNSAVED ── */
+function markUnsaved() {
+  var dot = document.getElementById('unsaved-dot');
+  if (dot) dot.classList.add('show');
+}
+function markSaved() {
+  var dot = document.getElementById('unsaved-dot');
+  if (dot) dot.classList.remove('show');
+}
+window.addEventListener('beforeunload', function(e) {
+  var dot = document.getElementById('unsaved-dot');
+  if (dot && dot.classList.contains('show')) { e.preventDefault(); e.returnValue = ''; }
+});
+
+/* ── SEARCH ── */
+var SEARCH_INDEX = [];
+function buildSearchIndex() {
+  SEARCH_INDEX = [];
+  function add(text, panel, label) {
+    if (text) SEARCH_INDEX.push({ text: String(text).toLowerCase(), panel: panel, label: label || String(text) });
+  }
+  (data.personnel || []).forEach(function(c) { add(c.name, 'personnel', 'Personnel: ' + c.name); });
+  (data.lore || []).forEach(function(e) { add(e.term, 'lore', 'Lore: ' + e.term); });
+  (data.factions || []).forEach(function(f) { add(f.name, 'factions', 'Faction: ' + f.name); });
+  (data.timeline || []).forEach(function(t) { add(t.title, 'timeline', 'Timeline: ' + t.title); });
+  (data.news || []).forEach(function(n, i) { add(n, 'news', 'News #' + (i+1)); });
+  (data.credits || []).forEach(function(c) { add(c.name, 'credits', 'Credit: ' + c.name); });
+  (data.episodes && data.episodes.seasons || []).forEach(function(s) {
+    (s.episodes || []).forEach(function(ep) { add(ep.title, 'episodes', 'Episode: ' + ep.title); });
+  });
+}
+function doSearch(q) {
+  var box = document.getElementById('search-results');
+  if (!q.trim()) { box.style.display = 'none'; return; }
+  var results = SEARCH_INDEX.filter(function(i) { return i.text.includes(q.toLowerCase()); }).slice(0, 8);
+  if (!results.length) { box.style.display = 'none'; return; }
+  box.innerHTML = results.map(function(r) {
+    return '<div class="search-result-item" onclick="jumpToPanel(\'' + r.panel + '\')">' + r.label + '</div>';
+  }).join('');
+  box.style.display = 'block';
+}
+function jumpToPanel(name) {
+  document.getElementById('search-results').style.display = 'none';
+  document.getElementById('admin-search').value = '';
+  document.querySelectorAll('.nav-item').forEach(function(n) {
+    if (n.textContent.toLowerCase().replace(/\s/g,'').includes(name.replace('-',''))) {
+      n.click();
+    }
+  });
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.admin-header')) {
+    var box = document.getElementById('search-results');
+    if (box) box.style.display = 'none';
+  }
+});
+
+/* ── HELPERS ── */
+function pasteField(id) {
+  navigator.clipboard.readText().then(function(t) {
+    var el = document.getElementById(id);
+    if (el) { el.value = t; markUnsaved(); }
+  }).catch(function() { alert('Clipboard access denied'); });
+}
+function setVal(id, val) { var el = document.getElementById(id); if (el) el.value = (val !== undefined && val !== null) ? val : ''; }
+function getVal(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+function getBool(id) { var el = document.getElementById(id); return el ? el.checked : false; }
+function setBool(id, v) { var el = document.getElementById(id); if (el) el.checked = !!v; }
+function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+
+/* ── RANK HELPERS ── */
+function buildRankSelect(i, faction, selectedRank) {
+  var ranks = [];
+  (data.factions || []).forEach(function(f) {
+    if ((f.type === faction || f.id === faction) && f.ranks) ranks = f.ranks;
+  });
+  var opts = '<option value="">— No rank —</option>';
+  ranks.forEach(function(r) {
+    opts += '<option value="' + r.id + '"' + (r.id === selectedRank ? ' selected' : '') + '>' + r.label + '</option>';
+  });
+  return '<select id="per-' + i + '-rank">' + opts + '</select>';
+}
+function updateRankDropdown(i, faction) {
+  var container = document.getElementById('per-' + i + '-rank');
+  if (!container) return;
+  collectPersonnelList();
+  var currentRank = data.personnel[i] ? data.personnel[i].rank || '' : '';
+  container.outerHTML = buildRankSelect(i, faction, currentRank);
+}
+
+/* ── INIT ── */
+var data = {};
+function initAdmin() {
+  // Always start fresh from SITE
+  data = JSON.parse(JSON.stringify(SITE));
+  var saved = localStorage.getItem('hw_admin_draft');
+  if (saved) {
+    try {
+      var draft = JSON.parse(saved);
+      // Overlay draft on top of SITE base
+      Object.keys(SITE).forEach(function(k) {
+        var draftVal = draft[k];
+        var siteVal  = SITE[k];
+        // Key missing in draft → use SITE
+        if (draftVal === undefined || draftVal === null) {
+          data[k] = JSON.parse(JSON.stringify(siteVal));
+          return;
+        }
+        // Array in draft is empty but SITE has items → use SITE
+        if (Array.isArray(siteVal) && siteVal.length > 0 &&
+            Array.isArray(draftVal) && draftVal.length === 0) {
+          data[k] = JSON.parse(JSON.stringify(siteVal));
+          return;
+        }
+        // Otherwise use draft value
+        data[k] = draftVal;
+      });
+      // Also carry over any draft keys not in SITE (custom additions)
+      Object.keys(draft).forEach(function(k) {
+        if (!(k in SITE)) data[k] = draft[k];
+      });
+    } catch(e) {
+      console.warn('Draft load failed, using SITE defaults:', e);
+      data = JSON.parse(JSON.stringify(SITE));
+    }
+  }
+  populateAll();
+  buildSearchIndex();
+  loadGHConfig();
+  document.addEventListener('input', markUnsaved);
+  document.addEventListener('change', markUnsaved);
+  // Autosave every 30s
+  setInterval(function() {
+    if (document.getElementById('unsaved-dot').classList.contains('show')) {
+      collectAll();
+      localStorage.setItem('hw_admin_draft', JSON.stringify(data));
+      markSaved();
+    }
+  }, 30000);
+}
+
+/* ── POPULATE ALL ── */
+function populateAll() {
+  setVal('meta-title', data.meta && data.meta.title);
+  setVal('meta-ogTitle', data.meta && data.meta.ogTitle);
+  setVal('meta-ogDescription', data.meta && data.meta.ogDescription);
+  setVal('meta-ogImage', data.meta && data.meta.ogImage);
+  setVal('meta-favicon', data.meta && data.meta.favicon);
+  setVal('status-projectStatus', data.status && data.status.projectStatus);
+  setVal('status-episodesReleased', data.status && data.status.episodesReleased);
+  setVal('status-episodesTotal', data.status && data.status.episodesTotal);
+  var b = data.branding || {};
+  setVal('brand-logoImage', b.logoImage); setVal('brand-heroBackground', b.heroBackground);
+  setVal('brand-heroBackgroundOpacity', b.heroBackgroundOpacity); setVal('brand-heroLogoWidth', b.heroLogoWidth);
+  setVal('brand-accentColor', b.accentColor); setVal('brand-loaderTagline', b.loaderTagline);
+  setVal('brand-enterBtnText', b.enterBtnText); setVal('brand-enterBtnLink', b.enterBtnLink);
+  setVal('brand-newsBarLabel', b.newsBarLabel);
+  if (b.accentColor) { var cp = document.getElementById('brand-accentColorPicker'); if (cp) cp.value = b.accentColor; }
+  buildNavList();
+  var h = data.sectionHeadings || {};
+  setVal('h-synopsis', h.synopsis); setVal('h-media', h.media); setVal('h-renders', h.renders);
+  setVal('h-wikiGateway', h.wikiGateway); setVal('h-audio', h.audio); setVal('h-credits', h.credits);
+  setVal('h-watch', h.watch);
+  var soc = data.socials || {};
+  setVal('soc-youtube', soc.youtube); setVal('soc-discord', soc.discord);
+  setVal('soc-instagram', soc.instagram); setVal('soc-twitter', soc.twitter);
+  var ann = data.announcement || {};
+  setBool('ann-enabled', ann.enabled); setVal('ann-text', ann.text); setVal('ann-style', ann.style);
+  var cd = data.countdown || {};
+  setBool('cd-enabled', cd.enabled); setVal('cd-label', cd.label);
+  if (cd.targetDate) setVal('cd-targetDate', cd.targetDate.replace(' ','T').substring(0,16));
+  setVal('synopsis-tags-input', (data.synopsis && data.synopsis.tags || []).join(', '));
+  setVal('synopsis-poster', data.synopsis && data.synopsis.poster);
+  setVal('synopsis-posterTag', data.synopsis && data.synopsis.posterTag);
+  buildSynopsisParas();
+  buildNewsList();
+  var m = data.media || {};
+  setVal('media-mainType', m.mainVideo && m.mainVideo.type || 'youtube');
+  setVal('media-mainSrc', m.mainVideo && m.mainVideo.src || '');
+  setVal('media-mainLabel', m.mainVideo && m.mainVideo.label || '');
+  buildPlaylistList(); buildGalleryCatList(); buildGalleryList();
+  buildPersonnelList(); buildFactionsList();
+  setVal('d9-code', data.directive9 && data.directive9.code);
+  setVal('d9-lockedLabel', data.directive9 && data.directive9.lockedLabel);
+  setVal('d9-unlockedLabel', data.directive9 && data.directive9.unlockedLabel);
+  buildD9Paras(); buildLoreList(); buildTimelineList(); buildTracksList(); buildChipsList();
+  buildSeasonsList(); buildCreditsList();
+  var wc = data.wikiConfig || {};
+  setBool('wiki-lightModeDefault', wc.lightModeDefault || false);
+  setBool('wiki-showBookReader', wc.showBookReader !== false);
+  buildTransmissionsList();
+  buildEasterEggsList();
+}
+
+/* ── COLLECT ALL ── */
+function collectAll() {
+  if (!data.meta) data.meta = {};
+  data.meta.title = getVal('meta-title'); data.meta.ogTitle = getVal('meta-ogTitle');
+  data.meta.ogDescription = getVal('meta-ogDescription'); data.meta.ogImage = getVal('meta-ogImage');
+  data.meta.favicon = getVal('meta-favicon');
+  if (!data.status) data.status = {};
+  data.status.projectStatus = getVal('status-projectStatus');
+  data.status.episodesReleased = getVal('status-episodesReleased');
+  data.status.episodesTotal = getVal('status-episodesTotal');
+  data.branding = {
+    logoImage: getVal('brand-logoImage'), heroBackground: getVal('brand-heroBackground'),
+    heroBackgroundOpacity: getVal('brand-heroBackgroundOpacity'), heroLogoWidth: getVal('brand-heroLogoWidth'),
+    accentColor: getVal('brand-accentColor'), loaderTagline: getVal('brand-loaderTagline'),
+    enterBtnText: getVal('brand-enterBtnText'), enterBtnLink: getVal('brand-enterBtnLink'),
+    newsBarLabel: getVal('brand-newsBarLabel')
+  };
+  collectNavList();
+  data.sectionHeadings = { synopsis: getVal('h-synopsis'), media: getVal('h-media'), renders: getVal('h-renders'), wikiGateway: getVal('h-wikiGateway'), watch: getVal('h-watch'), audio: getVal('h-audio'), credits: getVal('h-credits') };
+  data.socials = { youtube: getVal('soc-youtube'), discord: getVal('soc-discord'), instagram: getVal('soc-instagram'), twitter: getVal('soc-twitter') };
+  data.announcement = { enabled: getBool('ann-enabled'), text: getVal('ann-text'), style: getVal('ann-style') };
+  data.countdown = { enabled: getBool('cd-enabled'), label: getVal('cd-label'), targetDate: getVal('cd-targetDate') };
+  if (!data.synopsis) data.synopsis = {};
+  data.synopsis.tags = getVal('synopsis-tags-input').split(',').map(function(t) { return t.trim(); }).filter(Boolean);
+  data.synopsis.poster = getVal('synopsis-poster'); data.synopsis.posterTag = getVal('synopsis-posterTag');
+  collectSynopsisParas(); collectNewsList();
+  if (!data.media) data.media = { mainVideo: {}, playlist: [] };
+  data.media.mainVideo = { type: getVal('media-mainType'), src: getVal('media-mainSrc'), label: getVal('media-mainLabel') };
+  collectPlaylistList(); collectGalleryCatList(); collectGalleryList();
+  collectPersonnelList(); collectFactionsList();
+  if (!data.directive9) data.directive9 = {};
+  data.directive9.code = getVal('d9-code'); data.directive9.lockedLabel = getVal('d9-lockedLabel'); data.directive9.unlockedLabel = getVal('d9-unlockedLabel');
+  collectD9Paras(); collectLoreList(); collectTimelineList(); collectTracksList(); collectChipsList();
+  collectSeasonsList(); collectCreditsList();
+  if (!data.wikiConfig) data.wikiConfig = {};
+  data.wikiConfig.lightModeDefault = getBool('wiki-lightModeDefault');
+  data.wikiConfig.showBookReader = getBool('wiki-showBookReader');
+  collectTransmissionsList();
+  collectEasterEggs();
+}
+
+/* ── NAV ── */
+function buildNavList() {
+  var el = document.getElementById('nav-list'); if (!el) return; el.innerHTML = '';
+  (data.nav || []).forEach(function(n, i) {
+    el.innerHTML += '<div class="array-item"><div class="item-title">Nav ' + (i+1) + '</div>' +
+      '<div class="item-actions"><button class="move-btn" onclick="moveNav(' + i + ',-1)">↑</button><button class="move-btn" onclick="moveNav(' + i + ',1)">↓</button><button onclick="removeNav(' + i + ')">✕</button></div>' +
+      '<div class="field-row-3">' +
+        '<div class="field"><label>Label</label><input id="nav-' + i + '-label" value="' + esc(n.label) + '"></div>' +
+        '<div class="field"><label>Href</label><input id="nav-' + i + '-href" value="' + esc(n.href) + '"></div>' +
+        '<div class="field"><label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" id="nav-' + i + '-ext" ' + (n.external ? 'checked' : '') + '> External link</label></div>' +
+      '</div></div>';
+  });
+}
+function collectNavList() {
+  data.nav = [];
+  document.querySelectorAll('#nav-list .array-item').forEach(function(_, i) {
+    data.nav.push({ label: getVal('nav-' + i + '-label'), href: getVal('nav-' + i + '-href'), external: document.getElementById('nav-' + i + '-ext') ? document.getElementById('nav-' + i + '-ext').checked : false });
+  });
+}
+function addNavItem() { collectNavList(); data.nav.push({ label: 'New Link', href: '#section', external: false }); buildNavList(); }
+function removeNav(i) { collectNavList(); data.nav.splice(i, 1); buildNavList(); }
+function moveNav(i, d) { collectNavList(); var a = data.nav; if (i+d < 0 || i+d >= a.length) return; var t = a[i]; a[i] = a[i+d]; a[i+d] = t; buildNavList(); }
+
+/* ── SYNOPSIS PARAS ── */
+function buildSynopsisParas() {
+  var el = document.getElementById('synopsis-paras-list'); if (!el) return; el.innerHTML = '';
+  ((data.synopsis && data.synopsis.paragraphs) || []).forEach(function(p, i) {
+    el.innerHTML += '<div class="array-item"><div class="item-title">Paragraph ' + (i+1) + '</div>' +
+      '<div class="item-actions"><button onclick="removeSynopsisPara(' + i + ')">✕</button></div>' +
+      '<div class="field"><label>Style</label><select id="sp-style-' + i + '"><option value="lead"' + (p.style==='lead'?' selected':'') + '>Lead</option><option value="body"' + (p.style==='body'?' selected':'') + '>Body</option></select></div>' +
+      '<div class="field"><label>Text</label><textarea id="sp-text-' + i + '">' + esc(p.text) + '</textarea></div></div>';
+  });
+}
+function collectSynopsisParas() {
+  if (!data.synopsis) data.synopsis = {};
+  data.synopsis.paragraphs = [];
+  document.querySelectorAll('[id^="sp-style-"]').forEach(function(el) {
+    var i = el.id.split('-')[2];
+    data.synopsis.paragraphs.push({ style: el.value, text: getVal('sp-text-' + i) });
+  });
+}
+function addSynopsisPara() { collectSynopsisParas(); data.synopsis.paragraphs.push({ style: 'body', text: '' }); buildSynopsisParas(); }
+function removeSynopsisPara(i) { collectSynopsisParas(); data.synopsis.paragraphs.splice(i, 1); buildSynopsisParas(); }
+
+/* ── NEWS ── */
+function buildNewsList() {
+  var el = document.getElementById('news-list'); if (!el) return; el.innerHTML = '';
+  (data.news || []).forEach(function(n, i) {
+    el.innerHTML += '<div class="array-item"><div class="item-actions"><button onclick="removeNews(' + i + ')">✕</button></div>' +
+      '<div class="field"><label>Item ' + (i+1) + '</label><input id="news-' + i + '" value="' + esc(n) + '"></div></div>';
+  });
+}
+function collectNewsList() {
+  data.news = [];
+  document.querySelectorAll('[id^="news-"]').forEach(function(el) { if (/^news-\d+$/.test(el.id)) data.news.push(el.value); });
+}
+function addNewsItem() { collectNewsList(); data.news.push(''); buildNewsList(); }
+function removeNews(i) { collectNewsList(); data.news.splice(i, 1); buildNewsList(); }
+
+/* ── PLAYLIST ── */
+function buildPlaylistList() {
+  var el = document.getElementById('playlist-list'); if (!el) return; el.innerHTML = '';
+  ((data.media && data.media.playlist) || []).forEach(function(p, i) {
+    el.innerHTML += '<div class="array-item"><div class="item-title">Item ' + (i+1) + '</div>' +
+      '<div class="item-actions"><button onclick="removePlaylist(' + i + ')">✕</button></div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>Label</label><input id="pl-' + i + '-label" value="' + esc(p.label) + '"></div>' +
+        '<div class="field url-wrap"><label>YouTube URL / ID</label><input id="pl-' + i + '-src" value="' + esc(p.src) + '"><button class="paste-btn" onclick="pasteField(\'pl-' + i + '-src\')">PASTE</button></div>' +
+      '</div></div>';
+  });
+}
+function collectPlaylistList() {
+  if (!data.media) data.media = { mainVideo: {}, playlist: [] };
+  data.media.playlist = [];
+  document.querySelectorAll('#playlist-list .array-item').forEach(function(_, i) {
+    data.media.playlist.push({ label: getVal('pl-' + i + '-label'), src: getVal('pl-' + i + '-src') });
+  });
+}
+function addPlaylistItem() { collectPlaylistList(); data.media.playlist.push({ label: '', src: '' }); buildPlaylistList(); }
+function removePlaylist(i) { collectPlaylistList(); data.media.playlist.splice(i, 1); buildPlaylistList(); }
+
+/* ── GALLERY CATS ── */
+function buildGalleryCatList() {
+  var el = document.getElementById('gcat-list'); if (!el) return; el.innerHTML = '';
+  (data.galleryCategories || []).forEach(function(c, i) {
+    el.innerHTML += '<div class="array-item"><div class="item-actions">' +
+      '<button class="move-btn" onclick="moveGalleryCat(' + i + ',-1)">↑</button><button class="move-btn" onclick="moveGalleryCat(' + i + ',1)">↓</button>' +
+      '<button onclick="removeGalleryCat(' + i + ')">✕</button></div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>Key</label><input id="gcat-' + i + '-key" value="' + esc(c.key) + '"></div>' +
+        '<div class="field"><label>Button Label</label><input id="gcat-' + i + '-label" value="' + esc(c.label) + '"></div>' +
+      '</div></div>';
+  });
+}
+function collectGalleryCatList() {
+  data.galleryCategories = [];
+  document.querySelectorAll('#gcat-list .array-item').forEach(function(_, i) {
+    data.galleryCategories.push({ key: getVal('gcat-' + i + '-key'), label: getVal('gcat-' + i + '-label') });
+  });
+}
+function addGalleryCat() { collectGalleryCatList(); data.galleryCategories.push({ key: 'new', label: 'NEW' }); buildGalleryCatList(); }
+function removeGalleryCat(i) { collectGalleryCatList(); data.galleryCategories.splice(i, 1); buildGalleryCatList(); }
+function moveGalleryCat(i, d) { collectGalleryCatList(); var a = data.galleryCategories; if (i+d<0||i+d>=a.length) return; var t=a[i];a[i]=a[i+d];a[i+d]=t; buildGalleryCatList(); }
+
+/* ── GALLERY ITEMS ── */
+function buildGalleryList() {
+  var el = document.getElementById('gallery-list'); if (!el) return; el.innerHTML = '';
+  (data.gallery || []).forEach(function(g, i) {
+    el.innerHTML += '<div class="array-item"><div class="item-title">' + esc(g.category) + ' — ' + esc(g.type) + '</div>' +
+      '<div class="item-actions">' +
+        '<button class="move-btn" onclick="moveGallery(' + i + ',-1)">↑</button><button class="move-btn" onclick="moveGallery(' + i + ',1)">↓</button>' +
+        '<button onclick="removeGallery(' + i + ')">✕</button></div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>Type</label><select id="gal-' + i + '-type"><option value="image"' + (g.type==='image'?' selected':'') + '>Image</option><option value="video"' + (g.type==='video'?' selected':'') + '>Video</option></select></div>' +
+        '<div class="field"><label>Category</label><input id="gal-' + i + '-category" value="' + esc(g.category) + '"></div>' +
+      '</div>' +
+      '<div class="field url-wrap"><label>Source Path (image/video file)</label><input id="gal-' + i + '-src" value="' + esc(g.src) + '"><button class="paste-btn" onclick="pasteField(\'gal-' + i + '-src\')">PASTE</button></div>' +
+      '<div class="field"><label>Caption (shown in lightbox)</label><input id="gal-' + i + '-caption" value="' + esc(g.caption || '') + '"></div>' +
+      '</div>';
+  });
+}
+function collectGalleryList() {
+  data.gallery = [];
+  document.querySelectorAll('#gallery-list .array-item').forEach(function(_, i) {
+    var src = getVal('gal-' + i + '-src');
+    data.gallery.push({ type: getVal('gal-' + i + '-type'), category: getVal('gal-' + i + '-category'), src: src, full: src, caption: getVal('gal-' + i + '-caption') });
+  });
+}
+function addGalleryItem() { collectGalleryList(); data.gallery.push({ type: 'image', category: 'promo', src: '', full: '', caption: '' }); buildGalleryList(); }
+function removeGallery(i) { collectGalleryList(); data.gallery.splice(i, 1); buildGalleryList(); }
+function moveGallery(i, d) { collectGalleryList(); var a = data.gallery; if (i+d<0||i+d>=a.length) return; var t=a[i];a[i]=a[i+d];a[i+d]=t; buildGalleryList(); }
+
+/* ── PERSONNEL ── */
+function buildPersonnelList() {
+  var el = document.getElementById('personnel-list'); if (!el) return; el.innerHTML = '';
+  (data.personnel || []).forEach(function(c, i) {
+    var statsHTML = (c.stats || []).map(function(s, si) {
+      return '<div class="stats-row" id="per-' + i + '-stat-row-' + si + '">' +
+        '<div class="field"><label>Label</label><input id="per-' + i + '-stat-' + si + '-l" value="' + esc(s.label) + '"></div>' +
+        '<div class="field"><label>Value</label><input id="per-' + i + '-stat-' + si + '-v" value="' + esc(s.value) + '"></div>' +
+        '<div class="field" style="min-width:90px;"><label>Redacted?</label><div class="checkbox-row"><input type="checkbox" id="per-' + i + '-stat-' + si + '-r"' + (s.redacted ? ' checked' : '') + '><label>Yes</label></div></div>' +
+        '<div style="padding-top:18px;"><button onclick="removeStat(' + i + ',' + si + ')" style="background:none;border:1px solid rgba(224,82,82,0.3);color:#e05252;font-size:10px;padding:4px 8px;border-radius:3px;cursor:pointer;">✕</button></div>' +
+        '</div>';
+    }).join('');
+    el.innerHTML += '<div class="array-item"><div class="item-title">' + esc(c.name) + '</div>' +
+      '<div class="item-actions">' +
+        '<button class="move-btn" onclick="movePer(' + i + ',-1)">↑</button><button class="move-btn" onclick="movePer(' + i + ',1)">↓</button>' +
+        '<button onclick="removePer(' + i + ')">✕</button></div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>Name</label><input id="per-' + i + '-name" value="' + esc(c.name) + '"></div>' +
+        '<div class="field"><label>Status</label><input id="per-' + i + '-status" value="' + esc(c.status) + '"></div>' +
+      '</div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>Faction</label><select id="per-' + i + '-faction" onchange="updateRankDropdown(' + i + ',this.value)"><option value="dhd"' + (c.faction==='dhd'?' selected':'') + '>DHD</option><option value="skull"' + (c.faction==='skull'?' selected':'') + '>Skullborn</option><option value="unknown"' + (c.faction==='unknown'?' selected':'') + '>Unknown</option></select></div>' +
+        '<div class="field"><label>Faction Label</label><input id="per-' + i + '-factionLabel" value="' + esc(c.factionLabel) + '"></div>' +
+      '</div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>Rank (within faction)</label>' + buildRankSelect(i, c.faction, c.rank || '') + '</div>' +
+        '<div class="field" style="display:flex;align-items:center;gap:8px;padding-top:22px;"><input type="checkbox" id="per-' + i + '-locked"' + (c.locked?' checked':'') + '><label>🔒 Locked (shows as classified in wiki)</label></div>' +
+      '<div class="field" style="display:flex;align-items:center;gap:8px;padding-top:10px;"><input type="checkbox" id="per-' + i + '-hidden"' + (c.hidden?' checked':'') + '><label>👁 Hidden (invisible in wiki, exists in code)</label></div>' +
+      '</div>' +
+      '<div class="field url-wrap"><label>Image Path</label><input id="per-' + i + '-image" value="' + esc(c.image) + '"><button class="paste-btn" onclick="pasteField(\'per-' + i + '-image\')">PASTE</button></div>' +
+      '<div class="checkbox-row" style="margin-bottom:12px;"><input type="checkbox" id="per-' + i + '-visible"' + (c.visible !== false ? ' checked' : '') + '><label>Visible on site</label></div>' +
+      '<div class="field"><label>Bio</label><textarea id="per-' + i + '-bio" style="min-height:100px;">' + esc(c.bio) + '</textarea></div>' +
+      '<div class="section-label">Stats</div>' + statsHTML +
+      '<button class="add-btn" onclick="addStat(' + i + ')">+ ADD STAT</button>' +
+      '<hr class="divider">' +
+      '<div class="checkbox-row" style="margin-bottom:8px;"><input type="checkbox" id="per-' + i + '-echo-show"' + (c.echoEntry && c.echoEntry.show ? ' checked' : '') + '><label>Show Echo sub-card</label></div>' +
+      '<div class="field"><label>Echo Text</label><textarea id="per-' + i + '-echo-text" style="min-height:100px;">' + esc((c.echoEntry && c.echoEntry.text) || '') + '</textarea></div>' +
+      '</div>';
+  });
+}
+function collectPersonnelList() {
+  data.personnel = [];
+  document.querySelectorAll('#personnel-list .array-item').forEach(function(_, i) {
+    var stats = [];
+    document.querySelectorAll('[id^="per-' + i + '-stat-"][id$="-l"]').forEach(function(el) {
+      var si = el.id.split('-')[3];
+      stats.push({ label: getVal('per-' + i + '-stat-' + si + '-l'), value: getVal('per-' + i + '-stat-' + si + '-v'), redacted: !!(document.getElementById('per-' + i + '-stat-' + si + '-r') && document.getElementById('per-' + i + '-stat-' + si + '-r').checked) });
+    });
+    var name = getVal('per-'+i+'-name');
+    data.personnel.push({ id: name.toLowerCase().replace(/\s+/g,'-'), name: name, faction: getVal('per-'+i+'-faction'), factionLabel: getVal('per-'+i+'-factionLabel'), status: getVal('per-'+i+'-status'), visible: getBool('per-'+i+'-visible'), rank: getVal('per-'+i+'-rank'), locked: getBool('per-'+i+'-locked'), hidden: getBool('per-'+i+'-hidden'), image: getVal('per-'+i+'-image'), stats: stats, bio: getVal('per-'+i+'-bio'), echoEntry: { show: getBool('per-'+i+'-echo-show'), text: getVal('per-'+i+'-echo-text') } });
+  });
+}
+function addPersonnel() { collectPersonnelList(); data.personnel.push({ id: 'new', name: 'NEW CHARACTER', faction: 'dhd', factionLabel: 'DHD', status: 'ACTIVE', visible: true, image: '', stats: [], bio: '', echoEntry: { show: false, text: '' } }); buildPersonnelList(); }
+function removePer(i) { collectPersonnelList(); data.personnel.splice(i, 1); buildPersonnelList(); }
+function movePer(i, d) { collectPersonnelList(); var a = data.personnel; if (i+d<0||i+d>=a.length) return; var t=a[i];a[i]=a[i+d];a[i+d]=t; buildPersonnelList(); }
+function addStat(ci) { collectPersonnelList(); data.personnel[ci].stats.push({ label: '', value: '', redacted: false }); buildPersonnelList(); }
+function removeStat(ci, si) { collectPersonnelList(); data.personnel[ci].stats.splice(si, 1); buildPersonnelList(); }
+
+/* ── FACTIONS ── */
+function buildFactionsList() {
+  var el = document.getElementById('factions-list'); if (!el) return; el.innerHTML = '';
+  (data.factions || []).forEach(function(f, i) {
+    var statsHTML = (f.stats || []).map(function(s, si) {
+      return '<div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:8px;align-items:end;">' +
+        '<div class="field" style="margin:0"><label>Label</label><input id="fac-' + i + '-stat-' + si + '-l" value="' + esc(s.label) + '"></div>' +
+        '<div class="field" style="margin:0"><label>Value</label><input id="fac-' + i + '-stat-' + si + '-v" value="' + esc(s.value) + '"></div>' +
+        '<button onclick="removeFactionStat(' + i + ',' + si + ')" style="background:none;border:1px solid rgba(224,82,82,0.3);color:#e05252;font-size:10px;padding:5px 8px;border-radius:3px;cursor:pointer;margin-bottom:1px;">✕</button>' +
+        '</div>';
+    }).join('');
+    el.innerHTML += '<div class="array-item"><div class="item-title">' + esc(f.name) + '</div>' +
+      '<div class="item-actions"><button onclick="removeFaction(' + i + ')">✕</button></div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>Name</label><input id="fac-' + i + '-name" value="' + esc(f.name) + '"></div>' +
+        '<div class="field"><label>Type</label><select id="fac-' + i + '-type"><option value="dhd"' + (f.type==='dhd'?' selected':'') + '>DHD</option><option value="skull"' + (f.type==='skull'?' selected':'') + '>Skullborn</option></select></div>' +
+      '</div>' +
+      '<div class="field"><label>Subtitle</label><input id="fac-' + i + '-subtitle" value="' + esc(f.subtitle) + '"></div>' +
+      '<div class="field"><label>Body</label><textarea id="fac-' + i + '-body">' + esc(f.body) + '</textarea></div>' +
+      '<div class="section-label">Stat Rows</div>' + statsHTML +
+      '<button class="add-btn" onclick="addFactionStat(' + i + ')">+ ADD STAT</button></div>';
+  });
+}
+function collectFactionsList() {
+  data.factions = [];
+  document.querySelectorAll('#factions-list .array-item').forEach(function(_, i) {
+    var stats = [];
+    document.querySelectorAll('[id^="fac-' + i + '-stat-"][id$="-l"]').forEach(function(el) {
+      var si = el.id.split('-')[3];
+      stats.push({ label: getVal('fac-' + i + '-stat-' + si + '-l'), value: getVal('fac-' + i + '-stat-' + si + '-v') });
+    });
+    data.factions.push({ id: getVal('fac-' + i + '-name').toLowerCase(), name: getVal('fac-' + i + '-name'), subtitle: getVal('fac-' + i + '-subtitle'), type: getVal('fac-' + i + '-type'), body: getVal('fac-' + i + '-body'), stats: stats });
+  });
+}
+function addFaction() { collectFactionsList(); data.factions.push({ id: 'new', name: 'NEW FACTION', subtitle: '', type: 'dhd', body: '', stats: [] }); buildFactionsList(); }
+function removeFaction(i) { collectFactionsList(); data.factions.splice(i, 1); buildFactionsList(); }
+function addFactionStat(i) { collectFactionsList(); data.factions[i].stats.push({ label: '', value: '' }); buildFactionsList(); }
+function removeFactionStat(fi, si) { collectFactionsList(); data.factions[fi].stats.splice(si, 1); buildFactionsList(); }
+
+/* ── D9 PARAS ── */
+function buildD9Paras() {
+  var el = document.getElementById('d9-paras-list'); if (!el) return; el.innerHTML = '';
+  ((data.directive9 && data.directive9.paragraphs) || []).forEach(function(p, i) {
+    el.innerHTML += '<div class="array-item"><div class="item-actions"><button onclick="removeD9Para(' + i + ')">✕</button></div>' +
+      '<div class="field"><label>Paragraph ' + (i+1) + '</label><textarea id="d9-para-' + i + '">' + esc(p) + '</textarea></div></div>';
+  });
+}
+function collectD9Paras() { if (!data.directive9) data.directive9 = {}; data.directive9.paragraphs = []; document.querySelectorAll('[id^="d9-para-"]').forEach(function(el) { data.directive9.paragraphs.push(el.value); }); }
+function addD9Para() { collectD9Paras(); data.directive9.paragraphs.push(''); buildD9Paras(); }
+function removeD9Para(i) { collectD9Paras(); data.directive9.paragraphs.splice(i, 1); buildD9Paras(); }
+
+/* ── LORE ── */
+function buildLoreList() {
+  var el = document.getElementById('lore-list-admin'); if (!el) return; el.innerHTML = '';
+  (data.lore || []).forEach(function(e, i) {
+    el.innerHTML += '<div class="array-item"><div class="item-title">' + esc(e.term) + '</div>' +
+      '<div class="item-actions"><button class="move-btn" onclick="moveLore(' + i + ',-1)">↑</button><button class="move-btn" onclick="moveLore(' + i + ',1)">↓</button><button onclick="removeLore(' + i + ')">✕</button></div>' +
+      '<div class="field-row-3">' +
+        '<div class="field"><label>Term</label><input id="lore-' + i + '-term" value="' + esc(e.term) + '"></div>' +
+        '<div class="field" style="display:flex;align-items:center;gap:8px;padding-top:20px;"><input type="checkbox" id="lore-' + i + '-cl"' + (e.classified ? ' checked' : '') + '><label>Classified</label></div>' +
+        '<div class="field" style="display:flex;align-items:center;gap:8px;padding-top:20px;"><input type="checkbox" id="lore-' + i + '-locked"' + ((e.locked||e.classified) ? ' checked' : '') + '><label>🔒 Locked in wiki</label></div>' +
+        '<div class="field" style="display:flex;align-items:center;gap:8px;padding-top:10px;"><input type="checkbox" id="lore-' + i + '-hidden"' + (e.hidden?' checked':'') + '><label>👁 Hidden (invisible)</label></div>' +
+      '</div>' +
+      '<div class="field"><label>Body</label><textarea id="lore-' + i + '-body">' + esc(e.body) + '</textarea></div></div>';
+  });
+}
+function collectLoreList() {
+  data.lore = [];
+  document.querySelectorAll('#lore-list-admin .array-item').forEach(function(_, i) {
+    data.lore.push({ id: getVal('lore-'+i+'-term').toLowerCase().replace(/\s+/g,'-'), term: getVal('lore-'+i+'-term'), classified: !!(document.getElementById('lore-'+i+'-cl')&&document.getElementById('lore-'+i+'-cl').checked), locked: !!(document.getElementById('lore-'+i+'-locked')&&document.getElementById('lore-'+i+'-locked').checked), hidden: getBool('lore-'+i+'-hidden'), body: getVal('lore-'+i+'-body') });
+  });
+}
+function addLoreEntry() { collectLoreList(); data.lore.push({ id: 'new', term: 'NEW ENTRY', classified: false, body: '' }); buildLoreList(); }
+function removeLore(i) { collectLoreList(); data.lore.splice(i, 1); buildLoreList(); }
+function moveLore(i, d) { collectLoreList(); var a = data.lore; if (i+d<0||i+d>=a.length) return; var t=a[i];a[i]=a[i+d];a[i+d]=t; buildLoreList(); }
+
+/* ── TIMELINE ── */
+function buildTimelineList() {
+  var el = document.getElementById('timeline-list'); if (!el) return; el.innerHTML = '';
+  (data.timeline || []).forEach(function(e, i) {
+    el.innerHTML += '<div class="array-item"><div class="item-title">' + esc(e.year) + ' — ' + esc(e.title) + '</div>' +
+      '<div class="item-actions"><button class="move-btn" onclick="moveTL(' + i + ',-1)">↑</button><button class="move-btn" onclick="moveTL(' + i + ',1)">↓</button><button onclick="removeTL(' + i + ')">✕</button></div>' +
+      '<div class="field-row"><div class="field"><label>Year</label><input id="tl-' + i + '-year" value="' + esc(e.year) + '"></div><div class="field"><label>Title</label><input id="tl-' + i + '-title" value="' + esc(e.title) + '"></div></div>' +
+      '<div class="field"><label>Body</label><textarea id="tl-' + i + '-body">' + esc(e.body) + '</textarea></div>' +
+      '<div class="field-row">' +
+        '<div class="checkbox-row"><input type="checkbox" id="tl-' + i + '-cl"' + (e.classified ? ' checked' : '') + '><label>Classified</label></div>' +
+        '<div class="checkbox-row"><input type="checkbox" id="tl-' + i + '-locked"' + ((e.locked||e.classified) ? ' checked' : '') + '><label>🔒 Locked</label></div>' +
+        '<div class="checkbox-row"><input type="checkbox" id="tl-' + i + '-hidden"' + (e.hidden ? ' checked' : '') + '><label>👁 Hidden</label></div>' +
+      '</div></div>';
+  });
+}
+function collectTimelineList() {
+  data.timeline = [];
+  document.querySelectorAll('#timeline-list .array-item').forEach(function(_, i) {
+    data.timeline.push({ year: getVal('tl-'+i+'-year'), title: getVal('tl-'+i+'-title'), body: getVal('tl-'+i+'-body'), classified: !!(document.getElementById('tl-'+i+'-cl')&&document.getElementById('tl-'+i+'-cl').checked), locked: !!(document.getElementById('tl-'+i+'-locked')&&document.getElementById('tl-'+i+'-locked').checked), hidden: getBool('tl-'+i+'-hidden') });
+  });
+}
+function addTimelineEntry() { collectTimelineList(); data.timeline.push({ year: 'YEAR ??', title: 'NEW ENTRY', body: '', classified: false }); buildTimelineList(); }
+function removeTL(i) { collectTimelineList(); data.timeline.splice(i, 1); buildTimelineList(); }
+function moveTL(i, d) { collectTimelineList(); var a = data.timeline; if (i+d<0||i+d>=a.length) return; var t=a[i];a[i]=a[i+d];a[i+d]=t; buildTimelineList(); }
+
+/* ── AUDIO ── */
+function buildTracksList() {
+  var el = document.getElementById('tracks-list'); if (!el) return; el.innerHTML = '';
+  ((data.audio && data.audio.tracks) || []).forEach(function(t, i) {
+    el.innerHTML += '<div class="array-item"><div class="item-actions"><button onclick="removeTrack(' + i + ')">✕</button></div>' +
+      '<div class="field-row"><div class="field"><label>Title</label><input id="trk-' + i + '-title" value="' + esc(t.title) + '"></div><div class="field"><label>Subtitle</label><input id="trk-' + i + '-subtitle" value="' + esc(t.subtitle) + '"></div></div>' +
+      '<div class="field url-wrap"><label>Audio Src</label><input id="trk-' + i + '-src" value="' + esc(t.src) + '"><button class="paste-btn" onclick="pasteField(\'trk-' + i + '-src\')">PASTE</button></div></div>';
+  });
+}
+function collectTracksList() { if (!data.audio) data.audio = { tracks: [], voiceChips: [] }; data.audio.tracks = []; document.querySelectorAll('#tracks-list .array-item').forEach(function(_, i) { data.audio.tracks.push({ title: getVal('trk-' + i + '-title'), subtitle: getVal('trk-' + i + '-subtitle'), src: getVal('trk-' + i + '-src') }); }); }
+function addTrack() { collectTracksList(); data.audio.tracks.push({ title: '', subtitle: '', src: '' }); buildTracksList(); }
+function removeTrack(i) { collectTracksList(); data.audio.tracks.splice(i, 1); buildTracksList(); }
+
+function buildChipsList() {
+  var el = document.getElementById('chips-list'); if (!el) return; el.innerHTML = '';
+  ((data.audio && data.audio.voiceChips) || []).forEach(function(c, i) {
+    el.innerHTML += '<div class="array-item"><div class="item-actions"><button onclick="removeChip(' + i + ')">✕</button></div>' +
+      '<div class="field-row"><div class="field"><label>Label</label><input id="chip-' + i + '-label" value="' + esc(c.label) + '"></div>' +
+      '<div class="field" style="display:flex;align-items:center;gap:8px;padding-top:20px;"><input type="checkbox" id="chip-' + i + '-locked"' + (c.locked ? ' checked' : '') + '><label>Locked</label></div></div></div>';
+  });
+}
+function collectChipsList() { if (!data.audio) data.audio = { tracks: [], voiceChips: [] }; data.audio.voiceChips = []; document.querySelectorAll('#chips-list .array-item').forEach(function(_, i) { data.audio.voiceChips.push({ label: getVal('chip-' + i + '-label'), locked: !!(document.getElementById('chip-' + i + '-locked') && document.getElementById('chip-' + i + '-locked').checked) }); }); }
+function addChip() { collectChipsList(); data.audio.voiceChips.push({ label: '', locked: false }); buildChipsList(); }
+function removeChip(i) { collectChipsList(); data.audio.voiceChips.splice(i, 1); buildChipsList(); }
+
+/* ── EPISODES ── */
+function buildSeasonsList() {
+  var el = document.getElementById('seasons-list'); if (!el) return; el.innerHTML = '';
+  ((data.episodes && data.episodes.seasons) || []).forEach(function(s, si) {
+    var epsHTML = (s.episodes || []).map(function(ep, ei) {
+      return '<div class="array-item" style="border-left-color:#333;margin-left:16px;">' +
+        '<div class="item-title">S' + s.season + ' E' + (ei+1) + ': ' + esc(ep.title) + '</div>' +
+        '<div class="item-actions"><button onclick="removeEp(' + si + ',' + ei + ')">✕</button></div>' +
+        '<div class="field-row"><div class="field"><label>YouTube ID or URL</label><input id="ep-' + si + '-' + ei + '-yt" value="' + esc(ep.yt) + '"></div><div class="field"><label>Duration</label><input id="ep-' + si + '-' + ei + '-time" value="' + esc(ep.time) + '"></div></div>' +
+        '<div class="field"><label>Title</label><input id="ep-' + si + '-' + ei + '-title" value="' + esc(ep.title) + '"></div>' +
+        '<div class="field url-wrap"><label>Book PDF Path</label><input id="ep-' + si + '-' + ei + '-book" value="' + esc(ep.book) + '"><button class="paste-btn" onclick="pasteField(\'ep-' + si + '-' + ei + '-book\')">PASTE</button></div>' +
+        '<div class="checkbox-row" style="margin-bottom:10px;"><input type="checkbox" id="ep-' + si + '-' + ei + '-cs"' + (ep.comingSoon ? ' checked' : '') + '><label>Coming Soon (locked state)</label></div>' +
+        '<div class="field"><label>Description</label><textarea id="ep-' + si + '-' + ei + '-desc" style="min-height:100px;">' + esc(ep.desc) + '</textarea></div></div>';
+    }).join('');
+    el.innerHTML += '<div class="array-item"><div class="item-title">Season ' + s.season + '</div>' +
+      '<div class="item-actions"><button onclick="removeSeason(' + si + ')">✕ Remove Season</button></div>' +
+      '<div class="field"><label>Season Number</label><input id="season-' + si + '-num" type="number" value="' + s.season + '"></div>' +
+      '<hr class="divider">' + epsHTML +
+      '<button class="add-btn" onclick="addEp(' + si + ')">+ ADD EPISODE</button></div>';
+  });
+}
+function collectSeasonsList() {
+  if (!data.episodes) data.episodes = { seasons: [] };
+  data.episodes.seasons = [];
+  document.querySelectorAll('#seasons-list > .array-item').forEach(function(_, si) {
+    var eps = [];
+    document.querySelectorAll('[id^="ep-' + si + '-"][id$="-yt"]').forEach(function(el) {
+      var ei = el.id.split('-')[2];
+      eps.push({ yt: getVal('ep-' + si + '-' + ei + '-yt'), title: getVal('ep-' + si + '-' + ei + '-title'), time: getVal('ep-' + si + '-' + ei + '-time'), book: getVal('ep-' + si + '-' + ei + '-book'), comingSoon: !!(document.getElementById('ep-' + si + '-' + ei + '-cs') && document.getElementById('ep-' + si + '-' + ei + '-cs').checked), desc: getVal('ep-' + si + '-' + ei + '-desc') });
+    });
+    data.episodes.seasons.push({ season: parseInt(getVal('season-' + si + '-num')) || si + 1, episodes: eps });
+  });
+}
+function addSeason() { collectSeasonsList(); data.episodes.seasons.push({ season: data.episodes.seasons.length + 1, episodes: [] }); buildSeasonsList(); }
+function removeSeason(i) { collectSeasonsList(); data.episodes.seasons.splice(i, 1); buildSeasonsList(); }
+function addEp(si) { collectSeasonsList(); data.episodes.seasons[si].episodes.push({ yt: '', title: 'NEW EPISODE', time: '00:00', book: '', comingSoon: false, desc: '' }); buildSeasonsList(); }
+function removeEp(si, ei) { collectSeasonsList(); data.episodes.seasons[si].episodes.splice(ei, 1); buildSeasonsList(); }
+
+/* ── CREDITS ── */
+function buildCreditsList() {
+  var el = document.getElementById('credits-list'); if (!el) return; el.innerHTML = '';
+  (data.credits || []).forEach(function(c, i) {
+    el.innerHTML += '<div class="array-item"><div class="item-actions"><button class="move-btn" onclick="moveCred(' + i + ',-1)">↑</button><button class="move-btn" onclick="moveCred(' + i + ',1)">↓</button><button onclick="removeCred(' + i + ')">✕</button></div>' +
+      '<div class="field-row"><div class="field"><label>Role</label><input id="cred-' + i + '-role" value="' + esc(c.role) + '"></div><div class="field"><label>Name</label><input id="cred-' + i + '-name" value="' + esc(c.name) + '"></div></div></div>';
+  });
+}
+function collectCreditsList() { data.credits = []; document.querySelectorAll('#credits-list .array-item').forEach(function(_, i) { data.credits.push({ role: getVal('cred-' + i + '-role'), name: getVal('cred-' + i + '-name') }); }); }
+function addCredit() { collectCreditsList(); data.credits.push({ role: '', name: '' }); buildCreditsList(); }
+function removeCred(i) { collectCreditsList(); data.credits.splice(i, 1); buildCreditsList(); }
+function moveCred(i, d) { collectCreditsList(); var a = data.credits; if (i+d<0||i+d>=a.length) return; var t=a[i];a[i]=a[i+d];a[i+d]=t; buildCreditsList(); }
+
+/* ── WIKI CONFIG ── */
+function buildTransmissionsList() {
+  var el = document.getElementById('transmissions-list'); if (!el) return; el.innerHTML = '';
+  ((data.wikiConfig && data.wikiConfig.interceptedTransmissions) || []).forEach(function(t, i) {
+    el.innerHTML += '<div class="array-item"><div class="item-actions"><button onclick="removeTransmission(' + i + ')">✕</button></div>' +
+      '<div class="field"><label>Line ' + (i+1) + '</label><input id="tx-' + i + '" value="' + esc(t) + '"></div></div>';
+  });
+}
+function collectTransmissionsList() {
+  if (!data.wikiConfig) data.wikiConfig = {};
+  data.wikiConfig.interceptedTransmissions = [];
+  document.querySelectorAll('[id^="tx-"]').forEach(function(el) { if (/^tx-\d+$/.test(el.id)) data.wikiConfig.interceptedTransmissions.push(el.value); });
+}
+function addTransmission() { collectTransmissionsList(); if (!data.wikiConfig.interceptedTransmissions) data.wikiConfig.interceptedTransmissions = []; data.wikiConfig.interceptedTransmissions.push(''); buildTransmissionsList(); }
+function removeTransmission(i) { collectTransmissionsList(); data.wikiConfig.interceptedTransmissions.splice(i, 1); buildTransmissionsList(); }
+
+
+/* ── EASTER EGGS ── */
+function buildEasterEggsList() {
+  var el = document.getElementById('easter-eggs-list');
+  if (!el) return;
+  el.innerHTML = '';
+  // If data has no eggs but SITE does, seed from SITE automatically
+  if ((!data.easterEggs || data.easterEggs.length === 0) && SITE.easterEggs && SITE.easterEggs.length > 0) {
+    data.easterEggs = JSON.parse(JSON.stringify(SITE.easterEggs));
+  }
+  if (!data.easterEggs || data.easterEggs.length === 0) {
+    el.innerHTML = '<div class="info-bar">No easter eggs defined. Click "+ ADD EASTER EGG" to create one, or click the button below to load the default eggs from content.js.<br><br><button class="btn primary" onclick="seedEasterEggs()" style="margin-top:8px;">Load defaults from content.js</button></div>';
+    return;
+  }
+  (data.easterEggs || []).forEach(function(egg, i) {
+    el.innerHTML += '<div class="array-item">' +
+      '<div class="item-title">EGG ' + (i+1) + (egg.name ? ': ' + esc(egg.name) : '') + '</div>' +
+      '<div class="item-actions">' +
+        '<button class="move-btn" onclick="moveEgg(' + i + ',-1)">↑</button>' +
+        '<button class="move-btn" onclick="moveEgg(' + i + ',1)">↓</button>' +
+        '<button onclick="removeEgg(' + i + ')">✕</button>' +
+      '</div>' +
+      '<div class="checkbox-row" style="margin-bottom:14px;"><input type="checkbox" id="egg-' + i + '-enabled"' + (egg.enabled ? ' checked' : '') + '><label>Enabled</label></div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>Name / ID</label><input id="egg-' + i + '-name" value="' + esc(egg.name || '') + '" placeholder="e.g. chasing-ghosts-code"></div>' +
+        '<div class="field"><label>Trigger Type</label>' +
+          '<select id="egg-' + i + '-triggerType">' +
+            '<option value="code"' + (egg.triggerType==='code'?' selected':'') + '>Code input (Directive-9 panel)</option>' +
+            '<option value="keysequence"' + (egg.triggerType==='keysequence'?' selected':'') + '>Keyboard sequence (type anywhere)</option>' +
+            '<option value="clickcount"' + (egg.triggerType==='clickcount'?' selected':'') + '>Click count (on element)</option>' +
+            '<option value="hover"' + (egg.triggerType==='hover'?' selected':'') + '>Hover duration (on element)</option>' +
+            '<option value="konami"' + (egg.triggerType==='konami'?' selected':'') + '>Konami code</option>' +
+          '</select>' +
+        '</div>' +
+      '</div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>Trigger Value (code/sequence/selector)</label><input id="egg-' + i + '-triggerValue" value="' + esc(egg.triggerValue || '') + '" placeholder="e.g. CHASNG or #map-wrapper or 7"></div>' +
+        '<div class="field"><label>Response Type</label>' +
+          '<select id="egg-' + i + '-responseType">' +
+            '<option value="text"' + (egg.responseType==='text'?' selected':'') + '>Text reveal (in Directive-9 style)</option>' +
+            '<option value="glitch"' + (egg.responseType==='glitch'?' selected':'') + '>Glitch + text</option>' +
+            '<option value="newsflash"' + (egg.responseType==='newsflash'?' selected':'') + '>News ticker flash</option>' +
+            '<option value="redirect"' + (egg.responseType==='redirect'?' selected':'') + '>Redirect to URL</option>' +
+            '<option value="console"' + (egg.responseType==='console'?' selected':'') + '>Console message (dev Easter egg)</option>' +
+          '</select>' +
+        '</div>' +
+      '</div>' +
+      '<div class="field"><label>Response Content (text, URL, or console message)</label>' +
+        '<textarea id="egg-' + i + '-responseContent" style="min-height:80px;">' + esc(egg.responseContent || '') + '</textarea>' +
+      '</div>' +
+      '<div class="field"><label>Hint (optional — shown in news ticker when triggered)</label>' +
+        '<input id="egg-' + i + '-hint" value="' + esc(egg.hint || '') + '" placeholder="e.g. SIGNAL ACQUIRED // ARCHIVE UNLOCKED">' +
+      '</div>' +
+    '</div>';
+  });
+}
+
+function collectEasterEggs() {
+  data.easterEggs = [];
+  document.querySelectorAll('#easter-eggs-list .array-item').forEach(function(_, i) {
+    data.easterEggs.push({
+      enabled: getBool('egg-' + i + '-enabled'),
+      name: getVal('egg-' + i + '-name'),
+      triggerType: getVal('egg-' + i + '-triggerType'),
+      triggerValue: getVal('egg-' + i + '-triggerValue'),
+      responseType: getVal('egg-' + i + '-responseType'),
+      responseContent: getVal('egg-' + i + '-responseContent'),
+      hint: getVal('egg-' + i + '-hint')
+    });
+  });
+}
+
+function seedEasterEggs() {
+  data.easterEggs = JSON.parse(JSON.stringify(SITE.easterEggs || []));
+  buildEasterEggsList();
+  markUnsaved();
+}
+function addEasterEgg() {
+  collectEasterEggs();
+  if (!data.easterEggs) data.easterEggs = [];
+  data.easterEggs.push({
+    enabled: false,
+    name: '',
+    triggerType: 'code',
+    triggerValue: '',
+    responseType: 'text',
+    responseContent: '',
+    hint: ''
+  });
+  buildEasterEggsList();
+}
+
+function removeEgg(i) { collectEasterEggs(); data.easterEggs.splice(i, 1); buildEasterEggsList(); }
+function moveEgg(i, d) {
+  collectEasterEggs();
+  var a = data.easterEggs;
+  if (i+d < 0 || i+d >= a.length) return;
+  var t = a[i]; a[i] = a[i+d]; a[i+d] = t;
+  buildEasterEggsList();
+}
+
+/* ── GITHUB UPLOADER ── */
+function loadGHConfig() {
+  var cfg = JSON.parse(localStorage.getItem('hw_gh_config') || '{}');
+  if (cfg.user) setVal('gh-user', cfg.user);
+  if (cfg.repo) setVal('gh-repo', cfg.repo);
+  if (cfg.token) setVal('gh-token', cfg.token);
+  if (cfg.path) setVal('gh-path', cfg.path);
+}
+function saveGHConfig() {
+  localStorage.setItem('hw_gh_config', JSON.stringify({ user: getVal('gh-user'), repo: getVal('gh-repo'), token: getVal('gh-token'), path: getVal('gh-path') }));
+  alert('GitHub config saved.');
+}
+var zone = document.getElementById('upload-zone');
+zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('drag-over'); });
+zone.addEventListener('dragleave', function() { zone.classList.remove('drag-over'); });
+zone.addEventListener('drop', function(e) { e.preventDefault(); zone.classList.remove('drag-over'); handleFileSelect(e.dataTransfer.files[0]); });
+function handleFileSelect(file) {
+  if (!file) return;
+  var cfg = JSON.parse(localStorage.getItem('hw_gh_config') || '{}');
+  if (!cfg.user || !cfg.repo || !cfg.token) { alert('Save GitHub config first.'); return; }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var b64 = e.target.result.split(',')[1];
+    var fname = file.name.replace(/\s+/g, '-');
+    var uploadPath = (getVal('gh-path') || 'assets/images') + '/' + fname;
+    var url = 'https://api.github.com/repos/' + cfg.user + '/' + cfg.repo + '/contents/' + uploadPath;
+    var headers = { 'Authorization': 'token ' + cfg.token, 'Content-Type': 'application/json' };
+    fetch(url, { headers: headers }).then(function(r) { return r.ok ? r.json() : null; }).then(function(existing) {
+      var body = { message: 'Upload ' + fname, content: b64 };
+      if (existing && existing.sha) body.sha = existing.sha;
+      return fetch(url, { method: 'PUT', headers: headers, body: JSON.stringify(body) });
+    }).then(function(r) { return r.json(); }).then(function(result) {
+      if (result.content) {
+        document.getElementById('upload-path').textContent = uploadPath;
+        document.getElementById('upload-result').style.display = 'block';
+      } else { alert('Upload failed: ' + (result.message || 'Unknown error')); }
+    }).catch(function(err) { alert('Upload error: ' + err.message); });
+  };
+  reader.readAsDataURL(file);
+}
+function copyUploadPath() { navigator.clipboard.writeText(document.getElementById('upload-path').textContent).then(function() { alert('Copied!'); }).catch(function() { alert('Could not copy'); }); }
+
+/* ── GENERATE content.js ── */
+function generateContentJS() { collectAll(); return 'const SITE = ' + JSON.stringify(data, null, 2) + ';\n'; }
+function downloadContentJS() {
+  var blob = new Blob([generateContentJS()], { type: 'text/javascript' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'content.js'; a.click();
+  markSaved();
+}
+function previewContentJS() {
+  var out = document.getElementById('preview-output');
+  out.value = generateContentJS(); out.style.display = 'block';
+}
+
+/* ── SAVE / LOAD ── */
+function saveToStorage() { collectAll(); localStorage.setItem('hw_admin_draft', JSON.stringify(data)); markSaved(); alert('Draft saved.'); }
+function loadFromStorage() { var s = localStorage.getItem('hw_admin_draft'); if (s) { try { data = JSON.parse(s); populateAll(); buildSearchIndex(); alert('Reloaded.'); } catch(e) { alert('Could not load draft.'); } } else { alert('No draft found.'); } }
+function exportBackup() { collectAll(); var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }); var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'hellawake-backup.json'; a.click(); }
+function importBackup(input) { var file = input.files[0]; if (!file) return; var reader = new FileReader(); reader.onload = function(e) { try { data = JSON.parse(e.target.result); populateAll(); buildSearchIndex(); markUnsaved(); alert('Backup imported.'); } catch(e) { alert('Invalid JSON file.'); } }; reader.readAsText(file); }
+
+/* ── SETTINGS ── */
+function changePassword() {
+  var p1 = document.getElementById('new-pw-1').value;
+  var p2 = document.getElementById('new-pw-2').value;
+  if (!p1) { alert('Enter a password.'); return; }
+  if (p1 !== p2) { alert('Passwords do not match.'); return; }
+  localStorage.setItem('hw_admin_pw', p1);
+  document.getElementById('pw-change-msg').style.display = 'block';
+  document.getElementById('new-pw-1').value = '';
+  document.getElementById('new-pw-2').value = '';
+}
+function clearDraft() { if (confirm('Clear saved draft?')) { localStorage.removeItem('hw_admin_draft'); alert('Draft cleared.'); } }
+function resetToSITE() {
+  if (confirm('Reset ALL data to SITE defaults? This clears your draft and reloads everything from content.js.')) {
+    localStorage.removeItem('hw_admin_draft');
+    data = JSON.parse(JSON.stringify(SITE));
+    populateAll();
+    buildSearchIndex();
+    markUnsaved();
+    alert('Reset to SITE defaults. Click Save draft or Download content.js to keep changes.');
+  }
+}
+function resetWatched() { if (confirm('Reset watched episodes?')) { localStorage.removeItem('hw_watched'); alert('Reset.'); } }
+</script>
+</body>
+</html>

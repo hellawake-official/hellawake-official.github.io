@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faction — HELLAWAKE WIKI</title>
+<link rel="stylesheet" href="wiki.css">
+<script>(function(){var t=localStorage.getItem('hw_wiki_theme');if(t==='light'){document.documentElement.classList.add('wiki-light');var s=document.documentElement.style;s.setProperty('--bg','#ffffff');s.setProperty('--surface','#f7f7f5');s.setProperty('--surface2','#efefec');s.setProperty('--text','#1a1a1a');s.setProperty('--muted','#6b6b6b');s.setProperty('--border','rgba(0,0,0,0.09)');}})();</script>
+</head>
+<body>
+<div id="reading-progress"></div>
+<header class="wiki-topbar">
+  <img src="" class="wiki-topbar-logo wiki-logo-img" alt="HELLAWAKE">
+  <span class="wiki-topbar-title">WIKI</span>
+  <nav class="wiki-topbar-nav" id="wiki-topbar-nav"></nav>
+  <div class="wiki-topbar-actions">
+    <button class="wiki-theme-btn" id="wiki-theme-btn">LIGHT MODE</button>
+    <a href="../index.html" class="wiki-topbar-back">← MAIN SITE</a>
+  </div>
+</header>
+  <div class="wiki-search-bar" id="wiki-search-bar">
+    <span class="wiki-search-icon">⌕</span>
+    <input type="text" class="wiki-search-input" id="wiki-search-input" placeholder="SEARCH ARCHIVE — characters, lore, timeline, episodes..." autocomplete="off" spellcheck="false">
+    <div class="wiki-search-results" id="wiki-search-results" style="display:none;"></div>
+  </div>
+<div class="wiki-layout">
+  <aside class="wiki-sidebar" id="wiki-sidebar"></aside>
+  <div class="wiki-main">
+    <div class="wiki-page-header">
+      <div class="wiki-breadcrumb">
+        <a href="index.html">Wiki</a><span>/</span>
+        <a href="factions.html">Factions</a><span>/</span>
+        <span id="faction-breadcrumb-name">—</span>
+      </div>
+    </div>
+    <div id="faction-detail"></div>
+  </div>
+</div>
+<script src="../content.js"></script><script src="wiki.js"></script>
+<script>
+wikiApplyBranding();
+initWikiEasterEggs();
+buildWikiSearch();
+initThemeToggle();
+initReadingProgress();
+buildWikiTopbar('factions');
+buildWikiSidebar('factions');
+buildFactionDetail();
+</script>
+</body>
+</html>

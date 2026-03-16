@@ -1,0 +1,429 @@
+const SITE = {
+
+  meta: {
+    title: "HELLAWAKE | OFFICIAL ARCHIVE",
+    ogTitle: "HELLAWAKE — Official Archive",
+    ogDescription: "He was taken. They made him into something. Now he's out. // Action. Brotherhood. A war that was never what it looked like.",
+    ogImage: "images/Hellawake S1 Commercial Poster 1.png",
+    favicon: ""
+  },
+
+  status: {
+    projectStatus: "IN PRODUCTION",
+    episodesReleased: "01",
+    episodesTotal: "??"
+  },
+
+  branding: {
+    logoImage: "images/Hellawake S1 Logo.png",
+    heroBackground: "images/test bg.png",
+    heroBackgroundOpacity: "0.15",
+    heroLogoWidth: "55%",
+    accentColor: "#ff3c00",
+    loaderTagline: "He was taken. They made him into something.",
+    enterBtnText: "Enter Experience",
+    enterBtnLink: "episodes.html",
+    newsBarLabel: "UPLINK"
+  },
+
+  announcement: {
+    enabled: false,
+    text: "EPISODE 02 DROPPING SOON — STAY AWAKE",
+    style: "alert"
+  },
+
+  countdown: {
+    enabled: false,
+    label: "NEXT EPISODE DROPS IN",
+    targetDate: "2025-12-01T00:00:00"
+  },
+
+  socials: {
+    youtube: "https://youtube.com/@hellawake",
+    discord: "",
+    instagram: "",
+    twitter: ""
+  },
+
+  nav: [
+    { label: "Home",    sub: "ホーム",   href: "#hero"     },
+    { label: "Series",  sub: "シリーズ", href: "#synopsis" },
+    { label: "Media",   sub: "メディア", href: "#media"    },
+    { label: "Renders", sub: "レンダー", href: "#renders"  },
+    { label: "Wiki",    sub: "ウィキ",   href: "#wiki-gateway" },
+    { label: "Watch",   sub: "視聴",     href: "#watch"        },
+    { label: "Audio",   sub: "音声",     href: "#audio"    },
+    { label: "Credits", sub: "制作",     href: "#credits"  }
+  ],
+
+  sectionHeadings: {
+    synopsis:    "The Series",
+    media:       "Media Content",
+    renders:     "Visual Assets",
+    wikiGateway: "WIKI",
+    watch: "WATCH",
+    audio:       "Audio Archives",
+    credits:     "Staff Archive"
+  },
+
+  synopsis: {
+    tags: ["ACTION", "DRAMA", "SEASON 1 — ONGOING"],
+    poster: "images/Hellawake S1 Commercial Poster 1.png",
+    posterTag: "SEASON 1 — IN PRODUCTION",
+    paragraphs: [
+      { style: "lead", text: "Seven years ago, Liam Hill was taken. What they did to him in that facility turned him into something the Skullborns — the most dangerous faction in the known world — have been hunting ever since." },
+      { style: "body", text: "Now he's out. Alone. Moving through a world that has changed without him, carrying a second self he calls Echo — cold, ruthless, and not entirely him — that surfaces when he has no other choice." },
+      { style: "body", text: "On one side: the Skullborns, led by the feared Ravok Drien, whose reach extends further than anyone has yet understood. On the other: the Dawn Horizon Division, a covert organisation that has been fighting this war longer than most of its members have been alive." },
+      { style: "body", text: "And somewhere in the middle — a war that was never what it looked like." }
+    ]
+  },
+
+  media: {
+    mainVideo: { type: "youtube", src: "VeZK6KsbkXA", label: "PLAY ARCHIVE_01_TRAILER" },
+    playlist: [
+      { label: "S1 E1 — CHASING GHOSTS", src: "VeZK6KsbkXA" },
+      { label: "TECHNICAL_DEMO_01", src: "" },
+      { label: "SOUND_SCAPES_V1", src: "" }
+    ]
+  },
+
+  galleryCategories: [
+    { key: "all",     label: "ALL" },
+    { key: "promo",   label: "PROMOTIONAL" },
+    { key: "bts",     label: "BTS" },
+    { key: "spoiler", label: "SPOILER" },
+    { key: "char",    label: "CHARACTER" }
+  ],
+
+  gallery: [
+    { type: "image", category: "promo",   src: "images/Hellawake Promotional Render 3.png",   caption: "PROMOTIONAL RENDER — S1" },
+    { type: "video", category: "spoiler", src: "images/ep2_prologue_car_scene_test.mp4",       caption: "EP2 PROLOGUE — CAR SCENE TEST" },
+    { type: "image", category: "promo",   src: "images/Hellawake_S1_Commercial_Poster_2.png", caption: "S1 COMMERCIAL POSTER" },
+    { type: "image", category: "bts",     src: "images/railway-map-bts-2.png",                caption: "RAILWAY MAP — BTS" },
+    { type: "image", category: "bts",     src: "images/railway-map-bts-1.png",                caption: "RAILWAY MAP — BTS" },
+    { type: "video", category: "bts",     src: "images/Hellawake-audio-bts.mp4",              caption: "AUDIO SESSION — BTS" },
+    { type: "image", category: "promo",   src: "images/Hellawake S1 Commercial Poster 1.png", caption: "S1 COMMERCIAL POSTER" },
+    { type: "image", category: "spoiler", src: "images/spoiler_chasingghosts_old.png",         caption: "CHASING GHOSTS — EARLY RENDER" }
+  ],
+
+  personnel: [
+    {
+      id: "liam-hill", name: "LIAM HILL", faction: "unknown", factionLabel: "UNAFFILIATED",
+      status: "FUGITIVE", visible: true,
+      rank: "",
+      locked: false, hidden: false, image: "",
+      stats: [
+        { label: "ID",             value: "HWK-SUBJECT-07",    redacted: false },
+        { label: "Age",            value: "[CLASSIFIED]",       redacted: false },
+        { label: "Origin",         value: "REDACTED",           redacted: true  },
+        { label: "Classification", value: "Escaped Experiment", redacted: false }
+      ],
+      bio: "Taken seven years ago and subjected to experiments that changed him at a fundamental level. Now free and operating alone — moving through a world that moved on without him, trying to understand what was done to him and why the Skullborns want him dead so badly.\n\nCarries a second self he calls Echo. Doesn't talk about it.",
+      echoEntry: { show: true, text: "Secondary manifestation. Surfaces under extreme duress. Cold, precise, and operationally ruthless in ways Liam is not. Origin unclear. Whether Echo is a product of the facility, a fractured identity, or something else entirely remains CLASSIFIED UNDER DIRECTIVE-9." }
+    },
+    {
+      id: "reever", name: "REEVER", faction: "dhd", factionLabel: "DAWN HORIZON DIV.",
+      status: "ACTIVE OPERATIVE", visible: true,
+      rank: "emberwake",
+      locked: false, hidden: false, image: "",
+      stats: [
+        { label: "ID",           value: "DHD-OP-114",                   redacted: false },
+        { label: "Unit",         value: "Field Reconnaissance",         redacted: false },
+        { label: "Known Family", value: "CLASSIFIED // STATUS UNKNOWN", redacted: true  },
+        { label: "Clearance",    value: "Level 3",                      redacted: false }
+      ],
+      bio: "DHD field operative assigned to reconnaissance and rapid response. Deployed alongside Flame and squad leader Hoosier. First encounter with Skullborn activity led to a direct ambush — survived a train bombing and assassination attempt in Episode 1 with backup from Bloopy and Vag.\n\nCarries something heavy. Doesn't show it on the job.",
+      echoEntry: { show: false, text: "" }
+    },
+    {
+      id: "hoosier", name: "HOOSIER", faction: "dhd", factionLabel: "DAWN HORIZON DIV.",
+      status: "ACTIVE", visible: true,
+      rank: "emberwake",
+      locked: false, hidden: false, image: "",
+      stats: [
+        { label: "ID",        value: "DHD-OP-108",          redacted: false },
+        { label: "Role",      value: "Squad Leader",         redacted: false },
+        { label: "Unit",      value: "Field Reconnaissance", redacted: false },
+        { label: "Clearance", value: "Level 4",              redacted: false }
+      ],
+      bio: "Squad leader for the recon team deployed to investigate Skullborn activity in Episode 1. Held position at the ambush site alongside Flame, successfully subduing a Death Grin prisoner — though interrogation yielded nothing. The base wasn't empty. It was a trap.",
+      echoEntry: { show: false, text: "" }
+    },
+    {
+      id: "flame", name: "FLAME", faction: "dhd", factionLabel: "DAWN HORIZON DIV.",
+      status: "ACTIVE", visible: true,
+      rank: "emberwake",
+      locked: false, hidden: false, image: "",
+      stats: [
+        { label: "ID",        value: "DHD-OP-111",          redacted: false },
+        { label: "Role",      value: "Combat Operative",     redacted: false },
+        { label: "Unit",      value: "Field Reconnaissance", redacted: false },
+        { label: "Clearance", value: "Level 3",              redacted: false }
+      ],
+      bio: "Combat operative under Hoosier's command. Stayed behind to engage the Death Grins when the ambush was triggered, allowing Reever to break for headquarters. Helped subdue the prisoner at the forest base.",
+      echoEntry: { show: false, text: "" }
+    },
+    {
+      id: "ravok-drien", name: "RAVOK DRIEN", faction: "skull", factionLabel: "SKULLBORN",
+      status: "THREAT // ACTIVE", visible: true,
+      rank: "",
+      locked: false, hidden: false, image: "",
+      stats: [
+        { label: "Real Name",    value: "REDACTED",                       redacted: true  },
+        { label: "Faction",      value: "Skullborn — Leadership",         redacted: false },
+        { label: "Location",     value: "FORTRESS — COORDINATES UNKNOWN", redacted: true  },
+        { label: "Threat Level", value: "MAXIMUM",                        redacted: false }
+      ],
+      bio: "Leader of the Skullborns. His fortress has remained hidden for years. His reach extends further than the DHD has yet understood.\n\nWhatever happened in that facility — whatever Liam Hill became — Ravok Drien wants it.",
+      echoEntry: { show: false, text: "" }
+    },
+    {
+      id: "keshava", name: "KESHAVA", faction: "dhd", factionLabel: "DHD — FOUNDER",
+      status: "[UNKNOWN]", visible: true,
+      rank: "founder",
+      locked: false, hidden: false, image: "",
+      stats: [
+        { label: "Role",           value: "DHD Founder",       redacted: false },
+        { label: "Current Status", value: "UNCONFIRMED",        redacted: true  },
+        { label: "Location",       value: "UNKNOWN",            redacted: true  },
+        { label: "Legacy",         value: "The Division itself", redacted: false }
+      ],
+      bio: "Founded the Dawn Horizon Division. Has been fighting this war longer than most of its current members have been alive. The organisation runs on the doctrine they built — even now, when their own current status is unclear.",
+      echoEntry: { show: false, text: "" }
+    },
+    {
+      id: "bloopy", name: "BLOOPY", faction: "dhd", factionLabel: "DAWN HORIZON DIV.",
+      status: "ACTIVE", visible: true,
+      rank: "kindling",
+      locked: false, hidden: false, image: "",
+      stats: [
+        { label: "ID",        value: "DHD-OP-119",      redacted: false },
+        { label: "Role",      value: "Support Operative", redacted: false },
+        { label: "Unit",      value: "Rapid Response",   redacted: false },
+        { label: "Clearance", value: "Level 2",          redacted: false }
+      ],
+      bio: "Rapid response operative who arrived with Vag to back up Reever during the train station attack in Episode 1. Drove off the assassin before capture was possible.",
+      echoEntry: { show: false, text: "" }
+    },
+    {
+      id: "vag", name: "VAG", faction: "dhd", factionLabel: "DAWN HORIZON DIV.",
+      status: "ACTIVE", visible: true,
+      rank: "kindling",
+      locked: false, hidden: false, image: "",
+      stats: [
+        { label: "ID",        value: "DHD-OP-122",      redacted: false },
+        { label: "Role",      value: "Support Operative", redacted: false },
+        { label: "Unit",      value: "Rapid Response",   redacted: false },
+        { label: "Clearance", value: "Level 2",          redacted: false }
+      ],
+      bio: "Arrived with Bloopy to assist Reever at the train station. The assassin escaped before either operative could make a capture.",
+      echoEntry: { show: false, text: "" }
+    }
+  ],
+
+  factions: [
+    {
+      id: "dhd", name: "DAWN HORIZON", subtitle: "DIVISION // COVERT OPERATIONS", type: "dhd",
+      body: "A covert organisation founded by Keshava to fight a war most civilians don't know is happening. The DHD operates in field units — reconnaissance, rapid response, intelligence gathering. They have been at this longer than most of their operatives have been alive. They are not winning. They are holding.",
+      stats: [
+        { label: "KNOWN OPERATIVES", value: "REEVER / HOOSIER / FLAME / BLOOPY / VAG" },
+        { label: "HEADQUARTERS",     value: "CLASSIFIED" },
+        { label: "FOUNDED BY",       value: "KESHAVA" }
+      ],
+      ranks: [
+        { id: "founder",         label: "Founder",          desc: "The one who built it all. There is only one. The rank doesn't get passed down." },
+        { id: "halo-ascendant",  label: "Halo Ascendant",   desc: "The highest active rank below the Founder. Strategic leadership. The people Keshava trusts with the full picture." },
+        { id: "aurora-sentinel", label: "Aurora Sentinel",  desc: "Senior operatives. Field commanders and department heads. The backbone of DHD operations." },
+        { id: "solaris",         label: "Solaris",           desc: "Experienced operatives with significant field history. Run missions, lead smaller units, manage critical intelligence." },
+        { id: "brimstone",       label: "Brimstone",         desc: "Mid-tier operatives. Deep cover, long missions, the kind of work that doesn't get talked about." },
+        { id: "emberwake",       label: "Emberwake",         desc: "Active field operatives. The core fighting rank. Most DHD members people think of when they think of the organisation." },
+        { id: "kindling",        label: "Kindling",          desc: "Newer operatives. Proven enough to be trusted, still building their record." },
+        { id: "flicker",         label: "Flicker",           desc: "Fresh recruits. First assignments. Still finding their footing." }
+      ]
+    },
+    {
+      id: "skullborn", name: "THE SKULLBORNS", subtitle: "THREAT CLASSIFICATION // MAXIMUM", type: "skull",
+      body: "The most dangerous faction in the known world. Operating under Ravok Drien from a fortress whose location has never been confirmed. Their reach extends into infrastructure, communications, and places the DHD hasn't mapped yet. The Death Grins are a sub-unit — used for ambushes, assassinations, and operations that need no witnesses.",
+      stats: [
+        { label: "LEADERSHIP",        value: "RAVOK DRIEN" },
+        { label: "KNOWN UNITS",       value: "DEATH GRINS" },
+        { label: "FORTRESS LOCATION", value: "UNKNOWN // SCANNING" }
+      ],
+      ranks: []
+    }
+  ],
+
+  directive9: {
+    code: "HELLAWAKE",
+    lockedLabel: "SECURE TERMINAL // AWAITING INPUT",
+    unlockedLabel: "ACCESS GRANTED // DIRECTIVE-9 PARTIAL DECRYPT",
+    paragraphs: [
+      "DIRECTIVE-9 — Executive order authorising the deletion of all civilian records belonging to any individual selected for the HELLAWAKE initiative. Once activated, the subject ceases to exist in any official registry. No family records. No medical history. No legal identity. They are, as far as the world is concerned, gone.",
+      "Number of subjects confirmed under Directive-9: [REDACTED]. Number of successful retrievals: [REDACTED]. Number of escapes prior to Subject HWK-SUBJECT-07: 0.",
+      "// FURTHER FILES LOCKED PENDING EPISODE RELEASE //"
+    ]
+  },
+
+  map: { topLabel: "REGION SCAN — ACTIVE", bottomLabel: "FORTRESS COORDINATES — NOT FOUND" },
+
+  lore: [
+    { id: "hellawake-initiative", term: "THE HELLAWAKE INITIATIVE", classified: false, locked: false, hidden: false, body: "The programme responsible for what Liam Hill became. A facility. Experiments. Seven years. The full scope of what they were trying to create is not yet confirmed, but the Skullborns' interest in the result tells you everything you need to know about how dangerous it is." },
+    { id: "death-grins", term: "THE DEATH GRINS", classified: false, locked: false, hidden: false, body: "A Skullborn sub-unit deployed for high-risk ambush and assassination operations. Used the abandoned base scenario to trap the DHD recon team in Episode 1. Effective. Patient. Hard to interrogate." },
+    { id: "echo", term: "ECHO", classified: false, locked: false, hidden: false, body: "Liam Hill's secondary self. Surfaces when he has no other choice. Cold. Ruthless. Not entirely him. Whether this is a power, a fractured identity, or a product of the facility — the archive does not yet have a clean answer." },
+    { id: "the-breach", term: "THE BREACH", classified: false, locked: false, hidden: false, body: "Skullborn tactical operation — the coordinated bombing of Metro Line 7 during Reever's return to headquarters. Suggests deep infrastructure penetration. The DHD did not anticipate it." },
+    { id: "ghost-frequency", term: "GHOST FREQUENCY", classified: true, locked: true, hidden: false, body: "CLASSIFIED // DETAILS WITHHELD" },
+    { id: "directive-9", term: "DIRECTIVE-9", classified: true, locked: true, hidden: false, body: "ACCESS RESTRICTED // ENTER CODE IN ARCHIVE PANEL" },
+    { id: "anomaly", term: "[REDACTED ENTRY — ANOMALY CLASS]", classified: true, locked: true, hidden: false, body: "FILE LOCKED // CLEARANCE LEVEL INSUFFICIENT // THIS ENTRY PREDATES THE HELLAWAKE INITIATIVE // DO NOT QUERY FURTHER" }
+  ],
+
+  timeline: [
+    { year: "YEAR 0",    title: "THE TAKING",        classified: false, locked: false, hidden: false, body: "Liam Hill disappears. No official record of the event exists. Directive-9 activates. As far as any registry is concerned, he never existed." },
+    { year: "YEAR 1",    title: "FACILITY — PHASE 1", classified: true, locked: true, hidden: false, body: "CLASSIFIED // DETAILS WITHHELD" },
+    { year: "YEAR 3",    title: "FACILITY — PHASE 2", classified: true, locked: true, hidden: false, body: "CLASSIFIED // DETAILS WITHHELD" },
+    { year: "YEAR 6",    title: "FACILITY — PHASE 3", classified: true, locked: true, hidden: false, body: "CLASSIFIED // DETAILS WITHHELD" },
+    { year: "YEAR 7",    title: "SUBJECT ESCAPED",   classified: false, locked: false, hidden: false, body: "HWK-SUBJECT-07 breaks containment. First and only successful escape in the history of the HELLAWAKE initiative. Skullborn hunt order issued within 48 hours." },
+    { year: "YEAR 7",    title: "THE BREACH",         classified: false, locked: false, hidden: false, body: "Skullborn operatives bomb Metro Line 7. DHD recon team ambushed at abandoned base. Reever survives assassination attempt. Prisoner taken — interrogation inconclusive." },
+    { year: "ONGOING",   title: "SEASON 1 — PRESENT", classified: false, locked: false, hidden: false, body: "Liam Hill is alive and moving. The DHD doesn't know he exists. The Skullborns know exactly what he is. The gap between those two facts is where the story lives." }
+  ],
+
+  audio: {
+    tracks: [
+      { title: "SIGNAL_LOSS_EX.MP3",      subtitle: "OST RECORDING 08",    src: "" },
+      { title: "BREACH_AMBIENCE.WAV",     subtitle: "ENVIRONMENTAL LOOP",  src: "" },
+      { title: "CHASING_GHOSTS_THEME.MP3", subtitle: "S1 E1 MAIN THEME",   src: "" }
+    ],
+    voiceChips: [
+      { label: "REEVER_OP_REPORT",   locked: false },
+      { label: "HOOSIER_COMMAND_01", locked: false },
+      { label: "UNKNOWN_SIGNAL",     locked: false },
+      { label: "ECHO_INTERCEPT",     locked: true  },
+      { label: "RAVOK_TRANSMISSION", locked: true  }
+    ]
+  },
+
+  credits: [
+    { role: "DIRECTION / VISION",  name: "Studio HELLAWAKE"    },
+    { role: "TECHNICAL PIPELINE",  name: "Link Core Dev Team"  },
+    { role: "ATMOSPHERIC SOUND",   name: "Ghost Frequency Labs" },
+    { role: "ARCHIVE DESIGN",      name: "Visual Unit 08"      },
+    { role: "EPISODE ANIMATION",   name: "Studio HELLAWAKE"    }
+  ],
+
+  news: [
+    "EPISODE 01 — CHASING GHOSTS — NOW AVAILABLE",
+    "DHD RECON TEAM AMBUSHED — DEATH GRIN INVOLVEMENT CONFIRMED",
+    "TRAIN BOMBING — METRO LINE COMPROMISED",
+    "PRISONER CAPTURED — INTERROGATION INCONCLUSIVE",
+    "SKULLBORN FORTRESS LOCATION — STILL UNKNOWN",
+    "SUBJECT HWK-07 — WHEREABOUTS UNCONFIRMED",
+    "WIKI NOW LIVE — ARCHIVE ACCESS GRANTED",
+    "STAY AWAKE"
+  ],
+
+  wikiConfig: {
+    lightModeDefault: false,
+    showBookReader: true,
+    interceptedTransmissions: [
+      "SIGNAL ACQUIRED // SOURCE UNKNOWN // DECRYPTING...",
+      "DIRECTIVE-9 SUBJECTS: [REDACTED] // SUBJECT-07: STATUS UNKNOWN",
+      "SKULLBORN FORTRESS — TRIANGULATION FAILED // TRY AGAIN",
+      "DHD UPLINK STABLE // OPERATIVE REEVER — LAST KNOWN: SECTOR 4",
+      "ECHO DETECTED // FREQUENCY MATCH: 94% // LOCATION: [CLASSIFIED]",
+      "RAVOK DRIEN — LAST TRANSMISSION: [CORRUPTED] // DATE: [UNKNOWN]"
+    ]
+  },
+
+  episodes: {
+    seasons: [
+      {
+        season: 1,
+        episodes: [
+          {
+            yt: "VeZK6KsbkXA",
+            title: "Chasing Ghosts",
+            time: "05:24",
+            book: "",
+            comingSoon: false,
+            desc: "Reever, Flame, and squad leader Hoosier are dispatched on a reconnaissance mission when they uncover what looks like an abandoned Skullborn base. The group is suddenly ambushed — the Death Grins had set a trap. Hoosier and Flame stay behind to engage, while Reever breaks for headquarters. Taking the metro route, his journey is violently cut short when the train is bombed. A deadly assassin emerges, targeting Reever — nearly killing him before Bloopy and Vag arrive and drive the attacker off. Back at the forest, Hoosier and Flame subdue a Death Grin prisoner, but interrogation proves fruitless. More questions than answers."
+          },
+          {
+            yt: "",
+            title: "Episode 2",
+            time: "??:??",
+            book: "",
+            comingSoon: true,
+            desc: ""
+          }
+        ]
+      },
+      { season: 2, episodes: [] }
+    ]
+  },
+
+  easterEggs: [
+    {
+      enabled: true,
+      name: "chasing-ghosts-code",
+      triggerType: "code",
+      triggerValue: "CHASING GHOSTS",
+      responseType: "text",
+      responseContent: "ARCHIVE FRAGMENT UNLOCKED // EP1 INTERCEPT LOG\n\nThe base was empty. We knew before we got there — Hoosier knew. He didn't say it. None of us said it. You don't say the thing that makes it true.\n\nThe train was the real move. Everything else was theatre.\n\n— REEVER // FIELD LOG // DATE REDACTED",
+      hint: "ARCHIVE FRAGMENT UNLOCKED // SIGNAL: EP1-INTERCEPT"
+    },
+    {
+      enabled: true,
+      name: "bloopy-code",
+      triggerType: "code",
+      triggerValue: "BLOOPY",
+      responseType: "newsflash",
+      responseContent: "OPERATIVE RECOGNISED // DHD-OP-119 // NOT CLEARED FOR THIS FILE // ACCESS DENIED",
+      hint: ""
+    },
+    {
+      enabled: true,
+      name: "vag-code",
+      triggerType: "code",
+      triggerValue: "VAG",
+      responseType: "newsflash",
+      responseContent: "OPERATIVE RECOGNISED // DHD-OP-122 // NOT CLEARED FOR THIS FILE // ACCESS DENIED",
+      hint: ""
+    },
+    {
+      enabled: true,
+      name: "konami",
+      triggerType: "konami",
+      triggerValue: "",
+      responseType: "glitch",
+      responseContent: "SKULLBORN INTERNAL BROADCAST // PRIORITY ALPHA\n\nSubject HWK-07 remains uncontained. All units maintain hunt order. Ravok has been informed. The subject is not to be engaged directly — contain, do not engage.\n\nWhatever it has become, it is not to be destroyed. Not yet.\n\n// END TRANSMISSION",
+      hint: "SKULLBORN FREQUENCY DETECTED // DECRYPTING..."
+    },
+    {
+      enabled: true,
+      name: "unknown-signal-triple",
+      triggerType: "clickcount",
+      triggerValue: ".voice-chip:nth-child(3)//3",
+      responseType: "glitch",
+      responseContent: "S I G N A L _ A C Q U I R E D\n\n[CORRUPTED] ...didn't ask for this. None of us [CORRUPTED] ...the facility is still [CORRUPTED] ...Echo isn't just a name. It [CORRUPTED]\n\n// SOURCE: UNVERIFIED // MATCH: 94%",
+      hint: "UNKNOWN SIGNAL DECODED // PARTIAL // ORIGIN UNCONFIRMED"
+    },
+    {
+      enabled: true,
+      name: "access-sequence",
+      triggerType: "keysequence",
+      triggerValue: "ACCESS",
+      responseType: "redirect",
+      responseContent: "wiki/terminal.html",
+      hint: "TERMINAL ACCESS GRANTED // REDIRECTING..."
+    },
+    {
+      enabled: true,
+      name: "logo-seven-clicks",
+      triggerType: "clickcount",
+      triggerValue: ".nav-logo//7",
+      responseType: "redirect",
+      responseContent: "wiki/terminal.html",
+      hint: ""
+    }
+  ]
+
+};
