@@ -535,7 +535,12 @@ function buildEpisodeGuidePage() {
       const locked = ep.comingSoon || !ep.yt;
       const card = document.createElement('div');
       card.className = `ep-guide-card ${locked?'ep-guide-locked':''}`;
-      const bookBtn = (ep.book && SITE.wikiConfig?.showBookReader) ? `<a class="ep-book-btn" onclick="event.stopPropagation();openBookReader('${ep.book}','S${season.season} E${i+1}: ${ep.title}')">📖 BOOK VERSION</a>` : '';
+      var bookBtn = '';
+      if (ep.book && SITE.wikiConfig && SITE.wikiConfig.showBookReader) {
+        var bookTitle = encodeURIComponent('S' + season.season + ' E' + (i+1) + ': ' + ep.title);
+        var bookUrl = '../reader.html?book=' + encodeURIComponent(ep.book) + '&title=' + bookTitle;
+        bookBtn = '<a class="ep-book-btn" href="' + bookUrl + '" target="_blank" onclick="event.stopPropagation()">📖 BOOK VERSION</a>';
+      }
       card.innerHTML = `
         <div>${ep.yt?`<img class="ep-guide-thumb" src="https://img.youtube.com/vi/${ep.yt}/mqdefault.jpg" alt="${ep.title}" onerror="this.style.background='var(--surface2)'">`:`<div class="ep-guide-thumb"></div>`}</div>
         <div>
