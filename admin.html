@@ -566,7 +566,6 @@ function buildRankSelect(i, faction, selectedRank) {
 function updateRankDropdown(i, faction) {
   var container = document.getElementById('per-' + i + '-rank');
   if (!container) return;
-  // Read current rank BEFORE collectPersonnelList wipes it
   var currentRank = container.value || '';
   container.outerHTML = buildRankSelect(i, faction, currentRank);
 }
@@ -897,9 +896,9 @@ function collectPersonnelList() {
       stats.push({ label: getVal('per-' + i + '-stat-' + si + '-l'), value: getVal('per-' + i + '-stat-' + si + '-v'), redacted: !!(document.getElementById('per-' + i + '-stat-' + si + '-r') && document.getElementById('per-' + i + '-stat-' + si + '-r').checked) });
     });
     var name = getVal('per-'+i+'-name');
-    // Read rank directly from select element value — never let it be overwritten by empty string
+    // Read rank directly from select element — never loses value during rebuild
     var rankEl = document.getElementById('per-'+i+'-rank');
-    var rankVal = rankEl ? rankEl.value : (data.personnel[i] ? data.personnel[i].rank || '' : '');
+    var rankVal = rankEl ? rankEl.value : '';
     data.personnel.push({ id: name.toLowerCase().replace(/\s+/g,'-'), name: name, faction: getVal('per-'+i+'-faction'), factionLabel: getVal('per-'+i+'-factionLabel'), status: getVal('per-'+i+'-status'), visible: getBool('per-'+i+'-visible'), rank: rankVal, locked: getBool('per-'+i+'-locked'), hidden: getBool('per-'+i+'-hidden'), image: getVal('per-'+i+'-image'), stats: stats, bio: getVal('per-'+i+'-bio'), echoEntry: { show: getBool('per-'+i+'-echo-show'), text: getVal('per-'+i+'-echo-text') } });
   });
 }
