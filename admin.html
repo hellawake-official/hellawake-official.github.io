@@ -902,11 +902,30 @@ function collectPersonnelList() {
     data.personnel.push({ id: name.toLowerCase().replace(/\s+/g,'-'), name: name, faction: getVal('per-'+i+'-faction'), factionLabel: getVal('per-'+i+'-factionLabel'), status: getVal('per-'+i+'-status'), visible: getBool('per-'+i+'-visible'), rank: rankVal, locked: getBool('per-'+i+'-locked'), hidden: getBool('per-'+i+'-hidden'), image: getVal('per-'+i+'-image'), stats: stats, bio: getVal('per-'+i+'-bio'), echoEntry: { show: getBool('per-'+i+'-echo-show'), text: getVal('per-'+i+'-echo-text') } });
   });
 }
-function addPersonnel() { collectPersonnelList(); data.personnel.push({ id: 'new', name: 'NEW CHARACTER', faction: 'dhd', factionLabel: 'DHD', status: 'ACTIVE', visible: true, image: '', stats: [], bio: '', echoEntry: { show: false, text: '' } }); buildPersonnelList(); }
-function removePer(i) { collectPersonnelList(); data.personnel.splice(i, 1); buildPersonnelList(); }
-function movePer(i, d) { collectPersonnelList(); var a = data.personnel; if (i+d<0||i+d>=a.length) return; var t=a[i];a[i]=a[i+d];a[i+d]=t; buildPersonnelList(); }
-function addStat(ci) { collectPersonnelList(); data.personnel[ci].stats.push({ label: '', value: '', redacted: false }); buildPersonnelList(); }
-function removeStat(ci, si) { collectPersonnelList(); data.personnel[ci].stats.splice(si, 1); buildPersonnelList(); }
+function addPersonnel() { var r=saveRanks(); collectPersonnelList(); restoreRanks(r); data.personnel.push({ id: 'new', name: 'NEW CHARACTER', faction: 'dhd', factionLabel: 'DHD', status: 'ACTIVE', visible: true, image: '', stats: [], bio: '', echoEntry: { show: false, text: '' } }); buildPersonnelList(); }
+function removePer(i) { var r=saveRanks(); collectPersonnelList(); restoreRanks(r); data.personnel.splice(i, 1); buildPersonnelList(); }
+function movePer(i, d) { var r=saveRanks(); collectPersonnelList(); restoreRanks(r); var a = data.personnel; if (i+d<0||i+d>=a.length) return; var t=a[i];a[i]=a[i+d];a[i+d]=t; buildPersonnelList(); }
+
+function saveRanks() {
+  var ranks = {};
+  document.querySelectorAll('[id^="per-"][id$="-rank"]').forEach(function(el) {
+    ranks[el.id] = el.value;
+  });
+  return ranks;
+}
+function restoreRanks(ranks) {
+  Object.keys(ranks).forEach(function(id) {
+    if (ranks[id]) {
+      // Update data.personnel with saved rank
+      var match = id.match(/^per-(\d+)-rank$/);
+      if (match && data.personnel[parseInt(match[1])]) {
+        data.personnel[parseInt(match[1])].rank = ranks[id];
+      }
+    }
+  });
+}
+function addStat(ci) { var r=saveRanks(); collectPersonnelList(); restoreRanks(r); data.personnel[ci].stats.push({ label: '', value: '', redacted: false }); buildPersonnelList(); }
+function removeStat(ci, si) { var r=saveRanks(); collectPersonnelList(); restoreRanks(r); data.personnel[ci].stats.splice(si, 1); buildPersonnelList(); }
 
 /* ── FACTIONS ── */
 function buildFactionsList() {
