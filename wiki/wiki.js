@@ -116,8 +116,8 @@ function buildWikiSidebar(activePage) {
     { section:'Story' },
     { key:'characters', label:'Characters',    href:'characters.html', badge:String((SITE.personnel||[]).filter(c=>c.visible!==false).length) },
     { key:'factions',   label:'Factions',      href:'factions.html',   badge:String((SITE.factions||[]).length) },
-    { key:'lore',       label:'Lore',           href:'lore.html',       badge:String((SITE.lore||[]).length) },
-    { key:'timeline',   label:'Timeline',      href:'timeline.html',   badge:String((SITE.timeline||[]).length) },
+    { key:'lore',       label:'Lore',           href:'lore.html',       badge:String((SITE.lore||[]).filter(function(e){return !e.hidden;}).length) },
+    { key:'timeline',   label:'Timeline',      href:'timeline.html',   badge:String((SITE.timeline||[]).filter(function(e){return !e.hidden;}).length) },
     { section:'Media' },
     { key:'episodes',   label:'Episode Guide', href:'episodes.html',   badge:String(totalEps) },
     { section:'World' },
@@ -303,8 +303,8 @@ function buildWikiHome() {
   const sections = [
     { key:'characters', title:'Characters',    desc:'Personnel files and operative dossiers.',  href:'characters.html', count:(SITE.personnel||[]).filter(c=>c.visible!==false).length+' entries' },
     { key:'factions',   title:'Factions',      desc:'The Skullborns, the DHD, and beyond.',     href:'factions.html',   count:(SITE.factions||[]).length+' factions' },
-    { key:'lore',       title:'Lore',           desc:'Terminology, events, and classified files.',href:'lore.html',      count:(SITE.lore||[]).length+' entries' },
-    { key:'timeline',   title:'Timeline',      desc:'In-universe chronological events.',         href:'timeline.html',   count:(SITE.timeline||[]).length+' events' },
+    { key:'lore',       title:'Lore',           desc:'Terminology, events, and classified files.',href:'lore.html',      count:(SITE.lore||[]).filter(function(e){return !e.hidden;}).length+' entries' },
+    { key:'timeline',   title:'Timeline',      desc:'In-universe chronological events.',         href:'timeline.html',   count:(SITE.timeline||[]).filter(function(e){return !e.hidden;}).length+' events' },
     { key:'episodes',   title:'Episode Guide', desc:'Full episode synopses and details.',        href:'episodes.html',   count:totalEps+' episodes' },
     { key:'world',      title:'World',         desc:'The setting, factions, and the war.',       href:'world.html',      count:'' },
   ];
@@ -325,11 +325,11 @@ function buildCharactersPage() {
   grid.innerHTML = all.map(function(char) {
     // Locked character
     if (char.locked) {
-      return '<div class="wiki-card locked-card"><div class="wiki-card-faction-bar ' + char.faction + '"></div>' +
-        '<div class="wiki-card-img-placeholder">🔒</div>' +
-        '<div class="wiki-card-body"><span class="wiki-card-tag">' + char.factionLabel + '</span>' +
-        '<div class="wiki-card-title">[CLASSIFIED]</div>' +
-        '<div class="wiki-card-desc">Access restricted.</div></div></div>';
+      var imgPath = char.image ? ASSET_ROOT + char.image : null;
+      return '<div class="wiki-card locked-card">' +
+        '<div class="wiki-card-faction-bar ' + char.faction + '"></div>' +
+        (imgPath ? '<img class="wiki-card-img" src="' + imgPath + '" alt="CLASSIFIED">' : '<div class="wiki-card-img-placeholder" style="font-size:2rem;">🔒</div>') +
+        '</div>';
     }
     if (char.visible === false) return '';
     var imgPath = char.image ? ASSET_ROOT + char.image : null;
@@ -353,7 +353,7 @@ function buildCharacterDetail() {
   if (crumb) crumb.textContent = char ? char.name : '—';
   const detail = document.getElementById('char-detail');
   if (!detail) return;
-  if (!char) { detail.innerHTML='<p style="color:var(--muted);padding:40px;">Character not found.</p>'; return; }
+  if (!char || char.hidden) { detail.innerHTML='<p style="color:var(--muted);padding:40px;">Character not found.</p>'; return; }
   document.title = `${char.name} — HELLAWAKE WIKI`;
 
   const imgPath = char.image ? ASSET_ROOT + char.image : null;
@@ -499,7 +499,7 @@ function buildFactionDetail() {
 function buildLorePage() {
   const container = document.getElementById('lore-container');
   if (!container) return;
-  container.innerHTML = (SITE.lore||[]).map(e=>`
+  container.innerHTML = (SITE.lore||[]).filter(function(e){return !e.hidden;}).map(e=>`
     <div class="lore-entry ${e.classified?'classified':''}">
       <div class="lore-entry-term">${e.term}</div>
       <div class="lore-entry-body">${e.classified?'[ACCESS RESTRICTED]':e.body}</div>
@@ -510,7 +510,7 @@ function buildLorePage() {
 function buildTimelinePage() {
   const container = document.getElementById('timeline-container');
   if (!container) return;
-  container.innerHTML = (SITE.timeline||[]).map(entry=>`
+  container.innerHTML = (SITE.timeline||[]).filter(function(entry){return !entry.hidden;}).map(entry=>`
     <div class="tl-row ${entry.classified?'classified':''}">
       <div class="tl-row-year">${entry.year}</div>
       <div class="tl-row-dot"></div>
@@ -565,7 +565,7 @@ function buildWorldPage() {
     { title:'THE SETTING', content:'The world of HELLAWAKE is seven years past a turning point nobody fully understands yet. Infrastructure runs. People work. The war between the Dawn Horizon Division and the Skullborns is covert by design — most civilians have no idea it is happening. That invisibility is a weapon for both sides.' },
     { title:'THE HELLAWAKE INITIATIVE', content: loreInit?.body || '' },
     { title:'THE WAR', content:(SITE.factions||[]).map(f=>`<b style="color:var(--accent)">${f.name}</b> — ${f.body}`).join('<br><br>') },
-    { title:'KEY TERMINOLOGY', content:(SITE.lore||[]).filter(e=>!e.classified).map(e=>`<b style="color:var(--accent)">${e.term}</b><br><span style="color:var(--muted);font-size:13px;">${e.body}</span>`).join('<br><br>') },
+    { title:'KEY TERMINOLOGY', content:(SITE.lore||[]).filter(e=>!e.classified&&!e.hidden).map(e=>`<b style="color:var(--accent)">${e.term}</b><br><span style="color:var(--muted);font-size:13px;">${e.body}</span>`).join('<br><br>') },
   ];
   container.innerHTML = blocks.filter(b=>b.content).map(b=>
     `<div class="world-block"><div class="world-block-title">${b.title}</div><div class="world-block-body">${b.content}</div></div>`
