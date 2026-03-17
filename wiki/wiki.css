@@ -234,22 +234,11 @@ a.wiki-card:hover .faction-block.skull-block { border-top-color: #cc2200; }
 
 /* ── LOCKED CARD ── */
 .locked-card {
-  pointer-events: none; border-color: var(--dim) !important;
-  position: relative; overflow: hidden;
-}
-.locked-card .wiki-card-img {
-  filter: grayscale(0.6) brightness(0.7);
-  width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;
+  opacity: 0.5; pointer-events: none; filter: grayscale(1);
+  border-color: var(--dim) !important;
 }
 .locked-card .wiki-card-img-placeholder {
-  width: 100%; aspect-ratio: 16/9; background: var(--surface2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2rem; color: var(--dim);
-}
-.locked-card::after {
-  content: "🔒";
-  position: absolute; bottom: 8px; right: 8px;
-  font-size: 0.85rem; opacity: 0.7;
+  font-size: 1.5rem; letter-spacing: 0; color: var(--dim);
 }
 .locked-badge {
   font-size: 0.7rem; margin-left: 6px; opacity: 0.7;

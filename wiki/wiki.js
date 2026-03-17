@@ -325,11 +325,11 @@ function buildCharactersPage() {
   grid.innerHTML = all.map(function(char) {
     // Locked character
     if (char.locked) {
-      var imgPath = char.image ? ASSET_ROOT + char.image : null;
-      return '<div class="wiki-card locked-card">' +
-        '<div class="wiki-card-faction-bar ' + char.faction + '"></div>' +
-        (imgPath ? '<img class="wiki-card-img" src="' + imgPath + '" alt="CLASSIFIED">' : '<div class="wiki-card-img-placeholder" style="font-size:2rem;">🔒</div>') +
-        '</div>';
+      return '<div class="wiki-card locked-card"><div class="wiki-card-faction-bar ' + char.faction + '"></div>' +
+        '<div class="wiki-card-img-placeholder">🔒</div>' +
+        '<div class="wiki-card-body"><span class="wiki-card-tag">' + char.factionLabel + '</span>' +
+        '<div class="wiki-card-title">[CLASSIFIED]</div>' +
+        '<div class="wiki-card-desc">Access restricted.</div></div></div>';
     }
     if (char.visible === false) return '';
     var imgPath = char.image ? ASSET_ROOT + char.image : null;
