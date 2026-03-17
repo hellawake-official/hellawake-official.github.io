@@ -114,7 +114,7 @@ function buildWikiSidebar(activePage) {
     { section:'Navigation' },
     { key:'home',       label:'Wiki Home',     href:'index.html',      badge:'' },
     { section:'Story' },
-    { key:'characters', label:'Characters',    href:'characters.html', badge:String((SITE.personnel||[]).filter(c=>c.visible!==false).length) },
+    { key:'characters', label:'Characters',    href:'characters.html', badge:String((SITE.personnel||[]).filter(function(c){return c.visible!==false&&!c.hidden;}).length) },
     { key:'factions',   label:'Factions',      href:'factions.html',   badge:String((SITE.factions||[]).length) },
     { key:'lore',       label:'Lore',           href:'lore.html',       badge:String((SITE.lore||[]).filter(function(e){return !e.hidden;}).length) },
     { key:'timeline',   label:'Timeline',      href:'timeline.html',   badge:String((SITE.timeline||[]).filter(function(e){return !e.hidden;}).length) },
@@ -301,7 +301,7 @@ function buildWikiHome() {
   if (!container) return;
   const totalEps = (SITE.episodes?.seasons||[]).reduce((a,s)=>a+s.episodes.length,0);
   const sections = [
-    { key:'characters', title:'Characters',    desc:'Personnel files and operative dossiers.',  href:'characters.html', count:(SITE.personnel||[]).filter(c=>c.visible!==false).length+' entries' },
+    { key:'characters', title:'Characters',    desc:'Personnel files and operative dossiers.',  href:'characters.html', count:(SITE.personnel||[]).filter(function(c){return c.visible!==false&&!c.hidden;}).length+' entries' },
     { key:'factions',   title:'Factions',      desc:'The Skullborns, the DHD, and beyond.',     href:'factions.html',   count:(SITE.factions||[]).length+' factions' },
     { key:'lore',       title:'Lore',           desc:'Terminology, events, and classified files.',href:'lore.html',      count:(SITE.lore||[]).filter(function(e){return !e.hidden;}).length+' entries' },
     { key:'timeline',   title:'Timeline',      desc:'In-universe chronological events.',         href:'timeline.html',   count:(SITE.timeline||[]).filter(function(e){return !e.hidden;}).length+' events' },
