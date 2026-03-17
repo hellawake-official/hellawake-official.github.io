@@ -332,7 +332,7 @@ function buildCharactersPage() {
         '<div class="wiki-card-body">' +
           '<span class="wiki-card-tag">' + char.factionLabel + '</span>' +
           '<div class="wiki-card-title locked-title">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</div>' +
-          '<div class="wiki-card-desc locked-desc">CLASSIFIED // IDENTITY RESTRICTED</div>' +
+          '<div class="wiki-card-desc locked-desc">' + (char.teaser ? '<em>' + char.teaser + '</em>' : 'CLASSIFIED // IDENTITY RESTRICTED') + '</div>' +
         '</div>' +
         '</div>';
     }
@@ -471,11 +471,15 @@ function buildFactionDetail() {
     '<div class="wiki-card-grid">' +
     allMembers.map(function(c) {
       if (c.locked) {
+        var imgPath2 = c.image ? ASSET_ROOT + c.image : null;
         return '<div class="wiki-card locked-card">' +
           '<div class="wiki-card-faction-bar ' + c.faction + '"></div>' +
-          '<div class="wiki-card-img-placeholder">🔒</div>' +
-          '<div class="wiki-card-body"><span class="wiki-card-tag">CLASSIFIED</span>' +
-          '<div class="wiki-card-title">[REDACTED]</div></div></div>';
+          (imgPath2 ? '<img class="wiki-card-img" src="' + imgPath2 + '" alt="CLASSIFIED">' : '<div class="wiki-card-img-placeholder"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#444" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>') +
+          '<div class="wiki-card-body">' +
+            '<span class="wiki-card-tag">' + c.factionLabel + '</span>' +
+            '<div class="wiki-card-title locked-title">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</div>' +
+            '<div class="wiki-card-desc locked-desc">' + (c.teaser ? '<em>' + c.teaser + '</em>' : 'CLASSIFIED // IDENTITY RESTRICTED') + '</div>' +
+          '</div></div>';
       }
       if (c.visible === false) return '';
       var imgPath = c.image ? ASSET_ROOT + c.image : null;

@@ -249,9 +249,10 @@ a.wiki-card:hover .faction-block.skull-block { border-top-color: #cc2200; }
   color: #333 !important; letter-spacing: 1px; font-size: 0.9rem !important;
 }
 .locked-desc {
-  font-size: 10px !important; letter-spacing: 2px; color: #333 !important;
-  font-family: var(--font-display);
+  font-size: 12px !important; letter-spacing: 0px; color: #555 !important;
+  font-style: italic; line-height: 1.5;
 }
+.locked-desc em { font-style: italic; }
 .locked-badge {
   font-size: 0.7rem; margin-left: 6px; opacity: 0.7;
 }

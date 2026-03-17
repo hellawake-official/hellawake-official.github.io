@@ -879,6 +879,7 @@ function buildPersonnelList() {
       '<div class="field url-wrap"><label>Image Path</label><input id="per-' + i + '-image" value="' + esc(c.image) + '"><button class="paste-btn" onclick="pasteField(\'per-' + i + '-image\')">PASTE</button></div>' +
       '<div class="checkbox-row" style="margin-bottom:12px;"><input type="checkbox" id="per-' + i + '-visible"' + (c.visible !== false ? ' checked' : '') + '><label>Visible on site</label></div>' +
       '<div class="field"><label>Bio</label><textarea id="per-' + i + '-bio" style="min-height:100px;">' + esc(c.bio) + '</textarea></div>' +
+      '<div class="field"><label>Teaser (shown on locked card)</label><input id="per-' + i + '-teaser" value="' + esc(c.teaser || '') + '" placeholder="e.g. A name that appears in three separate DHD intercepts."></div>' +
       '<div class="section-label">Stats</div>' + statsHTML +
       '<button class="add-btn" onclick="addStat(' + i + ')">+ ADD STAT</button>' +
       '<hr class="divider">' +
@@ -899,7 +900,7 @@ function collectPersonnelList() {
     // Read rank directly from select element — never loses value during rebuild
     var rankEl = document.getElementById('per-'+i+'-rank');
     var rankVal = rankEl ? rankEl.value : '';
-    data.personnel.push({ id: name.toLowerCase().replace(/\s+/g,'-'), name: name, faction: getVal('per-'+i+'-faction'), factionLabel: getVal('per-'+i+'-factionLabel'), status: getVal('per-'+i+'-status'), visible: getBool('per-'+i+'-visible'), rank: rankVal, locked: getBool('per-'+i+'-locked'), hidden: getBool('per-'+i+'-hidden'), image: getVal('per-'+i+'-image'), stats: stats, bio: getVal('per-'+i+'-bio'), echoEntry: { show: getBool('per-'+i+'-echo-show'), text: getVal('per-'+i+'-echo-text') } });
+    data.personnel.push({ id: name.toLowerCase().replace(/\s+/g,'-'), name: name, faction: getVal('per-'+i+'-faction'), factionLabel: getVal('per-'+i+'-factionLabel'), status: getVal('per-'+i+'-status'), visible: getBool('per-'+i+'-visible'), rank: rankVal, locked: getBool('per-'+i+'-locked'), hidden: getBool('per-'+i+'-hidden'), teaser: getVal('per-'+i+'-teaser'), image: getVal('per-'+i+'-image'), stats: stats, bio: getVal('per-'+i+'-bio'), echoEntry: { show: getBool('per-'+i+'-echo-show'), text: getVal('per-'+i+'-echo-text') } });
   });
 }
 function addPersonnel() { var r=saveRanks(); collectPersonnelList(); restoreRanks(r); data.personnel.push({ id: 'new', name: 'NEW CHARACTER', faction: 'dhd', factionLabel: 'DHD', status: 'ACTIVE', visible: true, image: '', stats: [], bio: '', echoEntry: { show: false, text: '' } }); buildPersonnelList(); }
