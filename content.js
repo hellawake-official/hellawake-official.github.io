@@ -226,8 +226,9 @@ const SITE = {
       "status": "FUGITIVE",
       "visible": true,
       "rank": "",
-      "locked": false,
+      "locked": true,
       "hidden": false,
+      "teaser": "A photograph. A face. A drop of blood that covered everything.",
       "image": "",
       "stats": [
         {
@@ -264,9 +265,10 @@ const SITE = {
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "ACTIVE OPERATIVE",
       "visible": true,
-      "rank": "emberwake",
+      "rank": "",
       "locked": false,
       "hidden": false,
+      "teaser": "",
       "image": "",
       "stats": [
         {
@@ -303,9 +305,10 @@ const SITE = {
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "ACTIVE",
       "visible": true,
-      "rank": "emberwake",
+      "rank": "",
       "locked": false,
       "hidden": false,
+      "teaser": "",
       "image": "",
       "stats": [
         {
@@ -342,9 +345,10 @@ const SITE = {
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "ACTIVE",
       "visible": true,
-      "rank": "kindling",
+      "rank": "",
       "locked": false,
       "hidden": false,
+      "teaser": "",
       "image": "",
       "stats": [
         {
@@ -389,6 +393,7 @@ const SITE = {
       "rank": "",
       "locked": false,
       "hidden": true,
+      "teaser": "",
       "image": "",
       "stats": [
         {
@@ -425,9 +430,10 @@ const SITE = {
       "factionLabel": "DHD — FOUNDER",
       "status": "[UNKNOWN]",
       "visible": true,
-      "rank": "founder",
+      "rank": "",
       "locked": false,
       "hidden": true,
+      "teaser": "",
       "image": "",
       "stats": [
         {
@@ -464,9 +470,10 @@ const SITE = {
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "ACTIVE",
       "visible": true,
-      "rank": "kindling",
+      "rank": "",
       "locked": false,
       "hidden": false,
+      "teaser": "",
       "image": "",
       "stats": [
         {
@@ -503,9 +510,10 @@ const SITE = {
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "ACTIVE",
       "visible": true,
-      "rank": "kindling",
+      "rank": "",
       "locked": false,
       "hidden": false,
+      "teaser": "",
       "image": "",
       "stats": [
         {
@@ -545,6 +553,7 @@ const SITE = {
       "rank": "",
       "locked": true,
       "hidden": false,
+      "teaser": "The Train Station Incident. The assassin. No name. Not yet.",
       "image": "",
       "stats": [
         {
@@ -584,6 +593,7 @@ const SITE = {
       "rank": "",
       "locked": true,
       "hidden": false,
+      "teaser": "The photograph. Three faces. One of them isn't accounted for.",
       "image": "",
       "stats": [
         {
@@ -618,6 +628,7 @@ const SITE = {
       "rank": "",
       "locked": true,
       "hidden": true,
+      "teaser": "",
       "image": "",
       "stats": [
         {
@@ -652,6 +663,7 @@ const SITE = {
       "rank": "",
       "locked": true,
       "hidden": true,
+      "teaser": "",
       "image": "",
       "stats": [
         {
@@ -688,9 +700,10 @@ const SITE = {
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "UNCONFIRMED",
       "visible": true,
-      "rank": "brimstone",
+      "rank": "",
       "locked": true,
       "hidden": true,
+      "teaser": "",
       "image": "",
       "stats": [
         {
@@ -722,9 +735,10 @@ const SITE = {
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "ACTIVE",
       "visible": true,
-      "rank": "brimstone",
+      "rank": "",
       "locked": true,
       "hidden": true,
+      "teaser": "",
       "image": "",
       "stats": [
         {
@@ -756,9 +770,10 @@ const SITE = {
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "ACTIVE",
       "visible": true,
-      "rank": "solaris",
+      "rank": "",
       "locked": true,
       "hidden": true,
+      "teaser": "",
       "image": "",
       "stats": [
         {
@@ -790,9 +805,10 @@ const SITE = {
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "ACTIVE",
       "visible": true,
-      "rank": "aurora-sentinel",
+      "rank": "",
       "locked": true,
       "hidden": true,
+      "teaser": "",
       "image": "",
       "stats": [
         {
@@ -824,9 +840,10 @@ const SITE = {
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "ACTIVE",
       "visible": true,
-      "rank": "halo-ascendant",
+      "rank": "",
       "locked": true,
       "hidden": true,
+      "teaser": "",
       "image": "",
       "stats": [
         {
@@ -858,9 +875,10 @@ const SITE = {
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "ACTIVE",
       "visible": true,
-      "rank": "halo-ascendant",
+      "rank": "",
       "locked": true,
       "hidden": true,
+      "teaser": "",
       "image": "",
       "stats": [
         {
