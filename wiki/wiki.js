@@ -92,6 +92,7 @@ function buildTransmission(containerId) {
 
 /* ── TOPBAR ── */
 function buildWikiTopbar(activePage) {
+  var ls = (SITE.wikiConfig && SITE.wikiConfig.lockedSections) || {};
   const pages = [
     { key:'home',       label:'Wiki Home',   href:'index.html'      },
     { key:'characters', label:'Characters',  href:'characters.html' },
@@ -114,18 +115,18 @@ function buildWikiSidebar(activePage) {
     { section:'Navigation' },
     { key:'home',       label:'Wiki Home',     href:'index.html',      badge:'' },
     { section:'Story' },
-    { key:'characters', label:'Characters',    href:'characters.html', badge:String((SITE.personnel||[]).filter(function(c){return c.visible!==false&&!c.hidden;}).length) },
-    { key:'factions',   label:'Factions',      href:'factions.html',   badge:String((SITE.factions||[]).length) },
-    { key:'lore',       label:'Lore',           href:'lore.html',       badge:String((SITE.lore||[]).filter(function(e){return !e.hidden;}).length) },
-    { key:'timeline',   label:'Timeline',      href:'timeline.html',   badge:String((SITE.timeline||[]).filter(function(e){return !e.hidden;}).length) },
+    { key:'characters', label:'Characters',    href:'characters.html', badge: ls.characters ? '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : String((SITE.personnel||[]).filter(function(c){return c.visible!==false&&!c.hidden;}).length) },
+    { key:'factions',   label:'Factions',      href:'factions.html',   badge: ls.factions  ? '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : String((SITE.factions||[]).length) },
+    { key:'lore',       label:'Lore',           href:'lore.html',       badge: ls.lore      ? '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : String((SITE.lore||[]).filter(function(e){return !e.hidden;}).length) },
+    { key:'timeline',   label:'Timeline',      href:'timeline.html',   badge: ls.timeline  ? '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : String((SITE.timeline||[]).filter(function(e){return !e.hidden;}).length) },
     { section:'Media' },
-    { key:'episodes',   label:'Episode Guide', href:'episodes.html',   badge:String(totalEps) },
+    { key:'episodes',   label:'Episode Guide', href:'episodes.html',   badge: ls.episodes  ? '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : String(totalEps) },
     { section:'World' },
     { key:'world',      label:'World & Setting',href:'world.html',     badge:'' },
   ];
   el.innerHTML = sections.map(s => {
     if (s.section) return `<div class="wiki-sidebar-section">${s.section}</div>`;
-    return `<a href="${s.href}" class="wiki-sidebar-link ${s.key===activePage?'active':''}" data-page="${s.key}">${s.label}${s.badge?`<span class="badge">${s.badge}</span>`:''}</a>`;
+    return '<a href="' + s.href + '" class="wiki-sidebar-link ' + (s.key===activePage?'active':'') + '" data-page="' + s.key + '">' + s.label + (s.badge ? '<span class="badge">' + s.badge + '</span>' : '') + '</a>';
   }).join('');
 }
 
@@ -440,8 +441,16 @@ function buildCharacterDetail() {
       '</div></div>';
   }
 
-  // Related
-  var related = (SITE.personnel||[]).filter(function(c){ return c.id!==id && c.faction===char.faction && c.visible!==false && !c.hidden; }).slice(0,3);
+  // Related — use manually set list if available, else fallback to same faction
+  var related = [];
+  if (char.related && char.related.length) {
+    char.related.forEach(function(rid) {
+      var rc = (SITE.personnel||[]).find(function(c){ return c.id===rid && !c.hidden && c.visible!==false; });
+      if (rc) related.push(rc);
+    });
+  } else {
+    related = (SITE.personnel||[]).filter(function(c){ return c.id!==id && c.faction===char.faction && c.visible!==false && !c.hidden; }).slice(0,3);
+  }
   var relatedHTML = related.length ? '<div style="margin-top:36px;padding-top:20px;border-top:1px solid var(--border);">' +
     '<div style="font-size:10px;letter-spacing:3px;color:var(--dim);margin-bottom:14px;">RELATED PERSONNEL</div>' +
     '<div style="display:flex;gap:12px;flex-wrap:wrap;">' +

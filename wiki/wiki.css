@@ -420,3 +420,6 @@ a.wiki-card:hover .faction-block.skull-block { border-top-color: #cc2200; }
   font-size: 13px; color: var(--muted); max-width: 400px; line-height: 1.8;
   letter-spacing: 0.5px;
 }
+
+.badge { display: inline-flex; align-items: center; justify-content: center; }
+.badge svg { opacity: 0.6; }

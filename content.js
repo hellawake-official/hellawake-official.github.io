@@ -257,7 +257,8 @@ const SITE = {
         "show": true,
         "text": "Secondary manifestation. Surfaces under extreme duress. Cold, precise, and operationally ruthless in ways Liam is not. Origin unclear. Whether Echo is a product of the facility, a fractured identity, or something else entirely remains CLASSIFIED UNDER DIRECTIVE-9."
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "alex-river-h.",
@@ -298,7 +299,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "hoosier",
@@ -339,7 +341,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "zack-a.-reynalds",
@@ -380,7 +383,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "ravok-drien",
@@ -421,7 +425,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "keshava",
@@ -462,7 +467,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "nesalyn-alren",
@@ -503,7 +509,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "dimitris-vaelor",
@@ -544,7 +551,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "john-miller",
@@ -585,7 +593,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "naira",
@@ -621,7 +630,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "taito-a.",
@@ -657,7 +667,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "ender",
@@ -698,7 +709,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "zephyrus-swedan",
@@ -734,7 +746,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "clyde-forger",
@@ -770,7 +783,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "corvin",
@@ -806,7 +820,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "davan",
@@ -842,7 +857,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "kane",
@@ -878,7 +894,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     },
     {
       "id": "aenya-blake-carter",
@@ -914,7 +931,8 @@ const SITE = {
         "show": false,
         "text": ""
       },
-      "gallery": []
+      "gallery": [],
+      "related": []
     }
   ],
   "factions": [
