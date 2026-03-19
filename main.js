@@ -1,4 +1,3 @@
-
 /* ── MOBILE MENU ── */
 function initMobileMenu() {
   var btn = document.getElementById('mobile-menu-btn');
@@ -168,7 +167,7 @@ function buildMedia() {
   if (slot) {
     if (m.mainVideo?.src) {
       const id = m.mainVideo.src.replace(/.*(?:v=|youtu\.be\/)([^&]+).*/,'$1');
-      slot.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}" frameborder="0" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;"></iframe>`;
+      slot.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?rel=0&modestbranding=1" frameborder="0" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;"></iframe>`;
       slot.style.position = 'relative';
     } else {
       slot.innerHTML = `<span style="font-size:0.6rem;letter-spacing:5px;color:#444;">${m.mainVideo?.label||'NO VIDEO'}</span>`;
@@ -181,7 +180,7 @@ window.playMediaItem = function(el) {
   const src = el.dataset.src; if (!src) return;
   const slot = document.getElementById('media-main-slot'); if (!slot) return;
   const id = src.replace(/.*(?:v=|youtu\.be\/)([^&]+).*/,'$1');
-  slot.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" frameborder="0" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;"></iframe>`;
+  slot.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1" frameborder="0" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;"></iframe>`;
   slot.style.position = 'relative';
 };
 
@@ -745,7 +744,7 @@ function initEpisodesPage() {
     if(overlay) overlay.style.display='flex';
     setTimeout(()=>{
       renderList();
-      if(video){video.removeAttribute('src'); if(ep.yt) video.setAttribute('src',`https://www.youtube.com/watch?v=${ep.yt}`);}
+      if(video){video.removeAttribute('src'); if(ep.yt) video.setAttribute('src',`https://www.youtube.com/watch?v=${ep.yt}&rel=0&modestbranding=1`);}
       if(displayTitle) displayTitle.textContent=ep.title;
       if(descTitle) descTitle.textContent=`S${currentSeason} E${idx+1} : ${ep.title}`;
       if(descText) descText.textContent=ep.desc||'';

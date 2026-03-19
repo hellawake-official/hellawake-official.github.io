@@ -618,8 +618,11 @@ media-theme-sutro { width: 100%; aspect-ratio: 16/9; --media-accent-color: var(-
   .synopsis-grid { grid-template-columns: 1fr; gap: 28px; }
 
   /* ── MEDIA / VIDEO ── */
-  .pv-grid { grid-template-columns: 1fr; gap: 16px; }
-  .pv-list { flex-direction: column; max-height: 220px; overflow-y: auto; }
+  .pv-grid { grid-template-columns: 1fr; gap: 12px; margin-bottom: 20px; }
+  .pv-list { flex-direction: column; max-height: 200px; overflow-y: auto; }
+  .video-main { min-height: auto; }
+  #media-main-slot { min-height: auto !important; }
+  #media-main-slot iframe { min-height: 200px; }
 
   /* ── GALLERY ── */
   .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
@@ -644,6 +647,8 @@ media-theme-sutro { width: 100%; aspect-ratio: 16/9; --media-accent-color: var(-
   #cursor-wrap { display: none !important; }
 
   /* ── EPISODES PAGE ── */
+  .player-wrapper { max-height: 56vw; margin-bottom: 20px; }
+  media-theme-sutro, youtube-video { max-height: 56vw; }
   .series-info h1 { font-size: clamp(1.4rem, 6vw, 2rem); letter-spacing: 4px; }
   .ep-description h2 { font-size: 1.2rem; letter-spacing: 2px; }
   .watch-container { padding: 16px 14px 60px; }
