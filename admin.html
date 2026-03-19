@@ -130,7 +130,30 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 .download-panel code{background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-size:11px;color:var(--accent);}
 .divider{border:none;border-top:1px solid var(--border);margin:20px 0;}
 ::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:2px;}
+
+.md-editor { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+.md-toolbar {
+  display: flex; gap: 4px; padding: 6px 8px; background: var(--surface2);
+  border-bottom: 1px solid var(--border); flex-wrap: wrap;
+}
+.md-toolbar button {
+  background: none; border: 1px solid var(--border); color: var(--text);
+  font-size: 0.7rem; padding: 3px 8px; cursor: pointer; border-radius: 2px;
+  transition: 0.15s; font-family: var(--font-body);
+}
+.md-toolbar button:hover { border-color: var(--accent); color: var(--accent); }
+.md-preview-btn { margin-left: auto !important; letter-spacing: 1px; }
+.md-textarea { border: none !important; border-radius: 0 !important; resize: vertical; width: 100%; }
+.md-preview {
+  padding: 14px 16px; min-height: 140px; background: var(--surface);
+  font-size: 13px; line-height: 1.8; color: var(--text);
+}
+.md-preview p { margin-bottom: 10px; }
+.md-preview strong { color: var(--accent); }
+.md-preview blockquote { border-left: 2px solid var(--accent); padding-left: 12px; color: var(--muted); }
+
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
 </head>
 <body>
 
@@ -378,6 +401,17 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
           <div class="checkbox-row"><input type="checkbox" id="wiki-showBookReader"><label for="wiki-showBookReader">Show book reader on episode pages</label></div>
         </div>
         <hr class="divider">
+        <div class="section-label">Locked Wiki Sections</div>
+        <div class="info-bar">Locked sections show a CLASSIFIED screen instead of content. Visitors see the section exists but can't access it.</div>
+        <div class="field-row" style="flex-wrap:wrap;gap:10px;">
+          <div class="checkbox-row"><input type="checkbox" id="wiki-lock-characters"><label for="wiki-lock-characters">🔒 Characters</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="wiki-lock-factions"><label for="wiki-lock-factions">🔒 Factions</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="wiki-lock-lore"><label for="wiki-lock-lore">🔒 Lore</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="wiki-lock-timeline"><label for="wiki-lock-timeline">🔒 Timeline</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="wiki-lock-episodes"><label for="wiki-lock-episodes">🔒 Episodes</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="wiki-lock-world"><label for="wiki-lock-world">🔒 World</label></div>
+        </div>
+        <hr class="divider">
         <div class="section-label">Intercepted Transmissions</div>
         <div class="info-bar">Random quotes shown in the "INTERCEPTED //" bar on wiki pages.</div>
         <div id="transmissions-list"></div>
@@ -570,6 +604,84 @@ function updateRankDropdown(i, faction) {
   container.outerHTML = buildRankSelect(i, faction, currentRank);
 }
 
+
+/* ── GALLERY HELPERS ── */
+function buildGalleryItems(ci, items) {
+  if (!items || !items.length) return '<div class="gallery-empty" id="per-'+ci+'-gallery-empty" style="font-size:11px;color:var(--muted);padding:6px 0;">No images added.</div>';
+  return items.map(function(item, gi) {
+    return '<div class="array-item" style="gap:8px;align-items:center;" id="per-'+ci+'-gitem-'+gi+'">' +
+      '<input placeholder="Image path (e.g. images/char_photo.jpg)" id="per-'+ci+'-gsrc-'+gi+'" value="' + (item.src||'') + '" style="flex:2;">' +
+      '<input placeholder="Caption (optional)" id="per-'+ci+'-gcap-'+gi+'" value="' + (item.caption||'') + '" style="flex:1;">' +
+      '<button onclick="removeGalleryItem('+ci+','+gi+')" style="flex-shrink:0;">✕</button>' +
+    '</div>';
+  }).join('');
+}
+function collectGalleryItems(ci) {
+  var items = [];
+  var container = document.getElementById('per-'+ci+'-gallery-list');
+  if (!container) return items;
+  container.querySelectorAll('[id^="per-'+ci+'-gitem-"]').forEach(function(el, gi) {
+    var src = document.getElementById('per-'+ci+'-gsrc-'+gi);
+    var cap = document.getElementById('per-'+ci+'-gcap-'+gi);
+    if (src && src.value.trim()) {
+      items.push({ src: src.value.trim(), caption: cap ? cap.value.trim() : '' });
+    }
+  });
+  return items;
+}
+function addGalleryItem(ci) {
+  var r = saveRanks();
+  collectPersonnelList();
+  restoreRanks(r);
+  if (!data.personnel[ci].gallery) data.personnel[ci].gallery = [];
+  data.personnel[ci].gallery.push({ src: '', caption: '' });
+  buildPersonnelList();
+}
+function removeGalleryItem(ci, gi) {
+  var r = saveRanks();
+  collectPersonnelList();
+  restoreRanks(r);
+  if (data.personnel[ci] && data.personnel[ci].gallery) {
+    data.personnel[ci].gallery.splice(gi, 1);
+  }
+  buildPersonnelList();
+}
+
+/* ── MARKDOWN EDITOR ── */
+function mdFmt(i, type) {
+  var ta = document.getElementById('per-'+i+'-bio');
+  if (!ta) return;
+  var start = ta.selectionStart, end = ta.selectionEnd;
+  var sel = ta.value.substring(start, end);
+  var before = ta.value.substring(0, start);
+  var after = ta.value.substring(end);
+  var replacement = sel;
+  if (type === 'bold')   replacement = '**' + (sel||'text') + '**';
+  if (type === 'italic') replacement = '_' + (sel||'text') + '_';
+  if (type === 'h2')     replacement = '\n## ' + (sel||'Heading') + '\n';
+  if (type === 'hr')     replacement = '\n\n---\n\n';
+  if (type === 'quote')  replacement = '\n> ' + (sel||'quote') + '\n';
+  ta.value = before + replacement + after;
+  ta.focus();
+  ta.selectionStart = start + replacement.length;
+  ta.selectionEnd   = start + replacement.length;
+  markUnsaved();
+}
+function toggleMdPreview(i) {
+  var ta  = document.getElementById('per-'+i+'-bio');
+  var pre = document.getElementById('per-'+i+'-bio-preview');
+  var btn = document.querySelector('#per-'+i+'-bio-preview')?.previousElementSibling?.previousElementSibling;
+  if (!ta || !pre) return;
+  var isShowing = pre.style.display !== 'none';
+  if (isShowing) {
+    pre.style.display = 'none'; ta.style.display = '';
+  } else {
+    var md = ta.value;
+    pre.innerHTML = typeof marked !== 'undefined' ? marked.parse(md) : md.replace(/\n/g,'<br>');
+    pre.style.display = 'block'; ta.style.display = 'none';
+  }
+}
+
 /* ── INIT ── */
 var data = {};
 function initAdmin() {
@@ -668,8 +780,13 @@ function populateAll() {
   buildD9Paras(); buildLoreList(); buildTimelineList(); buildTracksList(); buildChipsList();
   buildSeasonsList(); buildCreditsList();
   var wc = data.wikiConfig || {};
+  var ls = wc.lockedSections || {};
   setBool('wiki-lightModeDefault', wc.lightModeDefault || false);
   setBool('wiki-showBookReader', wc.showBookReader !== false);
+  var ls = wc.lockedSections || {};
+  ['characters','factions','lore','timeline','episodes','world'].forEach(function(s) {
+    setBool('wiki-lock-'+s, ls[s] || false);
+  });
   buildTransmissionsList();
   buildEasterEggsList();
 }
@@ -711,6 +828,18 @@ function collectAll() {
   if (!data.wikiConfig) data.wikiConfig = {};
   data.wikiConfig.lightModeDefault = getBool('wiki-lightModeDefault');
   data.wikiConfig.showBookReader = getBool('wiki-showBookReader');
+  data.wikiConfig.lockedSections = {
+    characters: getBool('wiki-lock-characters'),
+    factions:   getBool('wiki-lock-factions'),
+    lore:       getBool('wiki-lock-lore'),
+    timeline:   getBool('wiki-lock-timeline'),
+    episodes:   getBool('wiki-lock-episodes'),
+    world:      getBool('wiki-lock-world')
+  };
+  data.wikiConfig.lockedSections = {};
+  ['characters','factions','lore','timeline','episodes','world'].forEach(function(s) {
+    data.wikiConfig.lockedSections[s] = getBool('wiki-lock-'+s);
+  });
   collectTransmissionsList();
   collectEasterEggs();
 }
@@ -878,8 +1007,27 @@ function buildPersonnelList() {
       '</div>' +
       '<div class="field url-wrap"><label>Image Path</label><input id="per-' + i + '-image" value="' + esc(c.image) + '"><button class="paste-btn" onclick="pasteField(\'per-' + i + '-image\')">PASTE</button></div>' +
       '<div class="checkbox-row" style="margin-bottom:12px;"><input type="checkbox" id="per-' + i + '-visible"' + (c.visible !== false ? ' checked' : '') + '><label>Visible on site</label></div>' +
-      '<div class="field"><label>Bio</label><textarea id="per-' + i + '-bio" style="min-height:100px;">' + esc(c.bio) + '</textarea></div>' +
+      '<div class="field">' +
+        '<label>Bio <span style="font-size:10px;color:var(--muted);font-weight:normal;letter-spacing:1px;">— supports markdown</span></label>' +
+        '<div class="md-editor">' +
+          '<div class="md-toolbar">' +
+            '<button type="button" onclick="mdFmt(' + i + ',\'bold\')" title="Bold">B</button>' +
+            '<button type="button" onclick="mdFmt(' + i + ',\'italic\')" title="Italic"><i>I</i></button>' +
+            '<button type="button" onclick="mdFmt(' + i + ',\'h2\')" title="Heading">H</button>' +
+            '<button type="button" onclick="mdFmt(' + i + ',\'hr\')" title="Divider">—</button>' +
+            '<button type="button" onclick="mdFmt(' + i + ',\'quote\')" title="Blockquote">"</button>' +
+            '<button type="button" onclick="toggleMdPreview(' + i + ')" class="md-preview-btn">PREVIEW</button>' +
+          '</div>' +
+          '<textarea id="per-' + i + '-bio" class="md-textarea" style="min-height:140px;">' + esc(c.bio) + '</textarea>' +
+          '<div id="per-' + i + '-bio-preview" class="md-preview" style="display:none;"></div>' +
+        '</div>' +
+      '</div>' +
       '<div class="field"><label>Teaser (shown on locked card)</label><input id="per-' + i + '-teaser" value="' + esc(c.teaser || '') + '" placeholder="e.g. A name that appears in three separate DHD intercepts."></div>' +
+      '<div class="field">' +
+        '<label>Character Gallery <span style="font-size:10px;color:var(--muted);font-weight:normal;">(horizontal strip on character page)</span></label>' +
+        '<div id="per-' + i + '-gallery-list">' + buildGalleryItems(i, c.gallery||[]) + '</div>' +
+        '<button type="button" class="add-btn" style="margin-top:6px;font-size:0.6rem;padding:5px 12px;" onclick="addGalleryItem(' + i + ')">+ ADD IMAGE</button>' +
+      '</div>' +
       '<div class="section-label">Stats</div>' + statsHTML +
       '<button class="add-btn" onclick="addStat(' + i + ')">+ ADD STAT</button>' +
       '<hr class="divider">' +
@@ -900,7 +1048,7 @@ function collectPersonnelList() {
     // Read rank directly from select element — never loses value during rebuild
     var rankEl = document.getElementById('per-'+i+'-rank');
     var rankVal = rankEl ? rankEl.value : '';
-    data.personnel.push({ id: name.toLowerCase().replace(/\s+/g,'-'), name: name, faction: getVal('per-'+i+'-faction'), factionLabel: getVal('per-'+i+'-factionLabel'), status: getVal('per-'+i+'-status'), visible: getBool('per-'+i+'-visible'), rank: rankVal, locked: getBool('per-'+i+'-locked'), hidden: getBool('per-'+i+'-hidden'), teaser: getVal('per-'+i+'-teaser'), image: getVal('per-'+i+'-image'), stats: stats, bio: getVal('per-'+i+'-bio'), echoEntry: { show: getBool('per-'+i+'-echo-show'), text: getVal('per-'+i+'-echo-text') } });
+    data.personnel.push({ id: name.toLowerCase().replace(/\s+/g,'-'), name: name, faction: getVal('per-'+i+'-faction'), factionLabel: getVal('per-'+i+'-factionLabel'), status: getVal('per-'+i+'-status'), visible: getBool('per-'+i+'-visible'), rank: rankVal, locked: getBool('per-'+i+'-locked'), hidden: getBool('per-'+i+'-hidden'), teaser: getVal('per-'+i+'-teaser'), image: getVal('per-'+i+'-image'), stats: stats, bio: getVal('per-'+i+'-bio'), gallery: collectGalleryItems(i), echoEntry: { show: getBool('per-'+i+'-echo-show'), text: getVal('per-'+i+'-echo-text') } });
   });
 }
 function addPersonnel() { var r=saveRanks(); collectPersonnelList(); restoreRanks(r); data.personnel.push({ id: 'new', name: 'NEW CHARACTER', faction: 'dhd', factionLabel: 'DHD', status: 'ACTIVE', visible: true, image: '', stats: [], bio: '', echoEntry: { show: false, text: '' } }); buildPersonnelList(); }

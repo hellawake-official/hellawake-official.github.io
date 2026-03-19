@@ -269,15 +269,23 @@ function initWikiEasterEggs() {
     var target = parseInt(parts[1]) || 3;
     if (!selector) return;
     var count = 0;
-    // Try both .wiki-logo-img and .nav-logo
-    var selectors = [selector, '.wiki-topbar-logo', '.wiki-logo-img'];
-    selectors.forEach(function(sel) {
-      document.querySelectorAll(sel).forEach(function(el) {
+    var lastTime = 0;
+    // For logo trigger, use only the topbar logo element — one element, one counter
+    var logoSelectors = ['.wiki-topbar-logo'];
+    var found = false;
+    logoSelectors.forEach(function(sel) {
+      if (found) return;
+      var el = document.querySelector(sel);
+      if (el) {
+        found = true;
         el.addEventListener('click', function(e) {
+          var now = Date.now();
+          if (now - lastTime > 2000) count = 0; // reset if too slow
+          lastTime = now;
           count++;
           if (count >= target) { count = 0; wikiFireEgg(egg); }
         });
-      });
+      }
     });
   });
 }
@@ -293,6 +301,28 @@ function wikiFireEgg(egg) {
   }
   // For other types, just redirect to terminal
   window.location.href = 'terminal.html';
+}
+
+
+/* ── SECTION LOCK HELPER ── */
+function isSectionLocked(key) {
+  return !!(SITE.wikiConfig && SITE.wikiConfig.lockedSections && SITE.wikiConfig.lockedSections[key]);
+}
+function renderLockedSection(containerId) {
+  var el = document.getElementById(containerId);
+  if (!el) return false;
+  el.innerHTML =
+    '<div class="section-locked-screen">' +
+      '<div class="section-locked-icon">' +
+        '<svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.2">' +
+          '<rect x="3" y="11" width="18" height="11" rx="2"/>' +
+          '<path d="M7 11V7a5 5 0 0 1 10 0v4"/>' +
+        '</svg>' +
+      '</div>' +
+      '<div class="section-locked-title">CLASSIFIED</div>' +
+      '<div class="section-locked-desc">This section is currently restricted.<br>Access will be granted when declassified.</div>' +
+    '</div>';
+  return true;
 }
 
 /* ── WIKI HOME ── */
@@ -319,6 +349,21 @@ function buildWikiHome() {
 
 /* ── CHARACTERS PAGE ── */
 function buildCharactersPage() {
+  // Check if section is locked
+  var lockedSections = (SITE.wikiConfig && SITE.wikiConfig.lockedSections) || {};
+  if (lockedSections['characters']) {{
+    var mainEl = document.querySelector('.wiki-main') || document.querySelector('[id$="-container"]') || document.querySelector('.wiki-content');
+    if (mainEl) {{
+      mainEl.innerHTML = '<div class="section-locked-screen">' +
+        '<div class="section-locked-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>' +
+        '<div class="section-locked-title">ACCESS RESTRICTED</div>' +
+        '<div class="section-locked-sub">This archive section is currently classified. Content will be unlocked as the series progresses.</div>' +
+      '</div>';
+    }}
+    return;
+  }}
+
+  if (isSectionLocked("characters")) { renderLockedSection("characters-grid"); return; }
   var grid = document.getElementById('characters-grid');
   if (!grid) return;
   var all = (SITE.personnel || []).filter(function(c){ return !c.hidden; });
@@ -352,54 +397,151 @@ function buildCharactersPage() {
 
 /* ── CHARACTER DETAIL ── */
 function buildCharacterDetail() {
-  const id = new URLSearchParams(window.location.search).get('id');
-  const char = (SITE.personnel||[]).find(c=>c.id===id);
-  const crumb = document.getElementById('char-breadcrumb-name');
+  var id = new URLSearchParams(window.location.search).get('id');
+  var char = (SITE.personnel||[]).find(function(c){ return c.id===id; });
+  var crumb = document.getElementById('char-breadcrumb-name');
   if (crumb) crumb.textContent = char ? char.name : '—';
-  const detail = document.getElementById('char-detail');
+  var detail = document.getElementById('char-detail');
   if (!detail) return;
   if (!char || char.hidden) { detail.innerHTML='<p style="color:var(--muted);padding:40px;">Character not found.</p>'; return; }
-  document.title = `${char.name} — HELLAWAKE WIKI`;
+  document.title = char.name + ' — HELLAWAKE WIKI';
 
-  const imgPath = char.image ? ASSET_ROOT + char.image : null;
-  const statsRows = (char.stats||[]).map(s =>
-    `<tr><td>${s.label}</td><td class="${s.redacted?'redacted':''}">${s.redacted?'[REDACTED]':s.value}</td></tr>`
-  ).join('');
-  const echoHTML = char.echoEntry?.show ? `<div class="char-echo-box"><p><b style="color:#6a5a8a;letter-spacing:2px;font-size:0.75rem;">ECHO</b> — ${char.echoEntry.text}</p></div>` : '';
+  var imgPath = char.image ? ASSET_ROOT + char.image : null;
+  var statsRows = (char.stats||[]).map(function(s) {
+    return '<tr><td>' + s.label + '</td><td class="' + (s.redacted?'redacted':'') + '">' + (s.redacted?'[REDACTED]':s.value) + '</td></tr>';
+  }).join('');
 
-  // Find related characters (same faction)
-  const related = (SITE.personnel||[]).filter(c=>c.id!==id && c.faction===char.faction && c.visible!==false).slice(0,3);
-  const relatedHTML = related.length ? `
-    <div style="margin-top:36px;padding-top:20px;border-top:1px solid var(--border);">
-      <div style="font-size:10px;letter-spacing:3px;color:var(--dim);margin-bottom:14px;">RELATED PERSONNEL</div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        ${related.map(r=>`<a href="character.html?id=${r.id}" style="background:var(--surface2);border:1px solid var(--border);padding:8px 14px;text-decoration:none;color:var(--text);font-family:var(--font-display);font-size:0.75rem;letter-spacing:2px;transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">${r.name}</a>`).join('')}
-      </div>
-    </div>` : '';
+  // Markdown bio
+  var bioHTML = '';
+  if (typeof marked !== 'undefined' && char.bio) {
+    bioHTML = '<div class="char-bio-md">' + marked.parse(char.bio) + '</div>';
+  } else {
+    bioHTML = '<p class="char-bio">' + (char.bio||'').replace(/\n/g,'<br>') + '</p>';
+  }
+
+  var echoHTML = (char.echoEntry && char.echoEntry.show) ?
+    '<div class="char-echo-box"><p><b style="color:#6a5a8a;letter-spacing:2px;font-size:0.75rem;">ECHO</b> — ' + char.echoEntry.text + '</p></div>' : '';
+
+  // Gallery
+  var galleryHTML = '';
+  var gallery = char.gallery || [];
+  if (gallery.length) {
+    galleryHTML = '<div class="char-gallery-section">' +
+      '<div class="char-gallery-label">GALLERY</div>' +
+      '<div class="char-gallery-strip">' +
+      gallery.map(function(item, i) {
+        var src = ASSET_ROOT + item.src;
+        var cap = item.caption || '';
+        return '<div class="char-gallery-item" onclick="openCharLightbox(' + i + ', charGalleryData)" data-index="' + i + '">' +
+          '<img src="' + src + '" alt="' + cap + '" loading="lazy">' +
+          (cap ? '<div class="char-gallery-cap">' + cap + '</div>' : '') +
+        '</div>';
+      }).join('') +
+      '</div></div>';
+  }
+
+  // Related
+  var related = (SITE.personnel||[]).filter(function(c){ return c.id!==id && c.faction===char.faction && c.visible!==false && !c.hidden; }).slice(0,3);
+  var relatedHTML = related.length ? '<div style="margin-top:36px;padding-top:20px;border-top:1px solid var(--border);">' +
+    '<div style="font-size:10px;letter-spacing:3px;color:var(--dim);margin-bottom:14px;">RELATED PERSONNEL</div>' +
+    '<div style="display:flex;gap:12px;flex-wrap:wrap;">' +
+    related.map(function(r) {
+      return '<a href="character.html?id=' + r.id + '" class="char-related-link">' + r.name + '</a>';
+    }).join('') +
+    '</div></div>' : '';
 
   var rankLabel = getRankLabel(char.faction, char.rank);
   var rankDesc = getRankDesc(char.faction, char.rank);
-  detail.innerHTML = `
-    <div class="char-profile">
-      <div>
-        <div class="char-profile-img">${imgPath?`<img src="${imgPath}" alt="${char.name}">`:'<span class="char-img-placeholder">IMAGE FILE PENDING</span>'}</div>
-      </div>
-      <div>
-        <div class="char-profile-name">${char.name}</div>
-        <span class="char-profile-faction">${char.factionLabel}</span>
-        ${rankLabel ? `<span class="char-rank-badge">${rankLabel.toUpperCase()}</span>` : ''}
-        ${rankDesc ? `<div class="char-rank-desc">${rankDesc}</div>` : ''}
-        <span class="char-profile-status ${char.faction}">STATUS: ${char.status}</span>
-        <table class="char-stats-table">${statsRows}</table>
-        <p class="char-bio">${char.bio}</p>
-        ${echoHTML}
-        ${relatedHTML}
-      </div>
-    </div>`;
+
+  // Store gallery data for lightbox
+  window.charGalleryData = gallery.map(function(item) {
+    return { src: ASSET_ROOT + item.src, caption: item.caption || '' };
+  });
+
+  detail.innerHTML =
+    '<div class="char-profile">' +
+      '<div>' +
+        '<div class="char-profile-img">' + (imgPath ? '<img src="' + imgPath + '" alt="' + char.name + '">' : '<span class="char-img-placeholder">IMAGE FILE PENDING</span>') + '</div>' +
+      '</div>' +
+      '<div>' +
+        '<div class="char-profile-name">' + char.name + '</div>' +
+        '<span class="char-profile-faction">' + char.factionLabel + '</span>' +
+        (rankLabel ? '<span class="char-rank-badge">' + rankLabel.toUpperCase() + '</span>' : '') +
+        (rankDesc ? '<div class="char-rank-desc">' + rankDesc + '</div>' : '') +
+        '<span class="char-profile-status ' + char.faction + '">STATUS: ' + char.status + '</span>' +
+        '<table class="char-stats-table">' + statsRows + '</table>' +
+        bioHTML +
+        echoHTML +
+        galleryHTML +
+        relatedHTML +
+      '</div>' +
+    '</div>';
+}
+
+/* ── CHARACTER LIGHTBOX ── */
+function openCharLightbox(index, items) {
+  var existing = document.getElementById('char-lightbox');
+  if (existing) existing.remove();
+
+  var lb = document.createElement('div');
+  lb.id = 'char-lightbox';
+  lb.innerHTML =
+    '<div class="char-lb-backdrop" onclick="closeCharLightbox()"></div>' +
+    '<div class="char-lb-content">' +
+      '<button class="char-lb-close" onclick="closeCharLightbox()">✕</button>' +
+      '<button class="char-lb-prev" onclick="charLbNav(-1)" id="char-lb-prev">&#8592;</button>' +
+      '<div class="char-lb-img-wrap"><img id="char-lb-img" src="' + items[index].src + '" alt=""></div>' +
+      '<button class="char-lb-next" onclick="charLbNav(1)" id="char-lb-next">&#8594;</button>' +
+      '<div class="char-lb-caption" id="char-lb-caption">' + items[index].caption + '</div>' +
+    '</div>';
+  document.body.appendChild(lb);
+  window._charLbIndex = index;
+  window._charLbItems = items;
+  updateCharLbNav();
+  requestAnimationFrame(function(){ lb.classList.add('char-lb-open'); });
+  document.addEventListener('keydown', charLbKeyHandler);
+}
+function charLbKeyHandler(e) {
+  if (e.key === 'ArrowRight') charLbNav(1);
+  if (e.key === 'ArrowLeft')  charLbNav(-1);
+  if (e.key === 'Escape')     closeCharLightbox();
+}
+function charLbNav(dir) {
+  var items = window._charLbItems;
+  var i = Math.max(0, Math.min(items.length-1, window._charLbIndex + dir));
+  window._charLbIndex = i;
+  document.getElementById('char-lb-img').src = items[i].src;
+  document.getElementById('char-lb-caption').textContent = items[i].caption;
+  updateCharLbNav();
+}
+function updateCharLbNav() {
+  var i = window._charLbIndex, n = window._charLbItems.length;
+  document.getElementById('char-lb-prev').style.opacity = i === 0 ? '0.2' : '1';
+  document.getElementById('char-lb-next').style.opacity = i === n-1 ? '0.2' : '1';
+}
+function closeCharLightbox() {
+  var lb = document.getElementById('char-lightbox');
+  if (lb) lb.remove();
+  document.removeEventListener('keydown', charLbKeyHandler);
 }
 
 /* ── FACTIONS PAGE ── */
 function buildFactionsPage() {
+  // Check if section is locked
+  var lockedSections = (SITE.wikiConfig && SITE.wikiConfig.lockedSections) || {};
+  if (lockedSections['factions']) {{
+    var mainEl = document.querySelector('.wiki-main') || document.querySelector('[id$="-container"]') || document.querySelector('.wiki-content');
+    if (mainEl) {{
+      mainEl.innerHTML = '<div class="section-locked-screen">' +
+        '<div class="section-locked-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>' +
+        '<div class="section-locked-title">ACCESS RESTRICTED</div>' +
+        '<div class="section-locked-sub">This archive section is currently classified. Content will be unlocked as the series progresses.</div>' +
+      '</div>';
+    }}
+    return;
+  }}
+
+  if (isSectionLocked("factions")) { renderLockedSection("factions-container"); return; }
   var container = document.getElementById('factions-container');
   if (!container) return;
   container.innerHTML = (SITE.factions || []).map(function(f) {
@@ -506,6 +648,21 @@ function buildFactionDetail() {
 
 /* ── LORE PAGE ── */
 function buildLorePage() {
+  // Check if section is locked
+  var lockedSections = (SITE.wikiConfig && SITE.wikiConfig.lockedSections) || {};
+  if (lockedSections['lore']) {{
+    var mainEl = document.querySelector('.wiki-main') || document.querySelector('[id$="-container"]') || document.querySelector('.wiki-content');
+    if (mainEl) {{
+      mainEl.innerHTML = '<div class="section-locked-screen">' +
+        '<div class="section-locked-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>' +
+        '<div class="section-locked-title">ACCESS RESTRICTED</div>' +
+        '<div class="section-locked-sub">This archive section is currently classified. Content will be unlocked as the series progresses.</div>' +
+      '</div>';
+    }}
+    return;
+  }}
+
+  if (isSectionLocked("lore")) { renderLockedSection("lore-container"); return; }
   const container = document.getElementById('lore-container');
   if (!container) return;
   container.innerHTML = (SITE.lore||[]).filter(function(e){return !e.hidden;}).map(e=>`
@@ -517,6 +674,21 @@ function buildLorePage() {
 
 /* ── TIMELINE PAGE ── */
 function buildTimelinePage() {
+  // Check if section is locked
+  var lockedSections = (SITE.wikiConfig && SITE.wikiConfig.lockedSections) || {};
+  if (lockedSections['timeline']) {{
+    var mainEl = document.querySelector('.wiki-main') || document.querySelector('[id$="-container"]') || document.querySelector('.wiki-content');
+    if (mainEl) {{
+      mainEl.innerHTML = '<div class="section-locked-screen">' +
+        '<div class="section-locked-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>' +
+        '<div class="section-locked-title">ACCESS RESTRICTED</div>' +
+        '<div class="section-locked-sub">This archive section is currently classified. Content will be unlocked as the series progresses.</div>' +
+      '</div>';
+    }}
+    return;
+  }}
+
+  if (isSectionLocked("timeline")) { renderLockedSection("timeline-container"); return; }
   const container = document.getElementById('timeline-container');
   if (!container) return;
   container.innerHTML = (SITE.timeline||[]).filter(function(entry){return !entry.hidden;}).map(entry=>`
@@ -532,33 +704,51 @@ function buildTimelinePage() {
 
 /* ── EPISODE GUIDE PAGE ── */
 function buildEpisodeGuidePage() {
+  // Check if section is locked
+  var lockedSections = (SITE.wikiConfig && SITE.wikiConfig.lockedSections) || {};
+  if (lockedSections['episodes']) {{
+    var mainEl = document.querySelector('.wiki-main') || document.querySelector('[id$="-container"]') || document.querySelector('.wiki-content');
+    if (mainEl) {{
+      mainEl.innerHTML = '<div class="section-locked-screen">' +
+        '<div class="section-locked-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>' +
+        '<div class="section-locked-title">ACCESS RESTRICTED</div>' +
+        '<div class="section-locked-sub">This archive section is currently classified. Content will be unlocked as the series progresses.</div>' +
+      '</div>';
+    }}
+    return;
+  }}
+
+  if (isSectionLocked("episodes")) { renderLockedSection("episode-guide-container"); return; }
   const container = document.getElementById('episode-guide-container');
   if (!container) return;
   container.innerHTML = '';
-  (SITE.episodes?.seasons||[]).forEach(season=>{
+  (SITE.episodes?.seasons||[]).forEach(function(season) {
     if(!season.episodes.length) return;
-    const sec = document.createElement('div');
+    var sec = document.createElement('div');
     sec.className = 'ep-guide-season';
-    sec.innerHTML = `<div class="ep-guide-season-title">SEASON ${season.season}</div>`;
-    season.episodes.forEach((ep,i)=>{
-      const locked = ep.comingSoon || !ep.yt;
-      const card = document.createElement('div');
-      card.className = `ep-guide-card ${locked?'ep-guide-locked':''}`;
+    sec.innerHTML = '<div class="ep-guide-season-title">SEASON ' + season.season + '</div>';
+    season.episodes.forEach(function(ep, i) {
+      var locked = ep.comingSoon || !ep.yt;
+      var card = document.createElement('div');
+      card.className = 'ep-guide-card' + (locked ? ' ep-guide-locked' : '');
       var bookBtn = '';
       if (ep.book && SITE.wikiConfig && SITE.wikiConfig.showBookReader) {
         var bookTitle = encodeURIComponent('S' + season.season + ' E' + (i+1) + ': ' + ep.title);
         var bookUrl = '../reader.html?book=' + encodeURIComponent(ep.book) + '&title=' + bookTitle;
         bookBtn = '<a class="ep-book-btn" href="' + bookUrl + '" target="_blank" onclick="event.stopPropagation()">📖 BOOK VERSION</a>';
       }
-      card.innerHTML = `
-        <div>${ep.yt?`<img class="ep-guide-thumb" src="https://img.youtube.com/vi/${ep.yt}/mqdefault.jpg" alt="${ep.title}" onerror="this.style.background='var(--surface2)'">`:`<div class="ep-guide-thumb"></div>`}</div>
-        <div>
-          <span class="ep-guide-num">S${season.season} E${i+1}</span>
-          <div class="ep-guide-title">${ep.title}${locked?' — COMING SOON':''}</div>
-          <div class="ep-guide-desc">${ep.desc||''}</div>
-          <div class="ep-guide-meta">${ep.time?`<span>RUNTIME: ${ep.time}</span>`:''}${bookBtn}</div>
-        </div>`;
-      if (!locked) card.onclick = () => { window.location.href = '../episodes.html'; };
+      var thumbHTML = ep.yt ?
+        '<img class="ep-guide-thumb" src="https://img.youtube.com/vi/' + ep.yt + '/mqdefault.jpg" alt="' + ep.title + '">' :
+        '<div class="ep-guide-thumb"></div>';
+      card.innerHTML =
+        '<div>' + thumbHTML + '</div>' +
+        '<div>' +
+          '<span class="ep-guide-num">S' + season.season + ' E' + (i+1) + '</span>' +
+          '<div class="ep-guide-title">' + ep.title + (locked ? ' — COMING SOON' : '') + '</div>' +
+          '<div class="ep-guide-desc">' + (ep.desc||'') + '</div>' +
+          '<div class="ep-guide-meta">' + (ep.time ? '<span>RUNTIME: ' + ep.time + '</span>' : '') + bookBtn + '</div>' +
+        '</div>';
+      if (!locked) card.onclick = function() { window.location.href = '../episodes.html'; };
       sec.appendChild(card);
     });
     container.appendChild(sec);
@@ -567,6 +757,21 @@ function buildEpisodeGuidePage() {
 
 /* ── WORLD PAGE ── */
 function buildWorldPage() {
+  // Check if section is locked
+  var lockedSections = (SITE.wikiConfig && SITE.wikiConfig.lockedSections) || {};
+  if (lockedSections['world']) {{
+    var mainEl = document.querySelector('.wiki-main') || document.querySelector('[id$="-container"]') || document.querySelector('.wiki-content');
+    if (mainEl) {{
+      mainEl.innerHTML = '<div class="section-locked-screen">' +
+        '<div class="section-locked-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>' +
+        '<div class="section-locked-title">ACCESS RESTRICTED</div>' +
+        '<div class="section-locked-sub">This archive section is currently classified. Content will be unlocked as the series progresses.</div>' +
+      '</div>';
+    }}
+    return;
+  }}
+
+  if (isSectionLocked("world")) { renderLockedSection("world-container"); return; }
   const container = document.getElementById('world-container');
   if (!container) return;
   const loreInit = (SITE.lore||[]).find(e=>e.id==='hellawake-initiative');

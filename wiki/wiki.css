@@ -297,3 +297,126 @@ a.wiki-card:hover .faction-block.skull-block { border-top-color: #cc2200; }
 .ws-snippet mark { background: var(--accent-s); color: var(--accent); border-radius: 2px; padding: 0 2px; }
 .wiki-search-empty { padding: 20px 18px; font-size: 12px; color: var(--muted); text-align: center; letter-spacing: 1px; }
 .wiki-search-count { padding: 7px 18px; font-size: 10px; color: var(--dim); letter-spacing: 1px; border-bottom: 1px solid var(--border); }
+/* ── CHARACTER GALLERY ── */
+.char-gallery-section { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); }
+.char-gallery-label {
+  font-size: 10px; letter-spacing: 4px; color: var(--dim);
+  font-family: var(--font-display); margin-bottom: 14px;
+}
+.char-gallery-strip {
+  display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px;
+  scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+}
+.char-gallery-strip::-webkit-scrollbar { height: 4px; }
+.char-gallery-strip::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.char-gallery-item {
+  flex-shrink: 0; width: 200px; cursor: pointer; position: relative; overflow: hidden;
+  border: 1px solid var(--border); transition: border-color 0.2s;
+}
+.char-gallery-item:hover { border-color: var(--accent); }
+.char-gallery-item img {
+  width: 200px; height: 130px; object-fit: cover; display: block;
+  transition: transform 0.3s;
+}
+.char-gallery-item:hover img { transform: scale(1.04); }
+.char-gallery-cap {
+  font-size: 10px; letter-spacing: 1px; color: var(--muted);
+  padding: 6px 8px; background: var(--surface2); font-family: var(--font-display);
+}
+
+/* ── CHARACTER LIGHTBOX ── */
+#char-lightbox {
+  position: fixed; inset: 0; z-index: 2000;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.25s; pointer-events: none;
+}
+#char-lightbox.char-lb-open { opacity: 1; pointer-events: all; }
+.char-lb-backdrop {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.92); cursor: pointer;
+}
+.char-lb-content {
+  position: relative; z-index: 1; max-width: 90vw; max-height: 90vh;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.char-lb-img-wrap img {
+  max-width: 85vw; max-height: 75vh; object-fit: contain; display: block;
+  box-shadow: 0 8px 60px rgba(0,0,0,0.8);
+}
+.char-lb-close {
+  position: fixed; top: 20px; right: 24px;
+  background: none; border: 1px solid rgba(255,255,255,0.2);
+  color: #fff; font-size: 1rem; padding: 6px 12px; cursor: pointer;
+  transition: 0.2s; z-index: 2;
+}
+.char-lb-close:hover { border-color: var(--accent); color: var(--accent); }
+.char-lb-prev, .char-lb-next {
+  position: fixed; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: #fff; font-size: 1.8rem;
+  cursor: pointer; padding: 12px 20px; transition: opacity 0.2s;
+  z-index: 2;
+}
+.char-lb-prev { left: 16px; }
+.char-lb-next { right: 16px; }
+.char-lb-caption {
+  font-size: 12px; letter-spacing: 2px; color: rgba(255,255,255,0.5);
+  font-family: var(--font-display); text-align: center; min-height: 18px;
+}
+
+/* ── MARKDOWN BIO ── */
+.char-bio-md { margin-top: 20px; line-height: 1.8; color: var(--text); }
+.char-bio-md p { margin-bottom: 14px; }
+.char-bio-md strong { color: var(--accent); font-weight: 600; }
+.char-bio-md em { color: var(--muted); font-style: italic; }
+.char-bio-md h1, .char-bio-md h2, .char-bio-md h3 {
+  font-family: var(--font-display); letter-spacing: 3px; margin: 20px 0 10px;
+  color: var(--text); text-transform: uppercase;
+}
+.char-bio-md ul, .char-bio-md ol { padding-left: 20px; margin-bottom: 14px; }
+.char-bio-md li { margin-bottom: 6px; }
+.char-bio-md code {
+  background: var(--surface2); padding: 2px 6px; font-family: monospace; font-size: 0.85em;
+}
+.char-bio-md blockquote {
+  border-left: 2px solid var(--accent); padding-left: 14px;
+  color: var(--muted); font-style: italic; margin: 14px 0;
+}
+.char-bio-md hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+/* ── RELATED PERSONNEL LINKS ── */
+.char-related-link {
+  background: var(--surface2); border: 1px solid var(--border);
+  padding: 8px 14px; text-decoration: none; color: var(--text);
+  font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 2px;
+  transition: border-color 0.2s, color 0.2s; display: inline-block;
+}
+.char-related-link:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── SECTION LOCKED SCREEN ── */
+.section-locked-screen {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 80px 40px; text-align: center; min-height: 320px;
+  border: 1px solid var(--border); margin: 0;
+}
+.section-locked-icon { color: var(--dim); margin-bottom: 24px; opacity: 0.4; }
+.section-locked-title {
+  font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 8px;
+  color: var(--dim); margin-bottom: 16px;
+}
+.section-locked-desc {
+  font-size: 13px; color: var(--muted); line-height: 1.8; letter-spacing: 0.5px;
+}
+
+/* ── LOCKED SECTION SCREEN ── */
+.section-locked-screen {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 80px 40px; text-align: center; gap: 20px; min-height: 40vh;
+}
+.section-locked-icon { color: var(--dim); opacity: 0.4; }
+.section-locked-title {
+  font-family: var(--font-display); font-size: 1rem; letter-spacing: 6px;
+  color: var(--dim); text-transform: uppercase;
+}
+.section-locked-sub {
+  font-size: 13px; color: var(--muted); max-width: 400px; line-height: 1.8;
+  letter-spacing: 0.5px;
+}
