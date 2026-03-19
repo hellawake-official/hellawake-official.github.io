@@ -1,4 +1,3 @@
-
 /* ── WIKI MOBILE MENU ── */
 function initWikiMobileMenu() {
   if (window.innerWidth > 768) return;
@@ -449,9 +448,12 @@ function buildWikiSearch() {
   // Build index
   var index = [];
 
-  (SITE.personnel||[]).filter(function(c){ return !c.hidden && c.visible!==false; }).forEach(function(c) {
+  (SITE.personnel||[]).filter(function(c){ return !c.hidden && !c.locked && c.visible!==false; }).forEach(function(c) {
     var snippet = (c.bio||'').replace(/[#*_`>]/g,'').substring(0,120);
-    index.push({ type:'CHARACTER', title:c.name, snippet:snippet, href:'character.html?id='+c.id, tags:[c.factionLabel, c.status, c.rank||''] });
+    // Include stat values (callsign, id, unit etc) in tags for search
+    var statVals = (c.stats||[]).filter(function(s){ return !s.redacted; }).map(function(s){ return s.value; });
+    var tags = [c.factionLabel, c.status, c.rank||''].concat(statVals);
+    index.push({ type:'CHARACTER', title:c.name, snippet:snippet, href:'character.html?id='+c.id, tags:tags });
   });
 
   (SITE.factions||[]).forEach(function(f) {
@@ -490,11 +492,28 @@ function buildWikiSearch() {
     if (q.length < 2) { results.style.display='none'; return; }
     var ql = q.toLowerCase();
 
-    var hits = index.filter(function(item) {
-      return item.title.toLowerCase().includes(ql) ||
-             item.snippet.toLowerCase().includes(ql) ||
-             item.tags.some(function(t){ return t && t.toLowerCase().includes(ql); });
-    }).slice(0,10);
+    var hits = index.map(function(item) {
+      var score = 0;
+      var titleLower = item.title.toLowerCase();
+      // Name: exact match scores highest, partial match scores high
+      if (titleLower === ql) score += 200;
+      else if (titleLower.startsWith(ql)) score += 150;
+      else if (titleLower.includes(ql)) score += 100;
+      // Tags: exact tag match scores higher than partial
+      item.tags.forEach(function(t) {
+        if (!t) return;
+        var tl = t.toLowerCase();
+        if (tl === ql) score += 80;
+        else if (tl.startsWith(ql)) score += 60;
+        else if (tl.includes(ql)) score += 40;
+      });
+      // Bio: only if nothing better matched
+      if (item.snippet.toLowerCase().includes(ql)) score += 5;
+      return { item:item, score:score };
+    }).filter(function(r){ return r.score > 0; })
+      .sort(function(a,b){ return b.score - a.score; })
+      .slice(0,10)
+      .map(function(r){ return r.item; });
 
     if (!hits.length) {
       results.innerHTML = '<div class="wiki-search-empty">NO RESULTS FOR "'+q.toUpperCase()+'"</div>';

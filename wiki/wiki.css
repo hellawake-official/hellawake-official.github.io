@@ -357,7 +357,9 @@ a.wiki-card:hover .faction-block.skull-block { border-top-color: #cc2200; }
 
 /* ── WIKI SEARCH ── */
 .wiki-search-bar {
-  position: relative;
+  position: sticky;
+  top: var(--wiki-top);
+  z-index: 90;
   padding: 10px 20px;
   border-bottom: 1px solid var(--border);
   background: var(--surface);
@@ -447,3 +449,18 @@ a.wiki-card:hover .faction-block.skull-block { border-top-color: #cc2200; }
   .wiki-search-icon { left: 32px; }
   .wiki-search-results { left: 16px; right: 16px; }
 }
+
+/* ── RELATED PERSONNEL ── */
+.char-related-link {
+  display: inline-block;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  text-decoration: none !important;
+  color: var(--text) !important;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.char-related-link:hover { border-color: var(--accent) !important; color: var(--accent) !important; }
