@@ -108,6 +108,7 @@ function buildWikiTopbar(activePage) {
 
 /* ── SIDEBAR ── */
 function buildWikiSidebar(activePage) {
+  var ls = (SITE.wikiConfig && SITE.wikiConfig.lockedSections) || {};
   const el = document.getElementById('wiki-sidebar');
   if (!el) return;
   const totalEps = (SITE.episodes?.seasons||[]).reduce((a,s)=>a+s.episodes.length,0);
