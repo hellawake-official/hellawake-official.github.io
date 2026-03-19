@@ -194,11 +194,107 @@ html.wiki-light body {
 .transmission-refresh:hover { color:var(--accent); }
 
 /* RESPONSIVE */
-@media (max-width:860px) {
-  .wiki-sidebar { display:none; }
-  .wiki-main { padding:20px 16px; }
-  .char-profile { grid-template-columns:1fr; }
+/* ============================================================
+   WIKI MOBILE — max-width: 768px
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* ── TOPBAR ── */
+  .wiki-topbar { padding: 0 12px; gap: 8px; }
+  .wiki-topbar-logo { height: 24px; }
+  .wiki-topbar-title { display: none; }
+  .wiki-topbar-nav { display: none; }
+  .wiki-topbar-back { font-size: 0.55rem; padding: 4px 8px; letter-spacing: 1px; }
+  .wiki-theme-btn { font-size: 0.55rem; padding: 4px 8px; letter-spacing: 1px; }
+
+  /* ── SIDEBAR — hidden, toggle via hamburger ── */
+  .wiki-sidebar {
+    position: fixed; left: 0; top: var(--wiki-top); bottom: 0;
+    z-index: 500; transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.23,1,0.32,1);
+    width: 260px; height: calc(100vh - var(--wiki-top));
+    box-shadow: 4px 0 30px rgba(0,0,0,0.7);
+  }
+  .wiki-sidebar.mobile-open { transform: translateX(0); }
+
+  /* ── WIKI HAMBURGER ── */
+  #wiki-mobile-btn {
+    display: flex; position: fixed;
+    bottom: 20px; right: 20px;
+    width: 48px; height: 48px;
+    background: var(--accent); border: none;
+    border-radius: 50%; align-items: center; justify-content: center;
+    z-index: 600; cursor: pointer; box-shadow: 0 4px 20px rgba(255,60,0,0.4);
+    flex-direction: column; gap: 4px;
+  }
+  #wiki-mobile-btn span { display:block; width:18px; height:1px; background:#fff; transition:0.25s; }
+  #wiki-mobile-btn.open span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+  #wiki-mobile-btn.open span:nth-child(2) { opacity: 0; }
+  #wiki-mobile-btn.open span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+
+  /* ── OVERLAY ── */
+  #wiki-mobile-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6); z-index: 499;
+  }
+  #wiki-mobile-overlay.show { display: block; }
+
+  /* ── LAYOUT ── */
+  .wiki-layout { padding-top: var(--wiki-top); }
+  .wiki-main { padding: 20px 16px 80px; }
+  .wiki-main.full-width { padding: 20px 16px 80px; }
+
+  /* ── SEARCH ── */
+  .wiki-search-bar { padding: 10px 16px; }
+  .wiki-search-icon { left: 32px; }
+  .wiki-search-results { left: 16px; right: 16px; }
+
+  /* ── HOME SECTION CARDS ── */
+  .wiki-section-cards { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .wiki-home-hero h1 { font-size: clamp(1.8rem, 8vw, 3rem); letter-spacing: 4px; }
+
+  /* ── CHARACTER CARDS ── */
+  .wiki-card-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .wiki-card-img { height: 120px; }
+
+  /* ── CHARACTER DETAIL ── */
+  .char-profile { grid-template-columns: 1fr; gap: 20px; }
+  .char-profile-img img { width: 100%; max-width: 300px; }
+  .char-profile-name { font-size: clamp(1.5rem, 6vw, 2.5rem); }
+  .char-gallery-item { width: 160px; }
+  .char-gallery-item img { width: 160px; height: 100px; }
+
+  /* ── FACTION RANK LADDER ── */
+  .rank-row { padding: 10px 12px; }
+  .faction-ranks-section { margin: 20px 0; }
+
+  /* ── LORE ── */
+  .lore-entry { padding: 16px 0; }
+
+  /* ── TIMELINE ── */
+  .tl-row-year { width: 80px; font-size: 0.55rem; padding-right: 16px; }
+  .tl-row-dot { left: 76px; }
+  .tl-row-content { padding-left: 20px; }
+  .timeline-full::before { left: 80px; }
+
+  /* ── EPISODE GUIDE ── */
+  .ep-guide-card { flex-direction: column; }
+  .ep-guide-thumb { width: 100%; height: 160px; }
+
+  /* ── BREADCRUMB ── */
+  .wiki-breadcrumb { font-size: 0.6rem; }
 }
+
+/* ── TABLET ── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .wiki-main { padding: 32px 28px; }
+  .wiki-card-grid { grid-template-columns: repeat(3, 1fr); }
+  .char-profile { grid-template-columns: 220px 1fr; }
+}
+
+/* ── WIKI HAMBURGER — hide on desktop ── */
+#wiki-mobile-btn { display: none; }
+#wiki-mobile-overlay { display: none; }
 
 /* CLICKABLE FACTION CARDS */
 a.wiki-card .faction-block { transition: border-color 0.2s, background 0.2s; }

@@ -1,3 +1,52 @@
+
+/* ── MOBILE MENU ── */
+function initMobileMenu() {
+  var btn = document.getElementById('mobile-menu-btn');
+  var sidebar = document.querySelector('.sidebar');
+  var overlay = document.getElementById('mobile-overlay');
+  if (!btn || !sidebar) return;
+
+  btn.addEventListener('click', function() {
+    var isOpen = sidebar.classList.contains('mobile-open');
+    if (isOpen) closeMobileMenu();
+    else openMobileMenu();
+  });
+
+  // Close on nav link click
+  document.querySelectorAll('.side-link').forEach(function(link) {
+    link.addEventListener('click', function() {
+      if (window.innerWidth <= 768) closeMobileMenu();
+    });
+  });
+
+  // Close on swipe left
+  var touchStartX = 0;
+  sidebar.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; }, { passive: true });
+  sidebar.addEventListener('touchend', function(e) {
+    if (touchStartX - e.changedTouches[0].clientX > 60) closeMobileMenu();
+  }, { passive: true });
+}
+
+function openMobileMenu() {
+  var btn = document.getElementById('mobile-menu-btn');
+  var sidebar = document.querySelector('.sidebar');
+  var overlay = document.getElementById('mobile-overlay');
+  sidebar && sidebar.classList.add('mobile-open');
+  overlay && overlay.classList.add('show');
+  btn && btn.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu() {
+  var btn = document.getElementById('mobile-menu-btn');
+  var sidebar = document.querySelector('.sidebar');
+  var overlay = document.getElementById('mobile-overlay');
+  sidebar && sidebar.classList.remove('mobile-open');
+  overlay && overlay.classList.remove('show');
+  btn && btn.classList.remove('open');
+  document.body.style.overflow = '';
+}
+window.closeMobileMenu = closeMobileMenu;
 /* HELLAWAKE — main.js | Requires content.js loaded first */
 
 /* ── BRANDING ── */
@@ -739,4 +788,5 @@ function initEpisodesPage() {
     gsap.to(this,{x:-50,opacity:0,duration:0.6});
   });
   initCursor();
+initMobileMenu();
 }

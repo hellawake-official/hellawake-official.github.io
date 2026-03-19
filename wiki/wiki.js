@@ -1,3 +1,45 @@
+
+/* ── WIKI MOBILE MENU ── */
+function initWikiMobileMenu() {
+  if (window.innerWidth > 768) return;
+  var btn = document.getElementById('wiki-mobile-btn');
+  var sidebar = document.getElementById('wiki-sidebar');
+  var overlay = document.getElementById('wiki-mobile-overlay');
+  if (!btn || !sidebar) return;
+
+  btn.addEventListener('click', function() {
+    var isOpen = sidebar.classList.contains('mobile-open');
+    isOpen ? closeWikiMenu() : openWikiMenu();
+  });
+
+  // Close on link click
+  sidebar.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() { closeWikiMenu(); });
+  });
+
+  // Swipe to close
+  var tx = 0;
+  sidebar.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, { passive:true });
+  sidebar.addEventListener('touchend', function(e){ if(tx - e.changedTouches[0].clientX > 50) closeWikiMenu(); }, { passive:true });
+}
+function openWikiMenu() {
+  var sidebar = document.getElementById('wiki-sidebar');
+  var overlay = document.getElementById('wiki-mobile-overlay');
+  var btn = document.getElementById('wiki-mobile-btn');
+  sidebar && sidebar.classList.add('mobile-open');
+  overlay && overlay.classList.add('show');
+  btn && btn.classList.add('open');
+}
+function closeWikiMenu() {
+  var sidebar = document.getElementById('wiki-sidebar');
+  var overlay = document.getElementById('wiki-mobile-overlay');
+  var btn = document.getElementById('wiki-mobile-btn');
+  sidebar && sidebar.classList.remove('mobile-open');
+  overlay && overlay.classList.remove('show');
+  btn && btn.classList.remove('open');
+}
+window.closeWikiMenu = closeWikiMenu;
+
 /* ── LOCKED ICON ── */
 function lockedBadge() {
   return '<span class="locked-badge" title="CLASSIFIED">🔒</span>';

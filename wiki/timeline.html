@@ -13,8 +13,22 @@
   gtag('js', new Date());
   gtag('config', 'G-CJ2EVB64KV');
 </script>
+<meta property="og:title" content="HELLAWAKE WIKI — Timeline">
+<meta property="og:description" content="In-universe chronological events. Updated as the series progresses.">
+<meta property="og:image" content="https://hellawake-official.github.io/images/Hellawake%20S1%20Logo.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HELLAWAKE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HELLAWAKE WIKI — Timeline">
+<meta name="twitter:description" content="In-universe chronological events. Updated as the series progresses.">
+<meta name="twitter:image" content="https://hellawake-official.github.io/images/Hellawake%20S1%20Logo.png">
+<meta name="description" content="In-universe chronological events. Updated as the series progresses.">
 </head>
 <body>
+<button id="wiki-mobile-btn" aria-label="Menu">
+  <span></span><span></span><span></span>
+</button>
+<div id="wiki-mobile-overlay" onclick="closeWikiMenu()"></div>
 <div id="reading-progress"></div>
 <header class="wiki-topbar">
   <img src="" class="wiki-topbar-logo wiki-logo-img" alt="HELLAWAKE">
@@ -40,6 +54,6 @@
 <script src="../content.js"></script><script src="wiki.js"></script>
 <script>wikiApplyBranding();
 initWikiEasterEggs();
-buildWikiSearch();initThemeToggle();initReadingProgress();buildWikiTopbar('timeline');buildWikiSidebar('timeline');buildTimelinePage();</script>
+buildWikiSearch();initThemeToggle();initReadingProgress();buildWikiTopbar('timeline');buildWikiSidebar('timeline');initWikiMobileMenu();buildTimelinePage();</script>
 </body>
 </html>
