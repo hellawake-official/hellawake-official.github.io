@@ -152,8 +152,37 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
 .md-preview strong { color: var(--accent); }
 .md-preview blockquote { border-left: 2px solid var(--accent); padding-left: 12px; color: var(--muted); }
 
+
+.btn-preview-char {
+  background: none; border: 1px solid var(--border); color: var(--muted);
+  font-size: 0.6rem; letter-spacing: 1px; padding: 3px 8px; cursor: pointer;
+  transition: 0.15s; margin-left: 6px;
+}
+.btn-preview-char:hover { border-color: var(--accent); color: var(--accent); }
+.img-lib-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px; margin-top: 8px;
+}
+.img-lib-item {
+  border: 1px solid var(--border); cursor: pointer; transition: border-color 0.15s;
+  overflow: hidden;
+}
+.img-lib-item:hover { border-color: var(--accent); }
+.img-lib-item img { width: 100%; height: 80px; object-fit: cover; display: block; }
+.img-lib-name {
+  font-size: 9px; padding: 4px 6px; color: var(--muted); white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.5px;
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CJ2EVB64KV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CJ2EVB64KV');
+</script>
 </head>
 <body>
 
@@ -204,6 +233,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
       <div class="nav-section">Tools</div>
       <div class="nav-item" onclick="showPanel('easter-eggs')">Easter Eggs</div>
       <div class="nav-item" onclick="showPanel('uploader')">Image Uploader</div>
+      <div class="nav-item" onclick="showPanel('image-library')">Image Library</div>
       <div class="nav-item" onclick="showPanel('deploy')">Deploy</div>
       <div class="nav-item" onclick="showPanel('settings')">Settings</div>
     </nav>
@@ -433,6 +463,19 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
           <div class="upload-result" id="upload-result"><div class="path" id="upload-path"></div><button class="btn" onclick="copyUploadPath()">Copy path</button></div>
         </div>
       </div>
+
+      <div class="panel" id="panel-image-library">
+        <div class="panel-title">Image Library</div>
+        <div class="panel-desc">Browse images from your GitHub repo. Enter your repo details below.</div>
+        <div class="field-row">
+          <div class="field"><label>GitHub Username</label><input id="gh-lib-user" placeholder="hellawake-official"></div>
+          <div class="field"><label>Repository</label><input id="gh-lib-repo" placeholder="hellawake-official.github.io"></div>
+          <div class="field"><label>Folder</label><input id="gh-lib-path" value="images" placeholder="images"></div>
+        </div>
+        <button class="btn primary" onclick="loadImageLibrary()" style="margin-bottom:16px;">BROWSE IMAGES</button>
+        <div id="img-lib-grid" class="img-lib-grid"></div>
+      </div>
+
 
       <div class="panel" id="panel-deploy">
         <div class="panel-title">Deploy</div>
@@ -680,6 +723,73 @@ function toggleMdPreview(i) {
     pre.innerHTML = typeof marked !== 'undefined' ? marked.parse(md) : md.replace(/\n/g,'<br>');
     pre.style.display = 'block'; ta.style.display = 'none';
   }
+}
+
+
+/* ── CHARACTER PREVIEW ── */
+function previewCharacter(i) {
+  collectPersonnelList();
+  var c = data.personnel[i];
+  if (!c) return;
+  var imgPath = c.image ? c.image : null;
+  var rankLabel = '';
+  (data.factions||[]).forEach(function(f) {
+    if ((f.type===c.faction||f.id===c.faction) && f.ranks) {
+      var r = f.ranks.find(function(r){ return r.id===c.rank; });
+      if (r) rankLabel = r.label;
+    }
+  });
+  var overlay = document.createElement('div');
+  overlay.id = 'char-preview-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:9999;display:flex;align-items:center;justify-content:center;padding:40px;';
+  overlay.onclick = function(e){ if(e.target===overlay) overlay.remove(); };
+  overlay.innerHTML =
+    '<div style="background:var(--surface);border:1px solid var(--border);max-width:700px;width:100%;padding:32px;position:relative;">' +
+      '<button onclick="document.getElementById(\'char-preview-overlay\').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;">✕</button>' +
+      '<div style="font-size:10px;letter-spacing:4px;color:var(--dim);margin-bottom:20px;">CHARACTER PREVIEW — WIKI CARD</div>' +
+      '<div style="display:flex;gap:24px;align-items:flex-start;">' +
+        (imgPath ? '<img src="'+imgPath+'" style="width:160px;height:200px;object-fit:cover;flex-shrink:0;">' : '<div style="width:160px;height:200px;background:#111;display:flex;align-items:center;justify-content:center;color:#333;font-size:0.7rem;letter-spacing:2px;flex-shrink:0;">IMAGE PENDING</div>') +
+        '<div>' +
+          '<div style="font-size:0.65rem;letter-spacing:3px;color:var(--accent);margin-bottom:4px;">' + c.factionLabel + (rankLabel ? ' // ' + rankLabel.toUpperCase() : '') + '</div>' +
+          '<div style="font-family:var(--font-display);font-size:1.8rem;letter-spacing:4px;margin-bottom:8px;">' + c.name + '</div>' +
+          '<div style="display:inline-block;border:1px solid var(--border);padding:4px 10px;font-size:0.6rem;letter-spacing:3px;margin-bottom:16px;">STATUS: ' + c.status + '</div>' +
+          '<div style="font-size:13px;color:var(--muted);line-height:1.8;border-top:1px solid var(--border);padding-top:14px;">' + (c.bio||'').replace(/[#*_`]/g,'').substring(0,200) + '...</div>' +
+          (c.stats && c.stats.length ? '<div style="margin-top:16px;font-size:10px;letter-spacing:2px;color:var(--dim);">'+c.stats.slice(0,3).map(function(s){return '<div style="padding:4px 0;border-bottom:1px solid #111;display:flex;gap:20px;"><span style="color:#555;">'+s.label+'</span><span>'+s.value+'</span></div>';}).join('')+'</div>' : '') +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+}
+
+/* ── IMAGE LIBRARY ── */
+function loadImageLibrary() {
+  var user = document.getElementById('gh-lib-user').value.trim() || (getVal('gh-user')||'');
+  var repo = document.getElementById('gh-lib-repo').value.trim() || (getVal('gh-repo')||'');
+  var path = document.getElementById('gh-lib-path').value.trim() || 'images';
+  var grid = document.getElementById('img-lib-grid');
+  if (!user || !repo) { grid.innerHTML = '<div style="color:var(--muted);padding:20px;">Enter GitHub username and repo first.</div>'; return; }
+  grid.innerHTML = '<div style="color:var(--muted);padding:20px;letter-spacing:2px;font-size:12px;">LOADING...</div>';
+  var apiUrl = 'https://api.github.com/repos/' + user + '/' + repo + '/contents/' + path;
+  fetch(apiUrl).then(function(r){ return r.json(); }).then(function(files) {
+    if (!Array.isArray(files)) { grid.innerHTML = '<div style="color:#cc4444;padding:20px;">Could not load folder. Check username/repo/folder.</div>'; return; }
+    var imgs = files.filter(function(f){ return /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(f.name); });
+    if (!imgs.length) { grid.innerHTML = '<div style="color:var(--muted);padding:20px;">No images found in this folder.</div>'; return; }
+    grid.innerHTML = imgs.map(function(f) {
+      var src = 'https://raw.githubusercontent.com/' + user + '/' + repo + '/main/' + f.path;
+      return '<div class="img-lib-item" onclick="copyImgPath(\''+path+'/'+f.name+'\',this)" title="Click to copy path">' +
+        '<img src="'+src+'" alt="'+f.name+'" loading="lazy">' +
+        '<div class="img-lib-name">'+f.name+'</div>' +
+      '</div>';
+    }).join('');
+  }).catch(function(e){ grid.innerHTML = '<div style="color:#cc4444;padding:20px;">Error: '+e.message+'</div>'; });
+}
+function copyImgPath(path, el) {
+  navigator.clipboard.writeText(path).then(function() {
+    var orig = el.style.borderColor;
+    el.style.borderColor = 'var(--accent)';
+    el.querySelector('.img-lib-name').textContent = '✓ COPIED';
+    setTimeout(function(){ el.style.borderColor=orig; el.querySelector('.img-lib-name').textContent=path.split('/').pop(); }, 1200);
+  });
 }
 
 /* ── INIT ── */
@@ -1026,6 +1136,14 @@ function buildPersonnelList() {
       '<div class="field"><label>Related Personnel <span style="font-size:10px;color:var(--muted);font-weight:normal;">— character IDs, comma separated (e.g. reever,hoosier)</span></label>' +
         '<input id="per-' + i + '-related" value="' + esc((c.related||[]).join(', ')) + '" placeholder="reever, hoosier, keshava">' +
       '</div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>Episode Appearances <span style="font-size:10px;color:var(--muted);font-weight:normal;">— e.g. S1E1, S1E2</span></label>' +
+          '<input id="per-' + i + '-appearances" value="' + esc((c.appearances||[]).join(', ')) + '" placeholder="S1E1, S2E3">' +
+        '</div>' +
+        '<div class="field"><label>Last Updated</label>' +
+          '<input type="date" id="per-' + i + '-updatedAt" value="' + esc(c.updatedAt||'') + '">' +
+        '</div>' +
+      '</div>' +
       '<div class="field">' +
         '<label>Character Gallery <span style="font-size:10px;color:var(--muted);font-weight:normal;">(horizontal strip on character page)</span></label>' +
         '<div id="per-' + i + '-gallery-list">' + buildGalleryItems(i, c.gallery||[]) + '</div>' +
@@ -1051,7 +1169,7 @@ function collectPersonnelList() {
     // Read rank directly from select element — never loses value during rebuild
     var rankEl = document.getElementById('per-'+i+'-rank');
     var rankVal = rankEl ? rankEl.value : '';
-    data.personnel.push({ id: name.toLowerCase().replace(/\s+/g,'-'), name: name, faction: getVal('per-'+i+'-faction'), factionLabel: getVal('per-'+i+'-factionLabel'), status: getVal('per-'+i+'-status'), visible: getBool('per-'+i+'-visible'), rank: rankVal, locked: getBool('per-'+i+'-locked'), hidden: getBool('per-'+i+'-hidden'), teaser: getVal('per-'+i+'-teaser'), related: getVal('per-'+i+'-related').split(',').map(function(s){return s.trim().toLowerCase();}).filter(Boolean), image: getVal('per-'+i+'-image'), stats: stats, bio: getVal('per-'+i+'-bio'), gallery: collectGalleryItems(i), echoEntry: { show: getBool('per-'+i+'-echo-show'), text: getVal('per-'+i+'-echo-text') } });
+    data.personnel.push({ id: name.toLowerCase().replace(/\s+/g,'-'), name: name, faction: getVal('per-'+i+'-faction'), factionLabel: getVal('per-'+i+'-factionLabel'), status: getVal('per-'+i+'-status'), visible: getBool('per-'+i+'-visible'), rank: rankVal, locked: getBool('per-'+i+'-locked'), hidden: getBool('per-'+i+'-hidden'), teaser: getVal('per-'+i+'-teaser'), related: getVal('per-'+i+'-related').split(',').map(function(s){return s.trim().toLowerCase();}).filter(Boolean), appearances: getVal('per-'+i+'-appearances').split(',').map(function(s){return s.trim().toUpperCase();}).filter(Boolean), updatedAt: getVal('per-'+i+'-updatedAt'), image: getVal('per-'+i+'-image'), stats: stats, bio: getVal('per-'+i+'-bio'), gallery: collectGalleryItems(i), echoEntry: { show: getBool('per-'+i+'-echo-show'), text: getVal('per-'+i+'-echo-text') } });
   });
 }
 function addPersonnel() { var r=saveRanks(); collectPersonnelList(); restoreRanks(r); data.personnel.push({ id: 'new', name: 'NEW CHARACTER', faction: 'dhd', factionLabel: 'DHD', status: 'ACTIVE', visible: true, image: '', stats: [], bio: '', echoEntry: { show: false, text: '' } }); buildPersonnelList(); }

@@ -5,6 +5,47 @@
 <title>Character — HELLAWAKE WIKI</title>
 <link rel="stylesheet" href="wiki.css">
 <script>(function(){var t=localStorage.getItem('hw_wiki_theme');if(t==='light'){document.documentElement.classList.add('wiki-light');var s=document.documentElement.style;s.setProperty('--bg','#ffffff');s.setProperty('--surface','#f7f7f5');s.setProperty('--surface2','#efefec');s.setProperty('--text','#1a1a1a');s.setProperty('--muted','#6b6b6b');s.setProperty('--border','rgba(0,0,0,0.09)');}})();</script>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CJ2EVB64KV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CJ2EVB64KV');
+</script>
+<script>
+// Dynamic OG/Twitter meta tags for character pages
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var id = params.get('id');
+  if (!id) return;
+  // Wait for SITE to load
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof SITE === 'undefined') return;
+    var char = (SITE.personnel||[]).find(function(c){ return c.id===id; });
+    if (!char || char.hidden) return;
+    var title = char.name + ' — HELLAWAKE WIKI';
+    var desc = char.bio ? char.bio.replace(/[#*_`]/g,'').split('\n')[0].substring(0,160) : char.factionLabel;
+    var img = char.image ? 'https://hellawake-official.github.io/' + char.image : 'https://hellawake-official.github.io/images/Hellawake S1 Logo.png';
+    function setMeta(prop, val, isName) {
+      var sel = isName ? 'meta[name="'+prop+'"]' : 'meta[property="'+prop+'"]';
+      var el = document.querySelector(sel);
+      if (!el) { el = document.createElement('meta'); if(isName) el.name=prop; else el.setAttribute('property',prop); document.head.appendChild(el); }
+      el.content = val;
+    }
+    document.title = title;
+    setMeta('og:title', title);
+    setMeta('og:description', desc);
+    setMeta('og:image', img);
+    setMeta('og:type', 'article');
+    setMeta('og:url', window.location.href);
+    setMeta('twitter:card', 'summary_large_image', true);
+    setMeta('twitter:title', title, true);
+    setMeta('twitter:description', desc, true);
+    setMeta('twitter:image', img, true);
+  });
+})();
+</script>
 </head>
 <body>
 <div id="reading-progress"></div>

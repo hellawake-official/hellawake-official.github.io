@@ -326,6 +326,63 @@ function renderLockedSection(containerId) {
   return true;
 }
 
+
+/* ── LORE CROSS-REFERENCES ── */
+function linkLoreTerms(text) {
+  if (!text || !SITE.lore) return text;
+  var terms = (SITE.lore||[]).filter(function(e){ return !e.hidden && !e.classified; });
+  // Sort by length descending so longer terms match first
+  terms.sort(function(a,b){ return b.term.length - a.term.length; });
+  terms.forEach(function(e) {
+    var escaped = e.term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    var re = new RegExp('\\b(' + escaped + ')\\b', 'gi');
+    text = text.replace(re, '<a href="lore.html" class="lore-xref" title="' + e.term + '">$1</a>');
+  });
+  return text;
+}
+
+
+/* ── EPISODE APPEARANCE TRACKER ── */
+function buildAppearanceTracker(char) {
+  var appearances = char.appearances || [];
+  if (!appearances.length) return '';
+  var seasons = SITE.episodes && SITE.episodes.seasons || [];
+  var items = appearances.map(function(epId) {
+    // epId format: "S1E1"
+    var match = epId.match(/S(\d+)E(\d+)/i);
+    if (!match) return null;
+    var sNum = parseInt(match[1]), eNum = parseInt(match[2]);
+    var season = seasons.find(function(s){ return s.season === sNum; });
+    var ep = season && season.episodes[eNum-1];
+    if (!ep) return null;
+    return { id: epId, title: ep.title, season: sNum, ep: eNum, yt: ep.yt };
+  }).filter(Boolean);
+  if (!items.length) return '';
+  return '<div class="char-appearances-section">' +
+    '<div class="char-appearances-label">APPEARS IN</div>' +
+    '<div class="char-appearances-list">' +
+    items.map(function(item) {
+      return '<a class="char-appearance-item" href="../episodes.html" title="' + item.title + '">' +
+        (item.yt ? '<img src="https://img.youtube.com/vi/' + item.yt + '/mqdefault.jpg" alt="' + item.title + '">' : '<div class="char-appearance-thumb-placeholder"></div>') +
+        '<div class="char-appearance-info">' +
+          '<span class="char-appearance-num">S' + item.season + ' E' + item.ep + '</span>' +
+          '<span class="char-appearance-title">' + item.title + '</span>' +
+        '</div>' +
+      '</a>';
+    }).join('') +
+    '</div></div>';
+}
+
+
+/* ── LAST UPDATED ── */
+function formatUpdatedAt(dateStr) {
+  if (!dateStr) return '';
+  try {
+    var d = new Date(dateStr);
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  } catch(e) { return dateStr; }
+}
+
 /* ── WIKI HOME ── */
 function buildWikiHome() {
   const container = document.getElementById('wiki-home-sections');
@@ -400,12 +457,16 @@ function buildCharacterDetail() {
 
   // Markdown bio
   var bioHTML = '';
-  if (typeof marked !== 'undefined' && char.bio) {
-    bioHTML = '<div class="char-bio-md">' + marked.parse(char.bio) + '</div>';
+  var rawBio = char.bio || '';
+  if (typeof marked !== 'undefined' && rawBio) {
+    var linkedBio = linkLoreTerms(rawBio);
+    bioHTML = '<div class="char-bio-md">' + marked.parse(linkedBio) + '</div>';
   } else {
-    bioHTML = '<p class="char-bio">' + (char.bio||'').replace(/\n/g,'<br>') + '</p>';
+    bioHTML = '<p class="char-bio">' + linkLoreTerms(rawBio).replace(/\n/g,'<br>') + '</p>';
   }
 
+  var appearancesHTML = buildAppearanceTracker(char);
+  var lastUpdatedHTML = char.updatedAt ? '<div class="char-last-updated">LAST UPDATED: ' + formatUpdatedAt(char.updatedAt) + '</div>' : '';
   var echoHTML = (char.echoEntry && char.echoEntry.show) ?
     '<div class="char-echo-box"><p><b style="color:#6a5a8a;letter-spacing:2px;font-size:0.75rem;">ECHO</b> — ' + char.echoEntry.text + '</p></div>' : '';
 
@@ -467,7 +528,9 @@ function buildCharacterDetail() {
         '<table class="char-stats-table">' + statsRows + '</table>' +
         bioHTML +
         echoHTML +
+        appearancesHTML +
         galleryHTML +
+        lastUpdatedHTML +
         relatedHTML +
       '</div>' +
     '</div>';

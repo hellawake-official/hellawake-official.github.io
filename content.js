@@ -258,7 +258,9 @@ const SITE = {
         "text": "Secondary manifestation. Surfaces under extreme duress. Cold, precise, and operationally ruthless in ways Liam is not. Origin unclear. Whether Echo is a product of the facility, a fractured identity, or something else entirely remains CLASSIFIED UNDER DIRECTIVE-9."
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "alex-river-h.",
@@ -300,7 +302,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "hoosier",
@@ -342,7 +346,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "zack-a.-reynalds",
@@ -384,7 +390,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "ravok-drien",
@@ -426,7 +434,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "keshava",
@@ -468,7 +478,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "nesalyn-alren",
@@ -510,7 +522,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "dimitris-vaelor",
@@ -552,7 +566,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "john-miller",
@@ -594,7 +610,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "naira",
@@ -631,7 +649,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "taito-a.",
@@ -668,7 +688,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "ender",
@@ -710,7 +732,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "zephyrus-swedan",
@@ -747,7 +771,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "clyde-forger",
@@ -784,7 +810,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "corvin",
@@ -821,7 +849,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "davan",
@@ -858,7 +888,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "kane",
@@ -895,7 +927,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     },
     {
       "id": "aenya-blake-carter",
@@ -932,7 +966,9 @@ const SITE = {
         "text": ""
       },
       "gallery": [],
-      "related": []
+      "related": [],
+      "updatedAt": "2026-03-19",
+      "appearances": []
     }
   ],
   "factions": [
@@ -1000,7 +1036,8 @@ const SITE = {
       "classified": false,
       "locked": false,
       "hidden": false,
-      "body": "The programme responsible for what Liam Hill became. A facility. Experiments. Seven years. The full scope of what they were trying to create is not yet confirmed, but the Skullborns' interest in the result tells you everything you need to know about how dangerous it is."
+      "body": "The programme responsible for what Liam Hill became. A facility. Experiments. Seven years. The full scope of what they were trying to create is not yet confirmed, but the Skullborns' interest in the result tells you everything you need to know about how dangerous it is.",
+      "updatedAt": "2026-03-19"
     },
     {
       "id": "the-death-grins",
@@ -1008,7 +1045,8 @@ const SITE = {
       "classified": false,
       "locked": false,
       "hidden": false,
-      "body": "A Skullborn sub-unit deployed for high-risk ambush and assassination operations. Used the abandoned base scenario to trap the DHD recon team in Episode 1. Effective. Patient. Hard to interrogate."
+      "body": "A Skullborn sub-unit deployed for high-risk ambush and assassination operations. Used the abandoned base scenario to trap the DHD recon team in Episode 1. Effective. Patient. Hard to interrogate.",
+      "updatedAt": "2026-03-19"
     },
     {
       "id": "echo",
@@ -1016,7 +1054,8 @@ const SITE = {
       "classified": false,
       "locked": false,
       "hidden": false,
-      "body": "Liam Hill's secondary self. Surfaces when he has no other choice. Cold. Ruthless. Not entirely him. Whether this is a power, a fractured identity, or a product of the facility \u2014 the archive does not yet have a clean answer."
+      "body": "Liam Hill's secondary self. Surfaces when he has no other choice. Cold. Ruthless. Not entirely him. Whether this is a power, a fractured identity, or a product of the facility \u2014 the archive does not yet have a clean answer.",
+      "updatedAt": "2026-03-19"
     },
     {
       "id": "the-breach",
@@ -1024,7 +1063,8 @@ const SITE = {
       "classified": false,
       "locked": false,
       "hidden": false,
-      "body": "Skullborn tactical operation \u2014 the coordinated bombing of Metro Line 7 during Reever's return to headquarters. Suggests deep infrastructure penetration. The DHD did not anticipate it."
+      "body": "Skullborn tactical operation \u2014 the coordinated bombing of Metro Line 7 during Reever's return to headquarters. Suggests deep infrastructure penetration. The DHD did not anticipate it.",
+      "updatedAt": "2026-03-19"
     },
     {
       "id": "ghost-frequency",
@@ -1032,7 +1072,8 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "CLASSIFIED // DETAILS WITHHELD"
+      "body": "CLASSIFIED // DETAILS WITHHELD",
+      "updatedAt": "2026-03-19"
     },
     {
       "id": "directive-9",
@@ -1040,7 +1081,8 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "ACCESS RESTRICTED // ENTER CODE IN ARCHIVE PANEL"
+      "body": "ACCESS RESTRICTED // ENTER CODE IN ARCHIVE PANEL",
+      "updatedAt": "2026-03-19"
     },
     {
       "id": "[redacted-entry-\u2014-anomaly-class]",
@@ -1048,7 +1090,8 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "FILE LOCKED // CLEARANCE LEVEL INSUFFICIENT // THIS ENTRY PREDATES THE HELLAWAKE INITIATIVE // DO NOT QUERY FURTHER"
+      "body": "FILE LOCKED // CLEARANCE LEVEL INSUFFICIENT // THIS ENTRY PREDATES THE HELLAWAKE INITIATIVE // DO NOT QUERY FURTHER",
+      "updatedAt": "2026-03-19"
     },
     {
       "id": "the-photograph",
@@ -1056,7 +1099,8 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "CLASSIFIED // ACCESS RESTRICTED\n\nA photograph carried by Reever. Three individuals: Reever, Liam Hill, and a third subject \u2014 identity REDACTED. Taken shortly before a significant event. Details of that event: CLASSIFIED.\n\nDuring the Episode 1 train bombing, blood from Reever's wound fell across the photograph \u2014 obscuring the face of one of the subjects."
+      "body": "CLASSIFIED // ACCESS RESTRICTED\n\nA photograph carried by Reever. Three individuals: Reever, Liam Hill, and a third subject \u2014 identity REDACTED. Taken shortly before a significant event. Details of that event: CLASSIFIED.\n\nDuring the Episode 1 train bombing, blood from Reever's wound fell across the photograph \u2014 obscuring the face of one of the subjects.",
+      "updatedAt": "2026-03-19"
     },
     {
       "id": "the-promise",
@@ -1064,7 +1108,8 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nReference to an unconfirmed event involving Reever and Liam Hill prior to the series. Nature of the promise: REDACTED. Current status: UNKNOWN."
+      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nReference to an unconfirmed event involving Reever and Liam Hill prior to the series. Nature of the promise: REDACTED. Current status: UNKNOWN.",
+      "updatedAt": "2026-03-19"
     },
     {
       "id": "subject-289",
@@ -1072,7 +1117,8 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "CLASSIFIED // DIRECTIVE-9 LOCK\n\nDesignation used internally within the HELLAWAKE initiative. Cross-references with HWK-SUBJECT-07. Further details withheld pending clearance."
+      "body": "CLASSIFIED // DIRECTIVE-9 LOCK\n\nDesignation used internally within the HELLAWAKE initiative. Cross-references with HWK-SUBJECT-07. Further details withheld pending clearance.",
+      "updatedAt": "2026-03-19"
     },
     {
       "id": "power-dominion",
@@ -1080,7 +1126,8 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nSkullborn internal faction. Designation and function: REDACTED. Known personnel: CLASSIFIED. File locked pending further episode release."
+      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nSkullborn internal faction. Designation and function: REDACTED. Known personnel: CLASSIFIED. File locked pending further episode release.",
+      "updatedAt": "2026-03-19"
     },
     {
       "id": "science-dominion",
@@ -1088,7 +1135,8 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nSkullborn internal faction. Believed to oversee experimental programmes including the HELLAWAKE initiative. Known personnel: CLASSIFIED. File locked pending further episode release."
+      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nSkullborn internal faction. Believed to oversee experimental programmes including the HELLAWAKE initiative. Known personnel: CLASSIFIED. File locked pending further episode release.",
+      "updatedAt": "2026-03-19"
     },
     {
       "id": "dhd-rank-structure",
@@ -1096,7 +1144,8 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "CLASSIFIED // INTERNAL DOCUMENT\n\nFull rank structure of the Dawn Horizon Division: REDACTED. Partial information available to cleared operatives only. File locked pending further episode release."
+      "body": "CLASSIFIED // INTERNAL DOCUMENT\n\nFull rank structure of the Dawn Horizon Division: REDACTED. Partial information available to cleared operatives only. File locked pending further episode release.",
+      "updatedAt": "2026-03-19"
     }
   ],
   "timeline": [
@@ -1106,7 +1155,8 @@ const SITE = {
       "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nEvents predating the HELLAWAKE initiative. A conflict that shaped the current state of the world. Key figures involved: REDACTED. Outcome: PARTIAL VICTORY // DETAILS WITHHELD.",
       "classified": true,
       "locked": true,
-      "hidden": false
+      "hidden": false,
+      "updatedAt": "2026-03-19"
     },
     {
       "year": "BEFORE YEAR 0",
@@ -1114,7 +1164,8 @@ const SITE = {
       "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nThe Dawn Horizon Division is established. Founder: Keshava. Circumstances of founding: REDACTED. What preceded it: CLASSIFIED UNDER DIRECTIVE-9.",
       "classified": true,
       "locked": true,
-      "hidden": false
+      "hidden": false,
+      "updatedAt": "2026-03-19"
     },
     {
       "year": "YEAR 0",
@@ -1122,7 +1173,8 @@ const SITE = {
       "body": "Liam Hill disappears. No official record of the event exists. Directive-9 activates. As far as any registry is concerned, he never existed.",
       "classified": false,
       "locked": false,
-      "hidden": false
+      "hidden": false,
+      "updatedAt": "2026-03-19"
     },
     {
       "year": "YEAR 1",
@@ -1130,7 +1182,8 @@ const SITE = {
       "body": "CLASSIFIED // DETAILS WITHHELD",
       "classified": true,
       "locked": true,
-      "hidden": false
+      "hidden": false,
+      "updatedAt": "2026-03-19"
     },
     {
       "year": "YEAR 3",
@@ -1138,7 +1191,8 @@ const SITE = {
       "body": "CLASSIFIED // DETAILS WITHHELD",
       "classified": true,
       "locked": true,
-      "hidden": false
+      "hidden": false,
+      "updatedAt": "2026-03-19"
     },
     {
       "year": "YEAR 6",
@@ -1146,7 +1200,8 @@ const SITE = {
       "body": "CLASSIFIED // DETAILS WITHHELD",
       "classified": true,
       "locked": true,
-      "hidden": false
+      "hidden": false,
+      "updatedAt": "2026-03-19"
     },
     {
       "year": "YEAR 7",
@@ -1154,7 +1209,8 @@ const SITE = {
       "body": "HWK-SUBJECT-07 breaks containment. First and only successful escape in the history of the HELLAWAKE initiative. Skullborn hunt order issued within 48 hours.",
       "classified": false,
       "locked": false,
-      "hidden": false
+      "hidden": false,
+      "updatedAt": "2026-03-19"
     },
     {
       "year": "YEAR 7",
@@ -1162,7 +1218,8 @@ const SITE = {
       "body": "Skullborn operatives bomb Metro Line 7. DHD recon team ambushed at abandoned base. Reever survives assassination attempt. Prisoner taken \u2014 interrogation inconclusive.",
       "classified": false,
       "locked": false,
-      "hidden": false
+      "hidden": false,
+      "updatedAt": "2026-03-19"
     },
     {
       "year": "ONGOING",
@@ -1170,7 +1227,8 @@ const SITE = {
       "body": "Liam Hill is alive and moving. The DHD doesn't know he exists. The Skullborns know exactly what he is. The gap between those two facts is where the story lives.",
       "classified": false,
       "locked": false,
-      "hidden": false
+      "hidden": false,
+      "updatedAt": "2026-03-19"
     },
     {
       "year": "UNKNOWN",
@@ -1178,7 +1236,8 @@ const SITE = {
       "body": "CLASSIFIED // THIS EVENT HAS NOT YET BEEN RECORDED IN THE ARCHIVE // CLEARANCE LEVEL INSUFFICIENT // DO NOT QUERY FURTHER",
       "classified": true,
       "locked": true,
-      "hidden": false
+      "hidden": false,
+      "updatedAt": "2026-03-19"
     }
   ],
   "audio": {
