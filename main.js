@@ -1,3 +1,4 @@
+
 /* ── MOBILE MENU ── */
 function initMobileMenu() {
   var btn = document.getElementById('mobile-menu-btn');
@@ -319,12 +320,12 @@ function buildWikiGateway() {
   const container = document.getElementById('wiki-gateway-cards');
   if (!container) return;
   const cards = [
-    { title:'Characters', desc:`${(SITE.personnel||[]).filter(c=>c.visible!==false).length} filed`, href:'wiki/characters.html', accent:'var(--accent)' },
-    { title:'Factions',   desc:`${(SITE.factions||[]).length} known`,   href:'wiki/factions.html',  accent:'#8B0000'          },
-    { title:'Lore',       desc:`${(SITE.lore||[]).length} entries`,     href:'wiki/lore.html',      accent:'var(--accent)'    },
-    { title:'Timeline',   desc:`${(SITE.timeline||[]).length} events`,  href:'wiki/timeline.html',  accent:'var(--accent)'    },
-    { title:'Episodes',   desc:'Full episode guide',                    href:'wiki/episodes.html',  accent:'var(--accent)'    },
-    { title:'World',      desc:'Setting & factions',                    href:'wiki/world.html',     accent:'var(--accent)'    },
+    { title:'Characters', desc:`${(SITE.personnel||[]).filter(c=>c.visible!==false).length} filed`, href:'wiki/characters', accent:'var(--accent)' },
+    { title:'Factions',   desc:`${(SITE.factions||[]).length} known`,   href:'wiki/factions',  accent:'#8B0000'          },
+    { title:'Lore',       desc:`${(SITE.lore||[]).length} entries`,     href:'wiki/lore',      accent:'var(--accent)'    },
+    { title:'Timeline',   desc:`${(SITE.timeline||[]).length} events`,  href:'wiki/timeline',  accent:'var(--accent)'    },
+    { title:'Episodes',   desc:'Full episode guide',                    href:'wiki/episodes',  accent:'var(--accent)'    },
+    { title:'World',      desc:'Setting & factions',                    href:'wiki/world',     accent:'var(--accent)'    },
   ];
   container.innerHTML = cards.map(c => `
     <a href="${c.href}" class="gateway-card hover-target" style="border-top:2px solid ${c.accent};">
