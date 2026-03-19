@@ -655,11 +655,11 @@ function buildGalleryItems(ci, items) {
     return '<div class="array-item" style="gap:8px;align-items:center;" id="per-'+ci+'-gitem-'+gi+'">' +
       '<input placeholder="Image path (e.g. images/char_photo.jpg)" id="per-'+ci+'-gsrc-'+gi+'" value="' + (item.src||'') + '" style="flex:2;">' +
       '<input placeholder="Caption (optional)" id="per-'+ci+'-gcap-'+gi+'" value="' + (item.caption||'') + '" style="flex:1;">' +
-      '<button onclick="removeGalleryItem('+ci+','+gi+')" style="flex-shrink:0;">✕</button>' +
+      '<button onclick="removeCharGalleryItem('+ci+','+gi+')" style="flex-shrink:0;">✕</button>' +
     '</div>';
   }).join('');
 }
-function collectGalleryItems(ci) {
+function collectCharGalleryItems(ci) {
   var items = [];
   var container = document.getElementById('per-'+ci+'-gallery-list');
   if (!container) return items;
@@ -672,7 +672,7 @@ function collectGalleryItems(ci) {
   });
   return items;
 }
-function addGalleryItem(ci) {
+function addCharGalleryItem(ci) {
   var r = saveRanks();
   collectPersonnelList();
   restoreRanks(r);
@@ -680,7 +680,7 @@ function addGalleryItem(ci) {
   data.personnel[ci].gallery.push({ src: '', caption: '' });
   buildPersonnelList();
 }
-function removeGalleryItem(ci, gi) {
+function removeCharGalleryItem(ci, gi) {
   var r = saveRanks();
   collectPersonnelList();
   restoreRanks(r);
@@ -1147,7 +1147,7 @@ function buildPersonnelList() {
       '<div class="field">' +
         '<label>Character Gallery <span style="font-size:10px;color:var(--muted);font-weight:normal;">(horizontal strip on character page)</span></label>' +
         '<div id="per-' + i + '-gallery-list">' + buildGalleryItems(i, c.gallery||[]) + '</div>' +
-        '<button type="button" class="add-btn" style="margin-top:6px;font-size:0.6rem;padding:5px 12px;" onclick="addGalleryItem(' + i + ')">+ ADD IMAGE</button>' +
+        '<button type="button" class="add-btn" style="margin-top:6px;font-size:0.6rem;padding:5px 12px;" onclick="addCharGalleryItem(' + i + ')">+ ADD IMAGE</button>' +
       '</div>' +
       '<div class="section-label">Stats</div>' + statsHTML +
       '<button class="add-btn" onclick="addStat(' + i + ')">+ ADD STAT</button>' +
@@ -1169,7 +1169,7 @@ function collectPersonnelList() {
     // Read rank directly from select element — never loses value during rebuild
     var rankEl = document.getElementById('per-'+i+'-rank');
     var rankVal = rankEl ? rankEl.value : '';
-    data.personnel.push({ id: name.toLowerCase().replace(/\s+/g,'-'), name: name, faction: getVal('per-'+i+'-faction'), factionLabel: getVal('per-'+i+'-factionLabel'), status: getVal('per-'+i+'-status'), visible: getBool('per-'+i+'-visible'), rank: rankVal, locked: getBool('per-'+i+'-locked'), hidden: getBool('per-'+i+'-hidden'), teaser: getVal('per-'+i+'-teaser'), related: getVal('per-'+i+'-related').split(',').map(function(s){return s.trim().toLowerCase();}).filter(Boolean), appearances: getVal('per-'+i+'-appearances').split(',').map(function(s){return s.trim().toUpperCase();}).filter(Boolean), updatedAt: getVal('per-'+i+'-updatedAt'), image: getVal('per-'+i+'-image'), stats: stats, bio: getVal('per-'+i+'-bio'), gallery: collectGalleryItems(i), echoEntry: { show: getBool('per-'+i+'-echo-show'), text: getVal('per-'+i+'-echo-text') } });
+    data.personnel.push({ id: name.toLowerCase().replace(/\s+/g,'-'), name: name, faction: getVal('per-'+i+'-faction'), factionLabel: getVal('per-'+i+'-factionLabel'), status: getVal('per-'+i+'-status'), visible: getBool('per-'+i+'-visible'), rank: rankVal, locked: getBool('per-'+i+'-locked'), hidden: getBool('per-'+i+'-hidden'), teaser: getVal('per-'+i+'-teaser'), related: getVal('per-'+i+'-related').split(',').map(function(s){return s.trim().toLowerCase();}).filter(Boolean), appearances: getVal('per-'+i+'-appearances').split(',').map(function(s){return s.trim().toUpperCase();}).filter(Boolean), updatedAt: getVal('per-'+i+'-updatedAt'), image: getVal('per-'+i+'-image'), stats: stats, bio: getVal('per-'+i+'-bio'), gallery: collectCharGalleryItems(i), echoEntry: { show: getBool('per-'+i+'-echo-show'), text: getVal('per-'+i+'-echo-text') } });
   });
 }
 function addPersonnel() { var r=saveRanks(); collectPersonnelList(); restoreRanks(r); data.personnel.push({ id: 'new', name: 'NEW CHARACTER', faction: 'dhd', factionLabel: 'DHD', status: 'ACTIVE', visible: true, image: '', stats: [], bio: '', echoEntry: { show: false, text: '' } }); buildPersonnelList(); }
