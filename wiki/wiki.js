@@ -350,7 +350,6 @@ function buildWikiHome() {
 
 /* ── CHARACTERS PAGE ── */
 function buildCharactersPage() {
-    return;
   if (isSectionLocked("characters")) { renderLockedSection("characters-grid"); return; }
   var grid = document.getElementById('characters-grid');
   if (!grid) return;
@@ -523,7 +522,6 @@ function closeCharLightbox() {
 
 /* ── FACTIONS PAGE ── */
 function buildFactionsPage() {
-    return;
   if (isSectionLocked("factions")) { renderLockedSection("factions-container"); return; }
   var container = document.getElementById('factions-container');
   if (!container) return;
@@ -631,7 +629,6 @@ function buildFactionDetail() {
 
 /* ── LORE PAGE ── */
 function buildLorePage() {
-    return;
   if (isSectionLocked("lore")) { renderLockedSection("lore-container"); return; }
   const container = document.getElementById('lore-container');
   if (!container) return;
@@ -644,7 +641,6 @@ function buildLorePage() {
 
 /* ── TIMELINE PAGE ── */
 function buildTimelinePage() {
-    return;
   if (isSectionLocked("timeline")) { renderLockedSection("timeline-container"); return; }
   const container = document.getElementById('timeline-container');
   if (!container) return;
@@ -661,7 +657,6 @@ function buildTimelinePage() {
 
 /* ── EPISODE GUIDE PAGE ── */
 function buildEpisodeGuidePage() {
-    return;
   if (isSectionLocked("episodes")) { renderLockedSection("episode-guide-container"); return; }
   const container = document.getElementById('episode-guide-container');
   if (!container) return;
@@ -701,7 +696,6 @@ function buildEpisodeGuidePage() {
 
 /* ── WORLD PAGE ── */
 function buildWorldPage() {
-    return;
   if (isSectionLocked("world")) { renderLockedSection("world-container"); return; }
   const container = document.getElementById('world-container');
   if (!container) return;
