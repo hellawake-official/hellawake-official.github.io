@@ -317,7 +317,7 @@ const SITE = {
       "locked": false,
       "hidden": false,
       "teaser": "",
-      "image": "",
+      "image": "images/Hoosier_Character_Card.png",
       "stats": [
         {
           "label": "Faction",
