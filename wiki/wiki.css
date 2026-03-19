@@ -135,6 +135,8 @@ html.wiki-light body {
 /* TIMELINE */
 .timeline-full { position:relative; padding:16px 0 32px; }
 .timeline-full::before { content:''; position:absolute; left:130px; top:0; bottom:0; width:1px; background:var(--border); }
+.timeline-full:has(.section-locked-screen)::before { display:none; }
+.timeline-full.is-locked::before { display:none; }
 .tl-row { display:flex; margin-bottom:28px; position:relative; }
 .tl-row-year { width:130px; flex-shrink:0; padding-top:16px; text-align:right; padding-right:28px; font-family:var(--font-display); font-size:0.65rem; letter-spacing:3px; color:var(--accent); }
 .tl-row-dot { position:absolute; left:126px; top:20px; width:9px; height:9px; background:var(--accent); border-radius:50%; border:2px solid var(--bg); z-index:2; }

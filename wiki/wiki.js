@@ -264,31 +264,40 @@ function initWikiEasterEggs() {
     });
   });
 
-  // Click count triggers (logo 7 clicks etc.)
+  // Click count triggers — handle logo-7-clicks specially, ignore others on wiki
+  var logoEl = document.querySelector('.wiki-topbar-logo');
+  var logoCount = 0, logoLastTime = 0;
   eggs.filter(function(egg) { return egg.triggerType === 'clickcount'; }).forEach(function(egg) {
     var parts = egg.triggerValue.split('//');
     var selector = parts[0] ? parts[0].trim() : null;
     var target = parseInt(parts[1]) || 3;
     if (!selector) return;
-    var count = 0;
-    var lastTime = 0;
-    // For logo trigger, use only the topbar logo element — one element, one counter
-    var logoSelectors = ['.wiki-topbar-logo'];
-    var found = false;
-    logoSelectors.forEach(function(sel) {
-      if (found) return;
-      var el = document.querySelector(sel);
-      if (el) {
-        found = true;
-        el.addEventListener('click', function(e) {
+    // Only handle logo-based triggers on wiki (nav-logo maps to wiki-topbar-logo)
+    var isLogoTrigger = selector === '.nav-logo' || selector === '.wiki-topbar-logo';
+    if (isLogoTrigger && logoEl) {
+      (function(t, egg) {
+        logoEl.addEventListener('click', function() {
           var now = Date.now();
-          if (now - lastTime > 2000) count = 0; // reset if too slow
-          lastTime = now;
-          count++;
-          if (count >= target) { count = 0; wikiFireEgg(egg); }
+          if (now - logoLastTime > 2500) logoCount = 0;
+          logoLastTime = now;
+          logoCount++;
+          if (logoCount >= t) { logoCount = 0; wikiFireEgg(egg); }
         });
-      }
-    });
+      })(target, egg);
+    }
+    // For non-logo clickcount triggers (voice chip etc), find specific elements
+    if (!isLogoTrigger) {
+      var el = document.querySelector(selector);
+      if (!el) return;
+      var count = 0, lastTime = 0;
+      el.addEventListener('click', function() {
+        var now = Date.now();
+        if (now - lastTime > 2000) count = 0;
+        lastTime = now;
+        count++;
+        if (count >= target) { count = 0; wikiFireEgg(egg); }
+      });
+    }
   });
 }
 
@@ -313,6 +322,8 @@ function isSectionLocked(key) {
 function renderLockedSection(containerId) {
   var el = document.getElementById(containerId);
   if (!el) return false;
+  // Add class to parent for CSS targeting
+  if (el.parentElement) el.parentElement.classList.add('is-locked');
   el.innerHTML =
     '<div class="section-locked-screen">' +
       '<div class="section-locked-icon">' +
