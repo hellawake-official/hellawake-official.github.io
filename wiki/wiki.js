@@ -350,20 +350,7 @@ function buildWikiHome() {
 
 /* ── CHARACTERS PAGE ── */
 function buildCharactersPage() {
-  // Check if section is locked
-  var lockedSections = (SITE.wikiConfig && SITE.wikiConfig.lockedSections) || {};
-  if (lockedSections['characters']) {{
-    var mainEl = document.querySelector('.wiki-main') || document.querySelector('[id$="-container"]') || document.querySelector('.wiki-content');
-    if (mainEl) {{
-      mainEl.innerHTML = '<div class="section-locked-screen">' +
-        '<div class="section-locked-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>' +
-        '<div class="section-locked-title">ACCESS RESTRICTED</div>' +
-        '<div class="section-locked-sub">This archive section is currently classified. Content will be unlocked as the series progresses.</div>' +
-      '</div>';
-    }}
     return;
-  }}
-
   if (isSectionLocked("characters")) { renderLockedSection("characters-grid"); return; }
   var grid = document.getElementById('characters-grid');
   if (!grid) return;
@@ -536,20 +523,7 @@ function closeCharLightbox() {
 
 /* ── FACTIONS PAGE ── */
 function buildFactionsPage() {
-  // Check if section is locked
-  var lockedSections = (SITE.wikiConfig && SITE.wikiConfig.lockedSections) || {};
-  if (lockedSections['factions']) {{
-    var mainEl = document.querySelector('.wiki-main') || document.querySelector('[id$="-container"]') || document.querySelector('.wiki-content');
-    if (mainEl) {{
-      mainEl.innerHTML = '<div class="section-locked-screen">' +
-        '<div class="section-locked-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>' +
-        '<div class="section-locked-title">ACCESS RESTRICTED</div>' +
-        '<div class="section-locked-sub">This archive section is currently classified. Content will be unlocked as the series progresses.</div>' +
-      '</div>';
-    }}
     return;
-  }}
-
   if (isSectionLocked("factions")) { renderLockedSection("factions-container"); return; }
   var container = document.getElementById('factions-container');
   if (!container) return;
@@ -657,20 +631,7 @@ function buildFactionDetail() {
 
 /* ── LORE PAGE ── */
 function buildLorePage() {
-  // Check if section is locked
-  var lockedSections = (SITE.wikiConfig && SITE.wikiConfig.lockedSections) || {};
-  if (lockedSections['lore']) {{
-    var mainEl = document.querySelector('.wiki-main') || document.querySelector('[id$="-container"]') || document.querySelector('.wiki-content');
-    if (mainEl) {{
-      mainEl.innerHTML = '<div class="section-locked-screen">' +
-        '<div class="section-locked-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>' +
-        '<div class="section-locked-title">ACCESS RESTRICTED</div>' +
-        '<div class="section-locked-sub">This archive section is currently classified. Content will be unlocked as the series progresses.</div>' +
-      '</div>';
-    }}
     return;
-  }}
-
   if (isSectionLocked("lore")) { renderLockedSection("lore-container"); return; }
   const container = document.getElementById('lore-container');
   if (!container) return;
@@ -683,20 +644,7 @@ function buildLorePage() {
 
 /* ── TIMELINE PAGE ── */
 function buildTimelinePage() {
-  // Check if section is locked
-  var lockedSections = (SITE.wikiConfig && SITE.wikiConfig.lockedSections) || {};
-  if (lockedSections['timeline']) {{
-    var mainEl = document.querySelector('.wiki-main') || document.querySelector('[id$="-container"]') || document.querySelector('.wiki-content');
-    if (mainEl) {{
-      mainEl.innerHTML = '<div class="section-locked-screen">' +
-        '<div class="section-locked-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>' +
-        '<div class="section-locked-title">ACCESS RESTRICTED</div>' +
-        '<div class="section-locked-sub">This archive section is currently classified. Content will be unlocked as the series progresses.</div>' +
-      '</div>';
-    }}
     return;
-  }}
-
   if (isSectionLocked("timeline")) { renderLockedSection("timeline-container"); return; }
   const container = document.getElementById('timeline-container');
   if (!container) return;
@@ -713,20 +661,7 @@ function buildTimelinePage() {
 
 /* ── EPISODE GUIDE PAGE ── */
 function buildEpisodeGuidePage() {
-  // Check if section is locked
-  var lockedSections = (SITE.wikiConfig && SITE.wikiConfig.lockedSections) || {};
-  if (lockedSections['episodes']) {{
-    var mainEl = document.querySelector('.wiki-main') || document.querySelector('[id$="-container"]') || document.querySelector('.wiki-content');
-    if (mainEl) {{
-      mainEl.innerHTML = '<div class="section-locked-screen">' +
-        '<div class="section-locked-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>' +
-        '<div class="section-locked-title">ACCESS RESTRICTED</div>' +
-        '<div class="section-locked-sub">This archive section is currently classified. Content will be unlocked as the series progresses.</div>' +
-      '</div>';
-    }}
     return;
-  }}
-
   if (isSectionLocked("episodes")) { renderLockedSection("episode-guide-container"); return; }
   const container = document.getElementById('episode-guide-container');
   if (!container) return;
@@ -766,20 +701,7 @@ function buildEpisodeGuidePage() {
 
 /* ── WORLD PAGE ── */
 function buildWorldPage() {
-  // Check if section is locked
-  var lockedSections = (SITE.wikiConfig && SITE.wikiConfig.lockedSections) || {};
-  if (lockedSections['world']) {{
-    var mainEl = document.querySelector('.wiki-main') || document.querySelector('[id$="-container"]') || document.querySelector('.wiki-content');
-    if (mainEl) {{
-      mainEl.innerHTML = '<div class="section-locked-screen">' +
-        '<div class="section-locked-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>' +
-        '<div class="section-locked-title">ACCESS RESTRICTED</div>' +
-        '<div class="section-locked-sub">This archive section is currently classified. Content will be unlocked as the series progresses.</div>' +
-      '</div>';
-    }}
     return;
-  }}
-
   if (isSectionLocked("world")) { renderLockedSection("world-container"); return; }
   const container = document.getElementById('world-container');
   if (!container) return;
