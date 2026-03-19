@@ -554,20 +554,18 @@ media-theme-sutro { width: 100%; aspect-ratio: 16/9; --media-accent-color: var(-
 
   :root { --sidebar-w: 0px; }
 
-  /* ── SIDEBAR — hidden by default, slide-in overlay ── */
+  /* ── SIDEBAR ── */
   .sidebar {
     transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.23,1,0.32,1);
-    z-index: 8000;
-    width: 280px;
+    z-index: 8000; width: 280px;
     box-shadow: 4px 0 40px rgba(0,0,0,0.8);
   }
   .sidebar.mobile-open { transform: translateX(0); }
 
-  /* ── HAMBURGER BUTTON ── */
+  /* ── HAMBURGER ── */
   #mobile-menu-btn {
-    display: flex;
-    position: fixed;
+    display: flex; position: fixed;
     top: 16px; left: 16px;
     width: 40px; height: 40px;
     align-items: center; justify-content: center;
@@ -576,69 +574,82 @@ media-theme-sutro { width: 100%; aspect-ratio: 16/9; --media-accent-color: var(-
     z-index: 9000; cursor: pointer;
     flex-direction: column; gap: 5px; padding: 10px;
   }
-  #mobile-menu-btn span {
-    display: block; width: 20px; height: 1px;
-    background: #fff; transition: 0.3s;
-  }
+  #mobile-menu-btn span { display:block; width:20px; height:1px; background:#fff; transition:0.3s; }
   #mobile-menu-btn.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
   #mobile-menu-btn.open span:nth-child(2) { opacity: 0; }
   #mobile-menu-btn.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
-  /* ── OVERLAY BACKDROP ── */
-  #mobile-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.7);
-    z-index: 7999;
-  }
+  /* ── OVERLAY ── */
+  #mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 7999; }
   #mobile-overlay.show { display: block; }
 
   /* ── MAIN CONTENT ── */
-  main {
-    margin-left: 0;
-    width: 100vw;
-  }
+  main { margin-left: 0; width: 100vw; }
 
   /* ── NEWS BAR ── */
   .news-bar { left: 0; }
 
+  /* ── LOADER ── */
+  .loader-logo { width: min(75vw, 300px); }
+  .bar-wrap { width: min(70vw, 250px); }
+  .loader-tagline { font-size: 0.55rem; letter-spacing: 3px; text-align: center; padding: 0 20px; }
+
   /* ── SECTIONS ── */
-  .section { padding: 80px 6% 60px; }
+  .section { padding: 80px 5% 60px; }
+  .short-section { padding: 60px 5%; }
 
   /* ── HERO ── */
   #hero { min-height: 100vh; }
-  .hero-logo { width: 80%; max-width: 320px; }
-  .enter-btn { font-size: 0.65rem; padding: 14px 28px; }
-
-  /* ── SYNOPSIS ── */
-  .synopsis-grid { grid-template-columns: 1fr; gap: 30px; }
-
-  /* ── GALLERY ── */
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .gallery-filter { flex-wrap: wrap; gap: 6px; }
-
-  /* ── WIKI GATEWAY ── */
-  .gateway-cards { grid-template-columns: 1fr; }
+  #logo-static { width: min(80vw, 320px) !important; }
+  .enter-btn { font-size: 0.6rem; padding: 12px 24px; letter-spacing: 3px; }
 
   /* ── HEADINGS ── */
-  .header-thin { font-size: clamp(2rem, 8vw, 4rem); letter-spacing: 4px; }
+  .header-thin { font-size: clamp(1.8rem, 7vw, 3.5rem); letter-spacing: 3px; }
+
+  /* ── SYNOPSIS ── */
+  .synopsis-grid { grid-template-columns: 1fr; gap: 32px; }
+
+  /* ── MEDIA / YOUTUBE ── */
+  .media-embed-wrap { padding: 0; }
+
+  /* ── GALLERY ── */
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .gallery-filter { flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .control-btn { font-size: 0.55rem; padding: 6px 10px; letter-spacing: 2px; }
+
+  /* ── WIKI GATEWAY ── */
+  .gateway-cards { grid-template-columns: 1fr; gap: 10px; }
 
   /* ── AUDIO ── */
   .audio-grid { grid-template-columns: 1fr; }
+  .audio-track { padding: 14px 16px; }
 
   /* ── CREDITS ── */
-  .credits-grid { grid-template-columns: 1fr; }
+  .credits-grid { grid-template-columns: 1fr; gap: 20px; }
 
-  /* ── SECURE TERMINAL ── */
+  /* ── TERMINAL ── */
   .classified-panel { max-width: 100%; }
-  .terminal-prompt { font-size: 0.65rem; white-space: nowrap; }
-  .classified-input { font-size: 0.7rem; }
+  .terminal-body { padding: 10px 12px 14px; }
+  .terminal-prompt { font-size: 0.6rem; white-space: nowrap; }
+  .classified-input { font-size: 0.65rem; }
+  .terminal-chrome-title { font-size: 0.55rem; letter-spacing: 0; }
 
-  /* ── LORE MAP ── */
+  /* ── LORE ── */
   .lore-container { grid-template-columns: 1fr; gap: 40px; }
 
   /* ── CURSOR — hide on touch ── */
-  #cursor-wrap { display: none; }
+  #cursor-wrap { display: none !important; }
+
+  /* ── EPISODES PAGE ── */
+  .watch-container { padding: 20px 14px 60px; }
+  .top-bar { flex-direction: column; align-items: flex-start; gap: 12px; padding-top: 60px; }
+  .theater-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 16px; }
+  .content-layout { grid-template-columns: 1fr; gap: 20px; }
+  .playlist-area { max-height: 300px; overflow-y: auto; }
+  .nav-controls { flex-wrap: wrap; gap: 8px; }
+  .season-tabs { gap: 12px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
+  .player-wrapper iframe,
+  .player-wrapper > div { width: 100% !important; }
 }
 
 /* ── TABLET ── */
@@ -646,6 +657,8 @@ media-theme-sutro { width: 100%; aspect-ratio: 16/9; --media-accent-color: var(-
   :root { --sidebar-w: 200px; }
   .section { padding: 120px 8%; }
   .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+  .synopsis-grid { gap: 40px; }
+  .content-layout { grid-template-columns: 1fr 320px; }
 }
 
 /* ── HAMBURGER — hide on desktop ── */

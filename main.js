@@ -1,4 +1,3 @@
-
 /* ── MOBILE MENU ── */
 function initMobileMenu() {
   var btn = document.getElementById('mobile-menu-btn');
@@ -135,7 +134,9 @@ function buildSidebar() {
   if (!nav) return;
   nav.innerHTML = (SITE.nav || []).map(n => {
     const isExternal = n.external || (!n.href.startsWith('#') && !n.href.startsWith('episodes'));
-    return `<a href="${n.href}" class="side-link hover-target ${isExternal ? 'nav-external' : 'nav-anchor'}" ${isExternal ? 'target="_blank"' : ''}>${n.label}<span>${n.sub}</span></a>`;
+    var kanjiMap = { 'Home':'帰還','Series':'物語','Media':'映像','Renders':'描写','Wiki':'記録','Watch':'視聴','Audio':'音声','Credits':'制作','Access':'機密' };
+    var kanji = kanjiMap[n.label] || n.sub || '';
+    return `<a href="${n.href}" class="side-link hover-target ${isExternal ? 'nav-external' : 'nav-anchor'}" ${isExternal ? 'target="_blank"' : ''}>${n.label}<span>${kanji}</span></a>`;
   }).join('');
 }
 
