@@ -68,7 +68,7 @@ function getRankDesc(factionType, rankId) {
 /* HELLAWAKE WIKI — wiki.js */
 
 /* ── LOGO PATH (wiki is one level deep) ── */
-const ASSET_ROOT = '/';
+const ASSET_ROOT = '../';
 
 function wikiApplyBranding() {
   if (SITE.branding?.accentColor) document.documentElement.style.setProperty('--accent', SITE.branding.accentColor);
@@ -139,9 +139,9 @@ function buildWikiTopbar(activePage) {
     { key:'home',       label:'Wiki Home',   href:'index'      },
     { key:'characters', label:'Characters',  href:'characters' },
     { key:'factions',   label:'Factions',    href:'factions'   },
-    { key:'lore',       label:'Lore',         href:'lore'       },
-    { key:'timeline',   label:'Timeline',    href:'timeline'   },
-    { key:'episodes',   label:'Episodes',    href:'episodes'   },
+    { key:'lore',       label:'Lore',         href:'lore.html'       },
+    { key:'timeline',   label:'Timeline',    href:'timeline.html'   },
+    { key:'episodes',   label:'Episodes',    href:'episodes.html'   },
     { key:'world',      label:'World',       href:'world'      },
   ];
   const nav = document.getElementById('wiki-topbar-nav');
@@ -160,10 +160,10 @@ function buildWikiSidebar(activePage) {
     { section:'Story' },
     { key:'characters', label:'Characters',    href:'characters', badge: ls.characters ? '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : String((SITE.personnel||[]).filter(function(c){return c.visible!==false&&!c.hidden;}).length) },
     { key:'factions',   label:'Factions',      href:'factions',   badge: ls.factions  ? '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : String((SITE.factions||[]).length) },
-    { key:'lore',       label:'Lore',           href:'lore',       badge: ls.lore      ? '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : String((SITE.lore||[]).filter(function(e){return !e.hidden;}).length) },
-    { key:'timeline',   label:'Timeline',      href:'timeline',   badge: ls.timeline  ? '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : String((SITE.timeline||[]).filter(function(e){return !e.hidden;}).length) },
+    { key:'lore',       label:'Lore',           href:'lore.html',       badge: ls.lore      ? '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : String((SITE.lore||[]).filter(function(e){return !e.hidden;}).length) },
+    { key:'timeline',   label:'Timeline',      href:'timeline.html',   badge: ls.timeline  ? '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : String((SITE.timeline||[]).filter(function(e){return !e.hidden;}).length) },
     { section:'Media' },
-    { key:'episodes',   label:'Episode Guide', href:'episodes',   badge: ls.episodes  ? '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : String(totalEps) },
+    { key:'episodes',   label:'Episode Guide', href:'episodes.html',   badge: ls.episodes  ? '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : String(totalEps) },
     { section:'World' },
     { key:'world',      label:'World & Setting',href:'world',     badge:'' },
   ];
@@ -451,25 +451,25 @@ function buildWikiSearch() {
 
   (SITE.personnel||[]).filter(function(c){ return !c.hidden && c.visible!==false; }).forEach(function(c) {
     var snippet = (c.bio||'').replace(/[#*_`>]/g,'').substring(0,120);
-    index.push({ type:'CHARACTER', title:c.name, snippet:snippet, href:'character?id='+c.id, tags:[c.factionLabel, c.status, c.rank||''] });
+    index.push({ type:'CHARACTER', title:c.name, snippet:snippet, href:'character.html?id='+c.id, tags:[c.factionLabel, c.status, c.rank||''] });
   });
 
   (SITE.factions||[]).forEach(function(f) {
-    index.push({ type:'FACTION', title:f.name, snippet:(f.body||'').substring(0,120), href:'faction?id='+f.id, tags:[f.subtitle] });
+    index.push({ type:'FACTION', title:f.name, snippet:(f.body||'').substring(0,120), href:'faction.html?id='+f.id, tags:[f.subtitle] });
   });
 
   (SITE.lore||[]).filter(function(e){ return !e.hidden && !e.classified; }).forEach(function(e) {
-    index.push({ type:'LORE', title:e.term, snippet:(e.body||'').substring(0,120), href:'lore', tags:[] });
+    index.push({ type:'LORE', title:e.term, snippet:(e.body||'').substring(0,120), href:'lore.html', tags:[] });
   });
 
   (SITE.timeline||[]).filter(function(e){ return !e.hidden && !e.classified; }).forEach(function(e) {
-    index.push({ type:'TIMELINE', title:e.title, snippet:(e.body||'').substring(0,120), href:'timeline', tags:[e.year] });
+    index.push({ type:'TIMELINE', title:e.title, snippet:(e.body||'').substring(0,120), href:'timeline.html', tags:[e.year] });
   });
 
   var seasons = (SITE.episodes&&SITE.episodes.seasons)||[];
   seasons.forEach(function(s) {
     (s.episodes||[]).filter(function(ep){ return !ep.comingSoon; }).forEach(function(ep,i) {
-      index.push({ type:'EPISODE', title:'S'+s.season+' E'+(i+1)+': '+ep.title, snippet:(ep.desc||'').substring(0,120), href:'episodes', tags:[] });
+      index.push({ type:'EPISODE', title:'S'+s.season+' E'+(i+1)+': '+ep.title, snippet:(ep.desc||'').substring(0,120), href:'episodes.html', tags:[] });
     });
   });
 
@@ -552,9 +552,9 @@ function buildWikiHome() {
   const sections = [
     { key:'characters', title:'Characters',    desc:'Personnel files and operative dossiers.',  href:'characters', count:(SITE.personnel||[]).filter(function(c){return c.visible!==false&&!c.hidden;}).length+' entries' },
     { key:'factions',   title:'Factions',      desc:'The Skullborns, the DHD, and beyond.',     href:'factions',   count:(SITE.factions||[]).length+' factions' },
-    { key:'lore',       title:'Lore',           desc:'Terminology, events, and classified files.',href:'lore',      count:(SITE.lore||[]).filter(function(e){return !e.hidden;}).length+' entries' },
-    { key:'timeline',   title:'Timeline',      desc:'In-universe chronological events.',         href:'timeline',   count:(SITE.timeline||[]).filter(function(e){return !e.hidden;}).length+' events' },
-    { key:'episodes',   title:'Episode Guide', desc:'Full episode synopses and details.',        href:'episodes',   count:totalEps+' episodes' },
+    { key:'lore',       title:'Lore',           desc:'Terminology, events, and classified files.',href:'lore.html',      count:(SITE.lore||[]).filter(function(e){return !e.hidden;}).length+' entries' },
+    { key:'timeline',   title:'Timeline',      desc:'In-universe chronological events.',         href:'timeline.html',   count:(SITE.timeline||[]).filter(function(e){return !e.hidden;}).length+' events' },
+    { key:'episodes',   title:'Episode Guide', desc:'Full episode synopses and details.',        href:'episodes.html',   count:totalEps+' episodes' },
     { key:'world',      title:'World',         desc:'The setting, factions, and the war.',       href:'world',      count:'' },
   ];
   container.innerHTML = sections.map(s =>
