@@ -1414,7 +1414,7 @@ const SITE = {
       "triggerType": "keysequence",
       "triggerValue": "ACCESS",
       "responseType": "redirect",
-      "responseContent": "wiki/terminal.html",
+      "responseContent": "https://hellawake-official.github.io/wiki/terminal/",
       "hint": "TERMINAL ACCESS GRANTED // REDIRECTING..."
     },
     {
@@ -1423,7 +1423,7 @@ const SITE = {
       "triggerType": "clickcount",
       "triggerValue": ".nav-logo//7",
       "responseType": "redirect",
-      "responseContent": "wiki/terminal.html",
+      "responseContent": "https://hellawake-official.github.io/wiki/terminal/",
       "hint": ""
     }
   ]
