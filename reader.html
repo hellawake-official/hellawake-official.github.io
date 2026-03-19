@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>HELLAWAKE // ARCHIVE READER</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <!-- Google Analytics -->
@@ -15,7 +15,7 @@
   --accent:#ff3c00; --text:#d0d0d0; --muted:#555; --dim:#333;
   --font-display:'Oswald',sans-serif; --font-body:'Inter',sans-serif;
 }
-html,body { height:100%; background:var(--bg); color:var(--text); font-family:var(--font-body); overflow:hidden; user-select:none; }
+html,body { height:100%; background:var(--bg); color:var(--text); font-family:var(--font-body); overflow:hidden; user-select:none; touch-action:none; }
 
 /* ── TOPBAR ── */
 #reader-topbar {
@@ -38,10 +38,11 @@ html,body { height:100%; background:var(--bg); color:var(--text); font-family:va
 /* ── VIEWER ── */
 #reader-body {
   position:fixed; top:52px; left:0; right:0; bottom:48px;
-  overflow-y:auto; overflow-x:hidden; background:var(--bg);
+  overflow-y:auto; overflow-x:auto; background:var(--bg);
   display:flex; flex-direction:column; align-items:center;
   padding:28px 0;
   scrollbar-width:thin; scrollbar-color:#222 #000;
+  touch-action:pan-x pan-y;
 }
 #reader-body::-webkit-scrollbar { width:5px; }
 #reader-body::-webkit-scrollbar-thumb { background:#222; }
@@ -426,6 +427,7 @@ function toggleDoubleMode() {
 }
 function rerender() {
   zoomDisp.textContent = Math.round(scale * 100) + '%';
+  var savedPage = currentPage;
   body.innerHTML = '';
   pageCanvases = {};
   document.getElementById('reader-loading').style.display = 'flex';
@@ -433,10 +435,62 @@ function rerender() {
   renderAllPages().then(function() {
     document.getElementById('reader-loading').style.display = 'none';
     observePages();
-    setTimeout(function(){ goToPage(currentPage); }, 100);
+    setTimeout(function(){
+      goToPage(savedPage);
+      // Center horizontally if content wider than viewport
+      var wrap = document.getElementById('page-wrap-' + savedPage);
+      if (wrap && wrap.offsetWidth > body.clientWidth) {
+        body.scrollLeft = (wrap.offsetWidth - body.clientWidth) / 2;
+      }
+    }, 100);
     saveProgress();
   });
 }
+
+
+// ── PINCH TO ZOOM ──
+(function() {
+  var el = document.getElementById('reader-body');
+  if (!el) return;
+
+  var startDist = 0, startScale = 1, pinching = false;
+
+  function getDist(touches) {
+    var dx = touches[0].clientX - touches[1].clientX;
+    var dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx*dx + dy*dy);
+  }
+
+  el.addEventListener('touchstart', function(e) {
+    if (e.touches.length === 2) {
+      pinching = true;
+      startDist = getDist(e.touches);
+      startScale = scale;
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  el.addEventListener('touchmove', function(e) {
+    if (pinching && e.touches.length === 2) {
+      e.preventDefault();
+      var newDist = getDist(e.touches);
+      var newScale = Math.max(0.6, Math.min(3.0, startScale * (newDist / startDist)));
+      // Only rerender if scale changed significantly
+      if (Math.abs(newScale - scale) > 0.05) {
+        scale = newScale;
+        zoomDisp.textContent = Math.round(scale * 100) + '%';
+      }
+    }
+  }, { passive: false });
+
+  el.addEventListener('touchend', function(e) {
+    if (pinching && e.touches.length < 2) {
+      pinching = false;
+      // Rerender at new scale
+      rerender();
+    }
+  }, { passive: true });
+})();
 
 // Block right-click
 document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
