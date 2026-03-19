@@ -44,6 +44,7 @@ body.low-perf .map-scanner { animation: none; display: none; }
 
 * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
 
+html { overflow-x: hidden; }
 body {
   background-color: var(--bg);
   color: #ffffff;
@@ -584,72 +585,74 @@ media-theme-sutro { width: 100%; aspect-ratio: 16/9; --media-accent-color: var(-
   #mobile-overlay.show { display: block; }
 
   /* ── MAIN CONTENT ── */
-  main { margin-left: 0; width: 100vw; }
-
-  /* ── NEWS BAR ── */
+  main { margin-left: 0; width: 100%; max-width: 100vw; overflow-x: hidden; }
+  html, body { overflow-x: hidden; max-width: 100vw; }
   .news-bar { left: 0; }
 
   /* ── LOADER ── */
-  .loader-logo { width: min(75vw, 300px); }
-  .bar-wrap { width: min(70vw, 250px); }
-  .loader-tagline { font-size: 0.55rem; letter-spacing: 3px; text-align: center; padding: 0 20px; }
-
-  /* ── SECTIONS ── */
-  .section { padding: 80px 5% 60px; }
-  .short-section { padding: 60px 5%; }
+  .loader-logo { width: min(72vw, 280px); }
+  .bar-wrap { width: min(60vw, 220px); }
+  .loader-tagline { font-size: 0.5rem; letter-spacing: 2px; text-align: center; padding: 0 24px; }
 
   /* ── HERO ── */
-  #hero { min-height: 100vh; }
-  #logo-static { width: min(80vw, 320px) !important; }
-  .enter-btn { font-size: 0.6rem; padding: 12px 24px; letter-spacing: 3px; }
+  #hero { min-height: 100svh; }
+  #logo-static { width: min(78vw, 300px) !important; max-width: 300px; }
+  .hero-content { padding: 0 5%; }
+  .enter-btn { font-size: 0.58rem; padding: 12px 22px; letter-spacing: 2px; }
+
+  /* ── SECTIONS ── */
+  .section { padding: 70px 5% 50px; }
+
+  /* ── SHORT SECTIONS (WIKI/WATCH) ── */
+  .short-section {
+    flex-direction: column; align-items: flex-start;
+    padding: 50px 5%; gap: 20px; min-height: auto;
+  }
+  .short-section .gateway-btn,
+  .short-section a[class*="btn"] { align-self: flex-start; }
 
   /* ── HEADINGS ── */
-  .header-thin { font-size: clamp(1.8rem, 7vw, 3.5rem); letter-spacing: 3px; }
+  .header-thin { font-size: clamp(1.6rem, 7vw, 3rem); letter-spacing: 2px; }
 
   /* ── SYNOPSIS ── */
-  .synopsis-grid { grid-template-columns: 1fr; gap: 32px; }
+  .synopsis-grid { grid-template-columns: 1fr; gap: 28px; }
 
-  /* ── MEDIA / YOUTUBE ── */
-  .media-embed-wrap { padding: 0; }
+  /* ── MEDIA / VIDEO ── */
+  .pv-grid { grid-template-columns: 1fr; gap: 16px; }
+  .pv-list { flex-direction: column; max-height: 220px; overflow-y: auto; }
 
   /* ── GALLERY ── */
   .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
-  .gallery-filter { flex-wrap: wrap; gap: 6px; justify-content: center; }
-  .control-btn { font-size: 0.55rem; padding: 6px 10px; letter-spacing: 2px; }
-
-  /* ── WIKI GATEWAY ── */
-  .gateway-cards { grid-template-columns: 1fr; gap: 10px; }
+  .gallery-filter { flex-wrap: wrap; gap: 6px; justify-content: flex-start; }
+  .control-btn { font-size: 0.52rem; padding: 5px 9px; letter-spacing: 1px; }
 
   /* ── AUDIO ── */
-  .audio-grid { grid-template-columns: 1fr; }
-  .audio-track { padding: 14px 16px; }
+  .audio-container { grid-template-columns: 1fr; gap: 28px; }
+  .voice-board { grid-template-columns: repeat(2, 1fr); gap: 10px; }
 
   /* ── CREDITS ── */
-  .credits-grid { grid-template-columns: 1fr; gap: 20px; }
+  .staff-grid { grid-template-columns: 1fr; gap: 24px; }
 
   /* ── TERMINAL ── */
   .classified-panel { max-width: 100%; }
   .terminal-body { padding: 10px 12px 14px; }
-  .terminal-prompt { font-size: 0.6rem; white-space: nowrap; }
-  .classified-input { font-size: 0.65rem; }
-  .terminal-chrome-title { font-size: 0.55rem; letter-spacing: 0; }
-
-  /* ── LORE ── */
-  .lore-container { grid-template-columns: 1fr; gap: 40px; }
+  .terminal-prompt { font-size: 0.58rem; white-space: nowrap; }
+  .classified-input { font-size: 0.62rem; }
+  .terminal-chrome-title { font-size: 0.52rem; letter-spacing: 0; }
 
   /* ── CURSOR — hide on touch ── */
   #cursor-wrap { display: none !important; }
 
   /* ── EPISODES PAGE ── */
-  .watch-container { padding: 20px 14px 60px; }
-  .top-bar { flex-direction: column; align-items: flex-start; gap: 12px; padding-top: 60px; }
-  .theater-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 16px; }
+  .series-info h1 { font-size: clamp(1.4rem, 6vw, 2rem); letter-spacing: 4px; }
+  .ep-description h2 { font-size: 1.2rem; letter-spacing: 2px; }
+  .watch-container { padding: 16px 14px 60px; }
+  .top-bar { flex-direction: column; align-items: flex-start; gap: 10px; padding-top: 56px; }
+  .theater-header { flex-direction: column; align-items: flex-start; gap: 6px; margin-bottom: 14px; }
   .content-layout { grid-template-columns: 1fr; gap: 20px; }
-  .playlist-area { max-height: 300px; overflow-y: auto; }
-  .nav-controls { flex-wrap: wrap; gap: 8px; }
-  .season-tabs { gap: 12px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
-  .player-wrapper iframe,
-  .player-wrapper > div { width: 100% !important; }
+  .playlist-area { max-height: 260px; overflow-y: auto; }
+  .nav-controls { flex-wrap: wrap; gap: 6px; }
+  .season-tabs { gap: 10px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 6px; }
 }
 
 /* ── TABLET ── */
@@ -659,7 +662,8 @@ media-theme-sutro { width: 100%; aspect-ratio: 16/9; --media-accent-color: var(-
   .gallery-grid { grid-template-columns: repeat(3, 1fr); }
   .synopsis-grid { gap: 40px; }
   .content-layout { grid-template-columns: 1fr 320px; }
+  .audio-container { gap: 30px; }
 }
 
-/* ── HAMBURGER — hide on desktop ── */
+/* ── HAMBURGER — desktop hidden ── */
 #mobile-menu-btn { display: none; }
