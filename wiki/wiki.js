@@ -68,7 +68,7 @@ function getRankDesc(factionType, rankId) {
 /* HELLAWAKE WIKI — wiki.js */
 
 /* ── LOGO PATH (wiki is one level deep) ── */
-const ASSET_ROOT = '../';
+const ASSET_ROOT = '/';
 
 function wikiApplyBranding() {
   if (SITE.branding?.accentColor) document.documentElement.style.setProperty('--accent', SITE.branding.accentColor);
