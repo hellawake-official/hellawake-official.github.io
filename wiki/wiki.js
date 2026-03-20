@@ -564,6 +564,67 @@ function buildWikiSearch() {
   });
 }
 
+
+/* ── FULL CREDITS PAGE ── */
+function buildFullCreditsPage() {
+  var container = document.getElementById('credits-container');
+  if (!container) return;
+
+  var credits = SITE.credits || {};
+  var groups = credits.groups || [];
+
+  // Voice Cast group from personnel
+  var voiceCast = (SITE.personnel||[]).filter(function(c) {
+    return c.va && c.va.name && !c.hidden;
+  });
+
+  var html = '';
+
+  // Voice Cast
+  if (voiceCast.length) {
+    html += '<div class="full-credits-group">' +
+      '<div class="full-credits-group-title">VOICE CAST</div>' +
+      '<div class="full-credits-entries">' +
+      voiceCast.map(function(c) {
+        var vaName = (c.va.url)
+          ? '<a href="' + c.va.url + '" target="_blank" rel="noopener" class="credits-link">' + c.va.name + ' ↗</a>'
+          : c.va.name;
+        return '<div class="full-credits-entry">' +
+          '<span class="fce-char">' + c.name + '</span>' +
+          '<span class="fce-sep">—</span>' +
+          '<span class="fce-name">' + vaName + '</span>' +
+        '</div>';
+      }).join('') +
+      '</div></div>';
+  }
+
+  // Production groups
+  groups.forEach(function(group) {
+    if (!group.entries || !group.entries.length) return;
+    html += '<div class="full-credits-group">' +
+      '<div class="full-credits-group-title">' + group.title + '</div>' +
+      '<div class="full-credits-entries">' +
+      group.entries.map(function(e) {
+        var name = e.url
+          ? '<a href="' + e.url + '" target="_blank" rel="noopener" class="credits-link">' + e.name + ' ↗</a>'
+          : e.name;
+        var eps = (e.episodes && e.episodes.length)
+          ? '<span class="fce-eps">' + e.episodes.join(', ') + '</span>'
+          : '';
+        return '<div class="full-credits-entry">' +
+          '<span class="fce-role">' + e.role + '</span>' +
+          '<span class="fce-sep">—</span>' +
+          '<span class="fce-name">' + name + '</span>' +
+          eps +
+        '</div>';
+      }).join('') +
+      '</div></div>';
+  });
+
+  if (!html) html = '<p style="color:var(--muted);padding:40px 0;">Credits coming soon.</p>';
+  container.innerHTML = html;
+}
+
 /* ── WIKI HOME ── */
 function buildWikiHome() {
   const container = document.getElementById('wiki-home-sections');
@@ -706,6 +767,7 @@ function buildCharacterDetail() {
         (rankLabel ? '<span class="char-rank-badge">' + rankLabel.toUpperCase() + '</span>' : '') +
         (rankDesc ? '<div class="char-rank-desc">' + rankDesc + '</div>' : '') +
         '<span class="char-profile-status ' + char.faction + '">STATUS: ' + char.status + '</span>' +
+        (char.va && char.va.name ? '<div class="char-va-line">VOICE: ' + (char.va.url ? '<a href="' + char.va.url + '" target="_blank" rel="noopener" class="char-va-link">' + char.va.name + ' ↗</a>' : char.va.name) + '</div>' : '') +
         '<table class="char-stats-table">' + statsRows + '</table>' +
         bioHTML +
         echoHTML +

@@ -672,3 +672,32 @@ media-theme-sutro { width: 100%; aspect-ratio: 16/9; --media-accent-color: var(-
 
 /* ── HAMBURGER — desktop hidden ── */
 #mobile-menu-btn { display: none; }
+
+/* ── SFX TOGGLE ── */
+.sfx-toggle {
+  background: none; border: 1px solid var(--ui-border);
+  color: var(--muted); font-family: var(--font-display);
+  font-size: 0.5rem; letter-spacing: 2px; padding: 4px 8px;
+  cursor: pointer; transition: 0.2s; margin-top: 8px;
+  display: block; width: 100%; text-align: left;
+}
+.sfx-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.sfx-toggle.sfx-on { color: var(--accent); border-color: rgba(255,60,0,0.3); }
+
+/* ── CREDITS GROUPS ── */
+.credits-group { margin-bottom: 48px; }
+.credits-group-title {
+  font-family: var(--font-display); font-size: 0.6rem; letter-spacing: 5px;
+  color: var(--accent); margin-bottom: 20px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--ui-border);
+}
+.credits-group-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.va-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 0; border-bottom: 1px solid var(--ui-border);
+}
+.credit-char { font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 2px; color: var(--text); }
+.credit-separator { color: var(--accent); opacity: 0.5; }
+.credit-va { font-size: 0.8rem; color: #888; }
+.credit-va-link { color: #888; text-decoration: none; transition: color 0.2s; }
+.credit-va-link:hover { color: var(--accent); }

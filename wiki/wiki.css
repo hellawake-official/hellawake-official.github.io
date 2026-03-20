@@ -564,3 +564,57 @@ a.wiki-card:hover .faction-block.skull-block { border-top-color: #cc2200; }
 .char-bio-md code { background: var(--surface2); padding: 2px 6px; font-family: monospace; font-size: 0.85em; }
 .char-bio-md blockquote { border-left: 2px solid var(--accent); padding-left: 14px; color: var(--muted); font-style: italic; margin: 14px 0; }
 .char-bio-md hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+/* ── SFX TOGGLE ── */
+.sfx-toggle {
+  background: none; border: 1px solid var(--border);
+  color: var(--muted); font-family: var(--font-display);
+  font-size: 0.55rem; letter-spacing: 2px; padding: 4px 10px;
+  cursor: pointer; transition: 0.2s; margin-left: 8px; flex-shrink: 0;
+}
+.sfx-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.sfx-toggle.sfx-on { color: var(--accent); border-color: rgba(255,60,0,0.3); }
+
+/* ── VA LINE ── */
+.char-va-line {
+  font-size: 11px; letter-spacing: 2px; color: var(--muted);
+  margin-top: 8px; font-family: var(--font-display);
+}
+.char-va-link {
+  color: var(--accent); text-decoration: none; opacity: 0.8; transition: opacity 0.15s;
+}
+.char-va-link:hover { opacity: 1; }
+
+/* ── FULL CREDITS PAGE ── */
+.full-credits-group { margin-bottom: 48px; }
+.full-credits-group-title {
+  font-family: var(--font-display); font-size: 0.65rem; letter-spacing: 5px;
+  color: var(--accent); margin-bottom: 16px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--border); text-transform: uppercase;
+}
+.full-credits-entries { display: flex; flex-direction: column; gap: 0; }
+.full-credits-entry {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.full-credits-entry:last-child { border-bottom: none; }
+.fce-char { font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 2px; min-width: 160px; }
+.fce-role { font-size: 12px; color: var(--muted); min-width: 200px; }
+.fce-sep { color: var(--accent); opacity: 0.4; }
+.fce-name { font-size: 13px; color: var(--text); }
+.fce-eps {
+  font-size: 10px; letter-spacing: 1px; color: var(--accent);
+  background: rgba(255,60,0,0.08); padding: 2px 8px; margin-left: 4px;
+  font-family: var(--font-display);
+}
+.credits-link { color: var(--accent); text-decoration: none; opacity: 0.85; transition: opacity 0.15s; }
+.credits-link:hover { opacity: 1; }
+
+/* ── FULL CREDITS LINK ON MAIN SITE ── */
+.full-credits-link { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--ui-border); }
+.full-credits-link a {
+  font-family: var(--font-display); font-size: 0.65rem; letter-spacing: 3px;
+  color: var(--accent); text-decoration: none; transition: opacity 0.2s; opacity: 0.7;
+}
+.full-credits-link a:hover { opacity: 1; }

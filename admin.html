@@ -411,7 +411,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13
         <div class="panel-title">Credits</div>
         <div class="panel-desc">Staff roles at the bottom of the archive.</div>
         <div id="credits-list"></div>
-        <button class="add-btn" onclick="addCredit()">+ ADD CREDIT</button>
+        <button class="add-btn" onclick="addCredit()">+ ADD FEATURED CREDIT</button>
+        <div style="margin-top:24px;padding-top:16px;border-top:1px solid var(--border);">
+          <div style="font-size:10px;letter-spacing:3px;color:var(--muted);margin-bottom:12px;">FULL CREDITS — WIKI PAGE</div>
+          <div id="credits-groups-list"></div>
+          <button class="add-btn" onclick="addCredGroup()">+ ADD GROUP</button>
+        </div>
       </div>
 
       <div class="panel" id="panel-easter-eggs">
@@ -1133,6 +1138,10 @@ function buildPersonnelList() {
         '</div>' +
       '</div>' +
       '<div class="field"><label>Teaser (shown on locked card)</label><input id="per-' + i + '-teaser" value="' + esc(c.teaser || '') + '" placeholder="e.g. A name that appears in three separate DHD intercepts."></div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>Voice Actor</label><input id="per-' + i + '-va-name" value="' + esc((c.va&&c.va.name)||'') + '" placeholder="Full name"></div>' +
+        '<div class="field"><label>VA Portfolio URL</label><input id="per-' + i + '-va-url" value="' + esc((c.va&&c.va.url)||'') + '" placeholder="https://..."></div>' +
+      '</div>' +
       '<div class="field"><label>Related Personnel <span style="font-size:10px;color:var(--muted);font-weight:normal;">— character IDs, comma separated (e.g. reever,hoosier)</span></label>' +
         '<input id="per-' + i + '-related" value="' + esc((c.related||[]).join(', ')) + '" placeholder="reever, hoosier, keshava">' +
       '</div>' +
@@ -1169,7 +1178,7 @@ function collectPersonnelList() {
     // Read rank directly from select element — never loses value during rebuild
     var rankEl = document.getElementById('per-'+i+'-rank');
     var rankVal = rankEl ? rankEl.value : '';
-    data.personnel.push({ id: name.toLowerCase().replace(/\s+/g,'-'), name: name, faction: getVal('per-'+i+'-faction'), factionLabel: getVal('per-'+i+'-factionLabel'), status: getVal('per-'+i+'-status'), visible: getBool('per-'+i+'-visible'), rank: rankVal, locked: getBool('per-'+i+'-locked'), hidden: getBool('per-'+i+'-hidden'), teaser: getVal('per-'+i+'-teaser'), related: getVal('per-'+i+'-related').split(',').map(function(s){return s.trim().toLowerCase();}).filter(Boolean), appearances: getVal('per-'+i+'-appearances').split(',').map(function(s){return s.trim().toUpperCase();}).filter(Boolean), updatedAt: getVal('per-'+i+'-updatedAt'), image: getVal('per-'+i+'-image'), stats: stats, bio: getVal('per-'+i+'-bio'), gallery: collectCharGalleryItems(i), echoEntry: { show: getBool('per-'+i+'-echo-show'), text: getVal('per-'+i+'-echo-text') } });
+    data.personnel.push({ id: name.toLowerCase().replace(/\s+/g,'-'), name: name, faction: getVal('per-'+i+'-faction'), factionLabel: getVal('per-'+i+'-factionLabel'), status: getVal('per-'+i+'-status'), visible: getBool('per-'+i+'-visible'), rank: rankVal, locked: getBool('per-'+i+'-locked'), hidden: getBool('per-'+i+'-hidden'), teaser: getVal('per-'+i+'-teaser'), va: { name: getVal('per-'+i+'-va-name'), url: getVal('per-'+i+'-va-url') }, related: getVal('per-'+i+'-related').split(',').map(function(s){return s.trim().toLowerCase();}).filter(Boolean), appearances: getVal('per-'+i+'-appearances').split(',').map(function(s){return s.trim().toUpperCase();}).filter(Boolean), updatedAt: getVal('per-'+i+'-updatedAt'), image: getVal('per-'+i+'-image'), stats: stats, bio: getVal('per-'+i+'-bio'), gallery: collectCharGalleryItems(i), echoEntry: { show: getBool('per-'+i+'-echo-show'), text: getVal('per-'+i+'-echo-text') } });
   });
 }
 function addPersonnel() { var r=saveRanks(); collectPersonnelList(); restoreRanks(r); data.personnel.push({ id: 'new', name: 'NEW CHARACTER', faction: 'dhd', factionLabel: 'DHD', status: 'ACTIVE', visible: true, image: '', stats: [], bio: '', echoEntry: { show: false, text: '' } }); buildPersonnelList(); }
@@ -1364,15 +1373,75 @@ function removeEp(si, ei) { collectSeasonsList(); data.episodes.seasons[si].epis
 /* ── CREDITS ── */
 function buildCreditsList() {
   var el = document.getElementById('credits-list'); if (!el) return; el.innerHTML = '';
-  (data.credits || []).forEach(function(c, i) {
-    el.innerHTML += '<div class="array-item"><div class="item-actions"><button class="move-btn" onclick="moveCred(' + i + ',-1)">↑</button><button class="move-btn" onclick="moveCred(' + i + ',1)">↓</button><button onclick="removeCred(' + i + ')">✕</button></div>' +
-      '<div class="field-row"><div class="field"><label>Role</label><input id="cred-' + i + '-role" value="' + esc(c.role) + '"></div><div class="field"><label>Name</label><input id="cred-' + i + '-name" value="' + esc(c.name) + '"></div></div></div>';
+  var credits = data.credits || {};
+  var featured = Array.isArray(credits) ? credits : (credits.featured || []);
+  featured.forEach(function(c, i) {
+    el.innerHTML += '<div class="array-item"><div class="item-actions"><button class="move-btn" onclick="moveCred('+i+',-1)">↑</button><button class="move-btn" onclick="moveCred('+i+',1)">↓</button><button onclick="removeCred('+i+')">✕</button></div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>Role</label><input id="cred-'+i+'-role" value="' + esc(c.role||'') + '"></div>' +
+        '<div class="field"><label>Name</label><input id="cred-'+i+'-name" value="' + esc(c.name||'') + '"></div>' +
+        '<div class="field"><label>URL (optional)</label><input id="cred-'+i+'-url" value="' + esc(c.url||'') + '" placeholder="https://..."></div>' +
+      '</div></div>';
+  });
+
+  // Full credits groups
+  var groupEl = document.getElementById('credits-groups-list');
+  if (!groupEl) return;
+  groupEl.innerHTML = '';
+  var groups = Array.isArray(credits) ? [] : (credits.groups || []);
+  groups.forEach(function(g, gi) {
+    groupEl.innerHTML += '<div class="array-item" style="flex-direction:column;gap:10px;">' +
+      '<div style="display:flex;align-items:center;gap:8px;">' +
+        '<input id="cg-'+gi+'-title" value="' + esc(g.title||'') + '" placeholder="Group title (e.g. ANIMATION)" style="flex:1;">' +
+        '<button onclick="removeCredGroup('+gi+')">✕</button>' +
+      '</div>' +
+      '<div id="cg-'+gi+'-entries">' +
+      (g.entries||[]).map(function(e, ei) {
+        return '<div class="array-item" style="margin-bottom:6px;">' +
+          '<div class="field-row">' +
+            '<div class="field"><label>Role</label><input id="cg-'+gi+'-'+ei+'-role" value="' + esc(e.role||'') + '"></div>' +
+            '<div class="field"><label>Name</label><input id="cg-'+gi+'-'+ei+'-name" value="' + esc(e.name||'') + '"></div>' +
+            '<div class="field"><label>URL</label><input id="cg-'+gi+'-'+ei+'-url" value="' + esc(e.url||'') + '" placeholder="https://..."></div>' +
+            '<div class="field"><label>Episodes (e.g. S1E1)</label><input id="cg-'+gi+'-'+ei+'-eps" value="' + esc((e.episodes||[]).join(', ')) + '"></div>' +
+          '</div>' +
+          '<button onclick="removeCredEntry('+gi+','+ei+')">✕</button>' +
+        '</div>';
+      }).join('') +
+      '</div>' +
+      '<button class="add-btn" style="font-size:0.6rem;padding:4px 10px;" onclick="addCredEntry('+gi+')">+ ADD ENTRY</button>' +
+    '</div>';
   });
 }
-function collectCreditsList() { data.credits = []; document.querySelectorAll('#credits-list .array-item').forEach(function(_, i) { data.credits.push({ role: getVal('cred-' + i + '-role'), name: getVal('cred-' + i + '-name') }); }); }
-function addCredit() { collectCreditsList(); data.credits.push({ role: '', name: '' }); buildCreditsList(); }
-function removeCred(i) { collectCreditsList(); data.credits.splice(i, 1); buildCreditsList(); }
-function moveCred(i, d) { collectCreditsList(); var a = data.credits; if (i+d<0||i+d>=a.length) return; var t=a[i];a[i]=a[i+d];a[i+d]=t; buildCreditsList(); }
+
+function collectCreditsList() {
+  var credits = data.credits || {};
+  var featured = [];
+  document.querySelectorAll('#credits-list .array-item').forEach(function(_, i) {
+    featured.push({ role: getVal('cred-'+i+'-role'), name: getVal('cred-'+i+'-name'), url: getVal('cred-'+i+'-url') });
+  });
+  var groups = [];
+  var groupItems = document.querySelectorAll('#credits-groups-list > .array-item');
+  groupItems.forEach(function(_, gi) {
+    var title = getVal('cg-'+gi+'-title');
+    var entries = [];
+    var entryItems = document.querySelectorAll('#cg-'+gi+'-entries > .array-item');
+    entryItems.forEach(function(_, ei) {
+      var eps = getVal('cg-'+gi+'-'+ei+'-eps').split(',').map(function(s){return s.trim();}).filter(Boolean);
+      entries.push({ role: getVal('cg-'+gi+'-'+ei+'-role'), name: getVal('cg-'+gi+'-'+ei+'-name'), url: getVal('cg-'+gi+'-'+ei+'-url'), episodes: eps });
+    });
+    groups.push({ title: title, entries: entries });
+  });
+  var existing = Array.isArray(credits) ? {} : credits;
+  data.credits = Object.assign({}, existing, { featured: featured, groups: groups });
+}
+
+function addCredit() { collectCreditsList(); if(!data.credits.featured) data.credits.featured=[]; data.credits.featured.push({ role: '', name: '', url: '' }); buildCreditsList(); }
+function removeCred(i) { collectCreditsList(); data.credits.featured.splice(i, 1); buildCreditsList(); }
+function moveCred(i, d) { collectCreditsList(); var a = data.credits.featured; if (i+d<0||i+d>=a.length) return; var t=a[i];a[i]=a[i+d];a[i+d]=t; buildCreditsList(); }
+function addCredGroup() { collectCreditsList(); if(!data.credits.groups) data.credits.groups=[]; data.credits.groups.push({ title: 'NEW GROUP', entries: [] }); buildCreditsList(); }
+function removeCredGroup(gi) { collectCreditsList(); data.credits.groups.splice(gi, 1); buildCreditsList(); }
+function addCredEntry(gi) { collectCreditsList(); data.credits.groups[gi].entries.push({ role: '', name: '', url: '', episodes: [] }); buildCreditsList(); }
+function removeCredEntry(gi, ei) { collectCreditsList(); data.credits.groups[gi].entries.splice(ei, 1); buildCreditsList(); }
 
 /* ── WIKI CONFIG ── */
 function buildTransmissionsList() {
