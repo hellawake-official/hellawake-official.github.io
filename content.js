@@ -1412,7 +1412,7 @@ const SITE = {
             "desc": ""
           },
           {
-            "yt": "",
+            "yt": "https://www.youtube.com/watch?v=7WeCVboDf1U",
             "title": "NEW EPISODE",
             "time": "00:00",
             "book": "",
