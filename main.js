@@ -367,7 +367,8 @@ function buildAudio() {
 function buildCredits() {
   const grid = document.getElementById('credits-grid');
   if (!grid) return;
-  grid.innerHTML = (SITE.credits||[]).map(c=>`<div class="staff-item"><span class="staff-role">${c.role}</span><span class="staff-name">${c.name}</span></div>`).join('');}
+  grid.innerHTML = (SITE.credits?.featured||[]).map(c=>`<div class="staff-item"><span class="staff-role">${c.role}</span><span class="staff-name">${c.name}</span></div>`).join('');
+}
 
 /* ── NEWS TICKER ── */
 function buildNewsTicker() {
