@@ -1,7 +1,7 @@
 const SITE = {
   "meta": {
     "title": "HELLAWAKE | OFFICIAL ARCHIVE",
-    "ogTitle": "HELLAWAKE \u2014 Official Archive",
+    "ogTitle": "HELLAWAKE — Official Archive",
     "ogDescription": "He was taken. They made him into something. Now he's out. // Action. Brotherhood. A war that was never what it looked like.",
     "ogImage": "images/Hellawake S1 Commercial Poster 1.png",
     "favicon": ""
@@ -24,7 +24,7 @@ const SITE = {
   },
   "announcement": {
     "enabled": false,
-    "text": "EPISODE 02 DROPPING SOON \u2014 STAY AWAKE",
+    "text": "EPISODE 02 DROPPING SOON — STAY AWAKE",
     "style": "alert"
   },
   "countdown": {
@@ -93,18 +93,18 @@ const SITE = {
     "tags": [
       "ACTION",
       "DRAMA",
-      "SEASON 1 \u2014 ONGOING"
+      "SEASON 1 — ONGOING"
     ],
     "poster": "images/Hellawake S1 Commercial Poster 1.png",
-    "posterTag": "SEASON 1 \u2014 IN PRODUCTION",
+    "posterTag": "SEASON 1 — IN PRODUCTION",
     "paragraphs": [
       {
         "style": "lead",
-        "text": "Seven years ago, Liam Hill was taken. What they did to him in that facility turned him into something the Skullborns \u2014 the most dangerous faction in the known world \u2014 have been hunting ever since."
+        "text": "Seven years ago, Liam Hill was taken. What they did to him in that facility turned him into something the Skullborns — the most dangerous faction in the known world — have been hunting ever since."
       },
       {
         "style": "body",
-        "text": "Now he's out. Alone. Moving through a world that has changed without him, carrying a second self he calls Echo \u2014 cold, ruthless, and not entirely him \u2014 that surfaces when he has no other choice."
+        "text": "Now he's out. Alone. Moving through a world that has changed without him, carrying a second self he calls Echo — cold, ruthless, and not entirely him — that surfaces when he has no other choice."
       },
       {
         "style": "body",
@@ -112,7 +112,7 @@ const SITE = {
       },
       {
         "style": "body",
-        "text": "And somewhere in the middle \u2014 a war that was never what it looked like."
+        "text": "And somewhere in the middle — a war that was never what it looked like."
       }
     ]
   },
@@ -124,7 +124,7 @@ const SITE = {
     },
     "playlist": [
       {
-        "label": "S1 E1 \u2014 CHASING GHOSTS",
+        "label": "S1 E1 — CHASING GHOSTS",
         "src": "VeZK6KsbkXA"
       },
       {
@@ -165,14 +165,14 @@ const SITE = {
       "category": "promo",
       "src": "images/Hellawake Promotional Render 3.png",
       "full": "images/Hellawake Promotional Render 3.png",
-      "caption": "PROMOTIONAL RENDER \u2014 S1"
+      "caption": "PROMOTIONAL RENDER — S1"
     },
     {
       "type": "video",
       "category": "spoiler",
       "src": "images/ep2_prologue_car_scene_test.mp4",
       "full": "images/ep2_prologue_car_scene_test.mp4",
-      "caption": "EP2 PROLOGUE \u2014 CAR SCENE TEST"
+      "caption": "EP2 PROLOGUE — CAR SCENE TEST"
     },
     {
       "type": "image",
@@ -186,21 +186,21 @@ const SITE = {
       "category": "bts",
       "src": "images/railway-map-bts-2.png",
       "full": "images/railway-map-bts-2.png",
-      "caption": "RAILWAY MAP \u2014 BTS"
+      "caption": "RAILWAY MAP — BTS"
     },
     {
       "type": "image",
       "category": "bts",
       "src": "images/railway-map-bts-1.png",
       "full": "images/railway-map-bts-1.png",
-      "caption": "RAILWAY MAP \u2014 BTS"
+      "caption": "RAILWAY MAP — BTS"
     },
     {
       "type": "video",
       "category": "bts",
       "src": "images/Hellawake-audio-bts.mp4",
       "full": "images/Hellawake-audio-bts.mp4",
-      "caption": "AUDIO SESSION \u2014 BTS"
+      "caption": "AUDIO SESSION — BTS"
     },
     {
       "type": "image",
@@ -214,7 +214,7 @@ const SITE = {
       "category": "spoiler",
       "src": "images/spoiler_chasingghosts_old.png",
       "full": "images/spoiler_chasingghosts_old.png",
-      "caption": "CHASING GHOSTS \u2014 EARLY RENDER"
+      "caption": "CHASING GHOSTS — EARLY RENDER"
     }
   ],
   "personnel": [
@@ -229,6 +229,13 @@ const SITE = {
       "locked": true,
       "hidden": false,
       "teaser": "A photograph. A face. A drop of blood that covered everything.",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "images/Liam_Character_Card.png",
       "stats": [
         {
@@ -252,15 +259,12 @@ const SITE = {
           "redacted": false
         }
       ],
-      "bio": "Taken seven years ago and subjected to experiments that changed him at a fundamental level. Now free and operating alone \u2014 moving through a world that moved on without him, trying to understand what was done to him and why the Skullborns want him dead so badly.\n\nCarries a second self he calls Echo. Doesn't talk about it.",
+      "bio": "Taken seven years ago and subjected to experiments that changed him at a fundamental level. Now free and operating alone — moving through a world that moved on without him, trying to understand what was done to him and why the Skullborns want him dead so badly.\n\nCarries a second self he calls Echo. Doesn't talk about it.",
+      "gallery": [],
       "echoEntry": {
         "show": true,
         "text": "Secondary manifestation. Surfaces under extreme duress. Cold, precise, and operationally ruthless in ways Liam is not. Origin unclear. Whether Echo is a product of the facility, a fractured identity, or something else entirely remains CLASSIFIED UNDER DIRECTIVE-9."
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "alex-river-h.",
@@ -269,10 +273,17 @@ const SITE = {
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "ACTIVE",
       "visible": true,
-      "rank": "emberwake",
+      "rank": "",
       "locked": false,
       "hidden": false,
       "teaser": "",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "images/Alex_Character_Card.png",
       "stats": [
         {
@@ -296,15 +307,12 @@ const SITE = {
           "redacted": false
         }
       ],
-      "bio": "DHD field operative assigned to reconnaissance. Deployed alongside Flame and squad leader Hoosier to investigate an abandoned Skullborn outpost \u2014 walked into a trap. Broke for headquarters on Hoosier's order while the squad held position. Survived a train bombing and a direct assassination attempt at the station. Backup arrived in time.\n\nCarries a photograph. Three faces. Doesn't talk about it.",
+      "bio": "DHD field operative assigned to reconnaissance. Deployed alongside Flame and squad leader Hoosier to investigate an abandoned Skullborn outpost — walked into a trap. Broke for headquarters on Hoosier's order while the squad held position. Survived a train bombing and a direct assassination attempt at the station. Backup arrived in time.\n\nCarries a photograph. Three faces. Doesn't talk about it.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "hoosier",
@@ -313,10 +321,17 @@ const SITE = {
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "ACTIVE",
       "visible": true,
-      "rank": "emberwake",
+      "rank": "",
       "locked": false,
       "hidden": false,
       "teaser": "",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "images/Hoosier_Character_Card.png",
       "stats": [
         {
@@ -341,14 +356,11 @@ const SITE = {
         }
       ],
       "bio": "Squad leader. Deployed with Reever and Flame on the Episode 1 recon mission. Knew before they arrived that the base wasn't right. Held position when the ambush triggered, covered Reever's exit, subdued a Death Grin prisoner. Interrogation yielded nothing.\n\nSparse with words. Precise with everything else.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "zack-a.-reynalds",
@@ -357,10 +369,17 @@ const SITE = {
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "ACTIVE",
       "visible": true,
-      "rank": "kindling",
+      "rank": "",
       "locked": false,
       "hidden": false,
       "teaser": "",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "images/Zack_Character_Card.png",
       "stats": [
         {
@@ -384,15 +403,12 @@ const SITE = {
           "redacted": false
         }
       ],
-      "bio": "Combat operative under Hoosier's command. Stayed behind with Hoosier when the ambush hit \u2014 held the line while Reever ran. Chaotic in a fight. Effective for exactly that reason.\n\nAnswers to Flame in the field.",
+      "bio": "Combat operative under Hoosier's command. Stayed behind with Hoosier when the ambush hit — held the line while Reever ran. Chaotic in a fight. Effective for exactly that reason.\n\nAnswers to Flame in the field.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "ravok-drien",
@@ -405,6 +421,13 @@ const SITE = {
       "locked": false,
       "hidden": true,
       "teaser": "",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "",
       "stats": [
         {
@@ -414,12 +437,12 @@ const SITE = {
         },
         {
           "label": "Faction",
-          "value": "Skullborn \u2014 Leadership",
+          "value": "Skullborn — Leadership",
           "redacted": false
         },
         {
           "label": "Location",
-          "value": "FORTRESS \u2014 COORDINATES UNKNOWN",
+          "value": "FORTRESS — COORDINATES UNKNOWN",
           "redacted": true
         },
         {
@@ -428,27 +451,31 @@ const SITE = {
           "redacted": false
         }
       ],
-      "bio": "Leader of the Skullborns. His fortress has remained hidden for years. His reach extends further than the DHD has yet understood.\n\nWhatever happened in that facility \u2014 whatever Liam Hill became \u2014 Ravok Drien wants it.",
+      "bio": "Leader of the Skullborns. His fortress has remained hidden for years. His reach extends further than the DHD has yet understood.\n\nWhatever happened in that facility — whatever Liam Hill became — Ravok Drien wants it.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "keshava",
       "name": "KESHAVA",
       "faction": "dhd",
-      "factionLabel": "DHD \u2014 FOUNDER",
+      "factionLabel": "DHD — FOUNDER",
       "status": "[UNKNOWN]",
       "visible": true,
       "rank": "",
       "locked": false,
       "hidden": true,
       "teaser": "",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "",
       "stats": [
         {
@@ -472,15 +499,12 @@ const SITE = {
           "redacted": false
         }
       ],
-      "bio": "Founded the Dawn Horizon Division. Has been fighting this war longer than most of its current members have been alive. The organisation runs on the doctrine they built \u2014 even now, when their own current status is unclear.",
+      "bio": "Founded the Dawn Horizon Division. Has been fighting this war longer than most of its current members have been alive. The organisation runs on the doctrine they built — even now, when their own current status is unclear.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "nesalyn-alren",
@@ -489,10 +513,17 @@ const SITE = {
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "ACTIVE",
       "visible": true,
-      "rank": "kindling",
+      "rank": "",
       "locked": false,
       "hidden": false,
       "teaser": "",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "images/Nesalyn_Character_Card.png",
       "stats": [
         {
@@ -517,14 +548,11 @@ const SITE = {
         }
       ],
       "bio": "Rapid response operative. Arrived with Vagelis to back up Reever at the train station. Drove off the assassin before capture was possible.\n\nMore to her than what's on file.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "dimitris-vaelor",
@@ -533,10 +561,17 @@ const SITE = {
       "factionLabel": "DAWN HORIZON DIV.",
       "status": "ACTIVE",
       "visible": true,
-      "rank": "kindling",
+      "rank": "",
       "locked": false,
       "hidden": false,
       "teaser": "",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "",
       "stats": [
         {
@@ -561,26 +596,30 @@ const SITE = {
         }
       ],
       "bio": "Arrived with Bloopy to assist Reever at the train station. The assassin was gone before either of them could close in.\n\nSomehow still finds something to say about it.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "john-miller",
       "name": "JOHN MILLER",
       "faction": "skull",
-      "factionLabel": "SKULLBORN \u2014 OPERATIVE",
+      "factionLabel": "SKULLBORN — OPERATIVE",
       "status": "ACTIVE // THREAT",
       "visible": true,
       "rank": "",
       "locked": true,
       "hidden": false,
       "teaser": "The Train Station Incident. The assassin. No name. Not yet.",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "",
       "stats": [
         {
@@ -590,7 +629,7 @@ const SITE = {
         },
         {
           "label": "Faction",
-          "value": "Skullborn \u2014 Field Operative",
+          "value": "Skullborn — Field Operative",
           "redacted": false
         },
         {
@@ -604,15 +643,12 @@ const SITE = {
           "redacted": false
         }
       ],
-      "bio": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nIdentity confirmed as Skullborn operative. First appearance: train station \u2014 Episode 1. Targeted Reever directly. Driven off by Bloopy and Vag before mission completion.\n\nBackground and true allegiance: REDACTED UNDER DIRECTIVE-9.",
+      "bio": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nIdentity confirmed as Skullborn operative. First appearance: train station — Episode 1. Targeted Reever directly. Driven off by Bloopy and Vag before mission completion.\n\nBackground and true allegiance: REDACTED UNDER DIRECTIVE-9.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "naira",
@@ -625,6 +661,13 @@ const SITE = {
       "locked": true,
       "hidden": false,
       "teaser": "The photograph. Three faces. One of them isn't accounted for.",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "",
       "stats": [
         {
@@ -643,15 +686,12 @@ const SITE = {
           "redacted": true
         }
       ],
-      "bio": "CLASSIFIED // ACCESS RESTRICTED\n\nAppears in the photograph carried by Reever \u2014 alongside Reever and Liam Hill. Relationship to both subjects: REDACTED.\n\nCurrent whereabouts unknown. No active file. No confirmed status.",
+      "bio": "CLASSIFIED // ACCESS RESTRICTED\n\nAppears in the photograph carried by Reever — alongside Reever and Liam Hill. Relationship to both subjects: REDACTED.\n\nCurrent whereabouts unknown. No active file. No confirmed status.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "taito-a.",
@@ -664,6 +704,13 @@ const SITE = {
       "locked": true,
       "hidden": true,
       "teaser": "",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "",
       "stats": [
         {
@@ -683,14 +730,11 @@ const SITE = {
         }
       ],
       "bio": "CLASSIFIED // EPISODE LOCK\n\nDHD operative. Emberwake rank. File locked pending further episode release.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "ender",
@@ -703,6 +747,13 @@ const SITE = {
       "locked": true,
       "hidden": true,
       "teaser": "",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "",
       "stats": [
         {
@@ -727,14 +778,11 @@ const SITE = {
         }
       ],
       "bio": "CLASSIFIED // EPISODE LOCK\n\nDHD operative. Kindling rank. Known connection to other operatives: REDACTED. File locked pending further episode release.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "zephyrus-swedan",
@@ -747,6 +795,13 @@ const SITE = {
       "locked": true,
       "hidden": true,
       "teaser": "",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "",
       "stats": [
         {
@@ -766,14 +821,11 @@ const SITE = {
         }
       ],
       "bio": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nBrimstone rank operative. Current assignment and location: CLASSIFIED. Last confirmed status: UNVERIFIED.\n\nFile locked pending further episode release.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "clyde-forger",
@@ -786,6 +838,13 @@ const SITE = {
       "locked": true,
       "hidden": true,
       "teaser": "",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "",
       "stats": [
         {
@@ -805,14 +864,11 @@ const SITE = {
         }
       ],
       "bio": "CLASSIFIED // EPISODE LOCK\n\nBrimstone rank operative. File locked pending further episode release.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "corvin",
@@ -825,6 +881,13 @@ const SITE = {
       "locked": true,
       "hidden": true,
       "teaser": "",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "",
       "stats": [
         {
@@ -844,14 +907,11 @@ const SITE = {
         }
       ],
       "bio": "CLASSIFIED // EPISODE LOCK\n\nSolaris rank. Senior operations. File locked pending further episode release.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "davan",
@@ -864,6 +924,13 @@ const SITE = {
       "locked": true,
       "hidden": true,
       "teaser": "",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "",
       "stats": [
         {
@@ -883,14 +950,11 @@ const SITE = {
         }
       ],
       "bio": "CLASSIFIED // EPISODE LOCK\n\nAurora Sentinel rank. Intelligence operations. File locked pending further episode release.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "kane",
@@ -903,6 +967,13 @@ const SITE = {
       "locked": true,
       "hidden": true,
       "teaser": "",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "",
       "stats": [
         {
@@ -922,14 +993,11 @@ const SITE = {
         }
       ],
       "bio": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nHalo Ascendant rank. File locked. Do not query further.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     },
     {
       "id": "aenya-blake-carter",
@@ -942,6 +1010,13 @@ const SITE = {
       "locked": true,
       "hidden": true,
       "teaser": "",
+      "va": {
+        "name": "",
+        "url": ""
+      },
+      "related": [],
+      "appearances": [],
+      "updatedAt": "2026-03-19",
       "image": "",
       "stats": [
         {
@@ -961,14 +1036,11 @@ const SITE = {
         }
       ],
       "bio": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nHalo Ascendant rank. File locked. Do not query further.",
+      "gallery": [],
       "echoEntry": {
         "show": false,
         "text": ""
-      },
-      "gallery": [],
-      "related": [],
-      "updatedAt": "2026-03-19",
-      "appearances": []
+      }
     }
   ],
   "factions": [
@@ -977,7 +1049,7 @@ const SITE = {
       "name": "DAWN HORIZON",
       "subtitle": "DIVISION // COVERT OPERATIONS",
       "type": "dhd",
-      "body": "A covert organisation founded by Keshava to fight a war most civilians don't know is happening. The DHD operates in field units \u2014 reconnaissance, rapid response, intelligence gathering. They have been at this longer than most of their operatives have been alive. They are not winning. They are holding.",
+      "body": "A covert organisation founded by Keshava to fight a war most civilians don't know is happening. The DHD operates in field units — reconnaissance, rapid response, intelligence gathering. They have been at this longer than most of their operatives have been alive. They are not winning. They are holding.",
       "stats": [
         {
           "label": "KNOWN OPERATIVES",
@@ -998,7 +1070,7 @@ const SITE = {
       "name": "THE SKULLBORNS",
       "subtitle": "THREAT CLASSIFICATION // MAXIMUM",
       "type": "skull",
-      "body": "The most dangerous faction in the known world. Operating under Ravok Drien from a fortress whose location has never been confirmed. Their reach extends into infrastructure, communications, and places the DHD hasn't mapped yet. The Death Grins are a sub-unit \u2014 used for ambushes, assassinations, and operations that need no witnesses.",
+      "body": "The most dangerous faction in the known world. Operating under Ravok Drien from a fortress whose location has never been confirmed. Their reach extends into infrastructure, communications, and places the DHD hasn't mapped yet. The Death Grins are a sub-unit — used for ambushes, assassinations, and operations that need no witnesses.",
       "stats": [
         {
           "label": "LEADERSHIP",
@@ -1020,14 +1092,14 @@ const SITE = {
     "lockedLabel": "SECURE TERMINAL // AWAITING INPUT",
     "unlockedLabel": "ACCESS GRANTED // DIRECTIVE-9 PARTIAL DECRYPT",
     "paragraphs": [
-      "DIRECTIVE-9 \u2014 Executive order authorising the deletion of all civilian records belonging to any individual selected for the HELLAWAKE initiative. Once activated, the subject ceases to exist in any official registry. No family records. No medical history. No legal identity. They are, as far as the world is concerned, gone.",
+      "DIRECTIVE-9 — Executive order authorising the deletion of all civilian records belonging to any individual selected for the HELLAWAKE initiative. Once activated, the subject ceases to exist in any official registry. No family records. No medical history. No legal identity. They are, as far as the world is concerned, gone.",
       "Number of subjects confirmed under Directive-9: [REDACTED]. Number of successful retrievals: [REDACTED]. Number of escapes prior to Subject HWK-SUBJECT-07: 0.",
       "// FURTHER FILES LOCKED PENDING EPISODE RELEASE //"
     ]
   },
   "map": {
-    "topLabel": "REGION SCAN \u2014 ACTIVE",
-    "bottomLabel": "FORTRESS COORDINATES \u2014 NOT FOUND"
+    "topLabel": "REGION SCAN — ACTIVE",
+    "bottomLabel": "FORTRESS COORDINATES — NOT FOUND"
   },
   "lore": [
     {
@@ -1036,8 +1108,7 @@ const SITE = {
       "classified": false,
       "locked": false,
       "hidden": false,
-      "body": "The programme responsible for what Liam Hill became. A facility. Experiments. Seven years. The full scope of what they were trying to create is not yet confirmed, but the Skullborns' interest in the result tells you everything you need to know about how dangerous it is.",
-      "updatedAt": "2026-03-19"
+      "body": "The programme responsible for what Liam Hill became. A facility. Experiments. Seven years. The full scope of what they were trying to create is not yet confirmed, but the Skullborns' interest in the result tells you everything you need to know about how dangerous it is."
     },
     {
       "id": "the-death-grins",
@@ -1045,8 +1116,7 @@ const SITE = {
       "classified": false,
       "locked": false,
       "hidden": false,
-      "body": "A Skullborn sub-unit deployed for high-risk ambush and assassination operations. Used the abandoned base scenario to trap the DHD recon team in Episode 1. Effective. Patient. Hard to interrogate.",
-      "updatedAt": "2026-03-19"
+      "body": "A Skullborn sub-unit deployed for high-risk ambush and assassination operations. Used the abandoned base scenario to trap the DHD recon team in Episode 1. Effective. Patient. Hard to interrogate."
     },
     {
       "id": "echo",
@@ -1054,8 +1124,7 @@ const SITE = {
       "classified": false,
       "locked": false,
       "hidden": false,
-      "body": "Liam Hill's secondary self. Surfaces when he has no other choice. Cold. Ruthless. Not entirely him. Whether this is a power, a fractured identity, or a product of the facility \u2014 the archive does not yet have a clean answer.",
-      "updatedAt": "2026-03-19"
+      "body": "Liam Hill's secondary self. Surfaces when he has no other choice. Cold. Ruthless. Not entirely him. Whether this is a power, a fractured identity, or a product of the facility — the archive does not yet have a clean answer."
     },
     {
       "id": "the-breach",
@@ -1063,8 +1132,7 @@ const SITE = {
       "classified": false,
       "locked": false,
       "hidden": false,
-      "body": "Skullborn tactical operation \u2014 the coordinated bombing of Metro Line 7 during Reever's return to headquarters. Suggests deep infrastructure penetration. The DHD did not anticipate it.",
-      "updatedAt": "2026-03-19"
+      "body": "Skullborn tactical operation — the coordinated bombing of Metro Line 7 during Reever's return to headquarters. Suggests deep infrastructure penetration. The DHD did not anticipate it."
     },
     {
       "id": "ghost-frequency",
@@ -1072,8 +1140,7 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "CLASSIFIED // DETAILS WITHHELD",
-      "updatedAt": "2026-03-19"
+      "body": "CLASSIFIED // DETAILS WITHHELD"
     },
     {
       "id": "directive-9",
@@ -1081,17 +1148,15 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "ACCESS RESTRICTED // ENTER CODE IN ARCHIVE PANEL",
-      "updatedAt": "2026-03-19"
+      "body": "ACCESS RESTRICTED // ENTER CODE IN ARCHIVE PANEL"
     },
     {
-      "id": "[redacted-entry-\u2014-anomaly-class]",
-      "term": "[REDACTED ENTRY \u2014 ANOMALY CLASS]",
+      "id": "[redacted-entry-—-anomaly-class]",
+      "term": "[REDACTED ENTRY — ANOMALY CLASS]",
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "FILE LOCKED // CLEARANCE LEVEL INSUFFICIENT // THIS ENTRY PREDATES THE HELLAWAKE INITIATIVE // DO NOT QUERY FURTHER",
-      "updatedAt": "2026-03-19"
+      "body": "FILE LOCKED // CLEARANCE LEVEL INSUFFICIENT // THIS ENTRY PREDATES THE HELLAWAKE INITIATIVE // DO NOT QUERY FURTHER"
     },
     {
       "id": "the-photograph",
@@ -1099,8 +1164,7 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "CLASSIFIED // ACCESS RESTRICTED\n\nA photograph carried by Reever. Three individuals: Reever, Liam Hill, and a third subject \u2014 identity REDACTED. Taken shortly before a significant event. Details of that event: CLASSIFIED.\n\nDuring the Episode 1 train bombing, blood from Reever's wound fell across the photograph \u2014 obscuring the face of one of the subjects.",
-      "updatedAt": "2026-03-19"
+      "body": "CLASSIFIED // ACCESS RESTRICTED\n\nA photograph carried by Reever. Three individuals: Reever, Liam Hill, and a third subject — identity REDACTED. Taken shortly before a significant event. Details of that event: CLASSIFIED.\n\nDuring the Episode 1 train bombing, blood from Reever's wound fell across the photograph — obscuring the face of one of the subjects."
     },
     {
       "id": "the-promise",
@@ -1108,8 +1172,7 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nReference to an unconfirmed event involving Reever and Liam Hill prior to the series. Nature of the promise: REDACTED. Current status: UNKNOWN.",
-      "updatedAt": "2026-03-19"
+      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nReference to an unconfirmed event involving Reever and Liam Hill prior to the series. Nature of the promise: REDACTED. Current status: UNKNOWN."
     },
     {
       "id": "subject-289",
@@ -1117,8 +1180,7 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "CLASSIFIED // DIRECTIVE-9 LOCK\n\nDesignation used internally within the HELLAWAKE initiative. Cross-references with HWK-SUBJECT-07. Further details withheld pending clearance.",
-      "updatedAt": "2026-03-19"
+      "body": "CLASSIFIED // DIRECTIVE-9 LOCK\n\nDesignation used internally within the HELLAWAKE initiative. Cross-references with HWK-SUBJECT-07. Further details withheld pending clearance."
     },
     {
       "id": "power-dominion",
@@ -1126,8 +1188,7 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nSkullborn internal faction. Designation and function: REDACTED. Known personnel: CLASSIFIED. File locked pending further episode release.",
-      "updatedAt": "2026-03-19"
+      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nSkullborn internal faction. Designation and function: REDACTED. Known personnel: CLASSIFIED. File locked pending further episode release."
     },
     {
       "id": "science-dominion",
@@ -1135,8 +1196,7 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nSkullborn internal faction. Believed to oversee experimental programmes including the HELLAWAKE initiative. Known personnel: CLASSIFIED. File locked pending further episode release.",
-      "updatedAt": "2026-03-19"
+      "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nSkullborn internal faction. Believed to oversee experimental programmes including the HELLAWAKE initiative. Known personnel: CLASSIFIED. File locked pending further episode release."
     },
     {
       "id": "dhd-rank-structure",
@@ -1144,8 +1204,7 @@ const SITE = {
       "classified": true,
       "locked": true,
       "hidden": false,
-      "body": "CLASSIFIED // INTERNAL DOCUMENT\n\nFull rank structure of the Dawn Horizon Division: REDACTED. Partial information available to cleared operatives only. File locked pending further episode release.",
-      "updatedAt": "2026-03-19"
+      "body": "CLASSIFIED // INTERNAL DOCUMENT\n\nFull rank structure of the Dawn Horizon Division: REDACTED. Partial information available to cleared operatives only. File locked pending further episode release."
     }
   ],
   "timeline": [
@@ -1155,8 +1214,7 @@ const SITE = {
       "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nEvents predating the HELLAWAKE initiative. A conflict that shaped the current state of the world. Key figures involved: REDACTED. Outcome: PARTIAL VICTORY // DETAILS WITHHELD.",
       "classified": true,
       "locked": true,
-      "hidden": false,
-      "updatedAt": "2026-03-19"
+      "hidden": false
     },
     {
       "year": "BEFORE YEAR 0",
@@ -1164,8 +1222,7 @@ const SITE = {
       "body": "CLASSIFIED // CLEARANCE INSUFFICIENT\n\nThe Dawn Horizon Division is established. Founder: Keshava. Circumstances of founding: REDACTED. What preceded it: CLASSIFIED UNDER DIRECTIVE-9.",
       "classified": true,
       "locked": true,
-      "hidden": false,
-      "updatedAt": "2026-03-19"
+      "hidden": false
     },
     {
       "year": "YEAR 0",
@@ -1173,35 +1230,31 @@ const SITE = {
       "body": "Liam Hill disappears. No official record of the event exists. Directive-9 activates. As far as any registry is concerned, he never existed.",
       "classified": false,
       "locked": false,
-      "hidden": false,
-      "updatedAt": "2026-03-19"
+      "hidden": false
     },
     {
       "year": "YEAR 1",
-      "title": "FACILITY \u2014 PHASE 1",
+      "title": "FACILITY — PHASE 1",
       "body": "CLASSIFIED // DETAILS WITHHELD",
       "classified": true,
       "locked": true,
-      "hidden": false,
-      "updatedAt": "2026-03-19"
+      "hidden": false
     },
     {
       "year": "YEAR 3",
-      "title": "FACILITY \u2014 PHASE 2",
+      "title": "FACILITY — PHASE 2",
       "body": "CLASSIFIED // DETAILS WITHHELD",
       "classified": true,
       "locked": true,
-      "hidden": false,
-      "updatedAt": "2026-03-19"
+      "hidden": false
     },
     {
       "year": "YEAR 6",
-      "title": "FACILITY \u2014 PHASE 3",
+      "title": "FACILITY — PHASE 3",
       "body": "CLASSIFIED // DETAILS WITHHELD",
       "classified": true,
       "locked": true,
-      "hidden": false,
-      "updatedAt": "2026-03-19"
+      "hidden": false
     },
     {
       "year": "YEAR 7",
@@ -1209,26 +1262,23 @@ const SITE = {
       "body": "HWK-SUBJECT-07 breaks containment. First and only successful escape in the history of the HELLAWAKE initiative. Skullborn hunt order issued within 48 hours.",
       "classified": false,
       "locked": false,
-      "hidden": false,
-      "updatedAt": "2026-03-19"
+      "hidden": false
     },
     {
       "year": "YEAR 7",
       "title": "THE BREACH",
-      "body": "Skullborn operatives bomb Metro Line 7. DHD recon team ambushed at abandoned base. Reever survives assassination attempt. Prisoner taken \u2014 interrogation inconclusive.",
+      "body": "Skullborn operatives bomb Metro Line 7. DHD recon team ambushed at abandoned base. Reever survives assassination attempt. Prisoner taken — interrogation inconclusive.",
       "classified": false,
       "locked": false,
-      "hidden": false,
-      "updatedAt": "2026-03-19"
+      "hidden": false
     },
     {
       "year": "ONGOING",
-      "title": "SEASON 1 \u2014 PRESENT",
+      "title": "SEASON 1 — PRESENT",
       "body": "Liam Hill is alive and moving. The DHD doesn't know he exists. The Skullborns know exactly what he is. The gap between those two facts is where the story lives.",
       "classified": false,
       "locked": false,
-      "hidden": false,
-      "updatedAt": "2026-03-19"
+      "hidden": false
     },
     {
       "year": "UNKNOWN",
@@ -1236,8 +1286,7 @@ const SITE = {
       "body": "CLASSIFIED // THIS EVENT HAS NOT YET BEEN RECORDED IN THE ARCHIVE // CLEARANCE LEVEL INSUFFICIENT // DO NOT QUERY FURTHER",
       "classified": true,
       "locked": true,
-      "hidden": false,
-      "updatedAt": "2026-03-19"
+      "hidden": false
     }
   ],
   "audio": {
@@ -1281,36 +1330,44 @@ const SITE = {
       }
     ]
   },
-  "credits": [
-    {
-      "role": "DIRECTION / VISION",
-      "name": "Studio HELLAWAKE"
-    },
-    {
-      "role": "TECHNICAL PIPELINE",
-      "name": "Link Core Dev Team"
-    },
-    {
-      "role": "ATMOSPHERIC SOUND",
-      "name": "Ghost Frequency Labs"
-    },
-    {
-      "role": "ARCHIVE DESIGN",
-      "name": "Visual Unit 08"
-    },
-    {
-      "role": "EPISODE ANIMATION",
-      "name": "Studio HELLAWAKE"
-    }
-  ],
+  "credits": {
+    "featured": [
+      {
+        "role": "DIRECTION / VISION",
+        "name": "Studio HELLAWAKE",
+        "url": ""
+      },
+      {
+        "role": "TECHNICAL PIPELINE",
+        "name": "Link Core Dev Team",
+        "url": ""
+      },
+      {
+        "role": "ATMOSPHERIC SOUND",
+        "name": "Ghost Frequency Labs",
+        "url": ""
+      },
+      {
+        "role": "ARCHIVE DESIGN",
+        "name": "Visual Unit 08",
+        "url": ""
+      },
+      {
+        "role": "EPISODE ANIMATION",
+        "name": "Studio HELLAWAKE",
+        "url": ""
+      }
+    ],
+    "groups": []
+  },
   "news": [
-    "EPISODE 01 \u2014 CHASING GHOSTS \u2014 NOW AVAILABLE",
-    "DHD RECON TEAM AMBUSHED \u2014 DEATH GRIN INVOLVEMENT CONFIRMED",
-    "TRAIN BOMBING \u2014 METRO LINE COMPROMISED",
-    "PRISONER CAPTURED \u2014 INTERROGATION INCONCLUSIVE",
-    "SKULLBORN FORTRESS LOCATION \u2014 STILL UNKNOWN",
-    "SUBJECT HWK-07 \u2014 WHEREABOUTS UNCONFIRMED",
-    "WIKI NOW LIVE \u2014 ARCHIVE ACCESS GRANTED",
+    "EPISODE 01 — CHASING GHOSTS — NOW AVAILABLE",
+    "DHD RECON TEAM AMBUSHED — DEATH GRIN INVOLVEMENT CONFIRMED",
+    "TRAIN BOMBING — METRO LINE COMPROMISED",
+    "PRISONER CAPTURED — INTERROGATION INCONCLUSIVE",
+    "SKULLBORN FORTRESS LOCATION — STILL UNKNOWN",
+    "SUBJECT HWK-07 — WHEREABOUTS UNCONFIRMED",
+    "WIKI NOW LIVE — ARCHIVE ACCESS GRANTED",
     "STAY AWAKE"
   ],
   "wikiConfig": {
@@ -1319,10 +1376,10 @@ const SITE = {
     "interceptedTransmissions": [
       "SIGNAL ACQUIRED // SOURCE UNKNOWN // DECRYPTING...",
       "DIRECTIVE-9 SUBJECTS: [REDACTED] // SUBJECT-07: STATUS UNKNOWN",
-      "SKULLBORN FORTRESS \u2014 TRIANGULATION FAILED // TRY AGAIN",
-      "DHD UPLINK STABLE // OPERATIVE REEVER \u2014 LAST KNOWN: SECTOR 4",
+      "SKULLBORN FORTRESS — TRIANGULATION FAILED // TRY AGAIN",
+      "DHD UPLINK STABLE // OPERATIVE REEVER — LAST KNOWN: SECTOR 4",
       "ECHO DETECTED // FREQUENCY MATCH: 94% // LOCATION: [CLASSIFIED]",
-      "RAVOK DRIEN \u2014 LAST TRANSMISSION: [CORRUPTED] // DATE: [UNKNOWN]"
+      "RAVOK DRIEN — LAST TRANSMISSION: [CORRUPTED] // DATE: [UNKNOWN]"
     ],
     "lockedSections": {
       "characters": false,
@@ -1344,20 +1401,48 @@ const SITE = {
             "time": "05:24",
             "book": "archives/s1e1_book.pdf",
             "comingSoon": false,
-            "desc": "Reever, Flame, and squad leader Hoosier are dispatched on a reconnaissance mission when they uncover what looks like an abandoned Skullborn base. The group is suddenly ambushed \u2014 the Death Grins had set a trap. Hoosier and Flame stay behind to engage, while Reever breaks for headquarters. Taking the metro route, his journey is violently cut short when the train is bombed. A deadly assassin emerges, targeting Reever \u2014 nearly killing him before Bloopy and Vag arrive and drive the attacker off. Back at the forest, Hoosier and Flame subdue a Death Grin prisoner, but interrogation proves fruitless. More questions than answers."
+            "desc": "Reever, Flame, and squad leader Hoosier are dispatched on a reconnaissance mission when they uncover what looks like an abandoned Skullborn base. The group is suddenly ambushed — the Death Grins had set a trap. Hoosier and Flame stay behind to engage, while Reever breaks for headquarters. Taking the metro route, his journey is violently cut short when the train is bombed. A deadly assassin emerges, targeting Reever — nearly killing him before Bloopy and Vag arrive and drive the attacker off. Back at the forest, Hoosier and Flame subdue a Death Grin prisoner, but interrogation proves fruitless. More questions than answers."
           },
           {
-            "yt": "",
+            "yt": "https://www.youtube.com/watch?v=7WeCVboDf1U",
             "title": "Episode 2",
             "time": "??:??",
             "book": "wiki\\archives\\s1e1_book.pdf",
             "comingSoon": true,
+            "desc": ""
+          },
+          {
+            "yt": "",
+            "title": "NEW EPISODE",
+            "time": "00:00",
+            "book": "",
+            "comingSoon": false,
+            "desc": ""
+          },
+          {
+            "yt": "",
+            "title": "NEW EPISODE",
+            "time": "00:00",
+            "book": "",
+            "comingSoon": false,
+            "desc": ""
+          },
+          {
+            "yt": "",
+            "title": "NEW EPISODE",
+            "time": "00:00",
+            "book": "",
+            "comingSoon": false,
             "desc": ""
           }
         ]
       },
       {
         "season": 2,
+        "episodes": []
+      },
+      {
+        "season": 3,
         "episodes": []
       }
     ]
@@ -1369,7 +1454,7 @@ const SITE = {
       "triggerType": "code",
       "triggerValue": "CHASING GHOSTS",
       "responseType": "text",
-      "responseContent": "ARCHIVE FRAGMENT UNLOCKED // EP1 INTERCEPT LOG\n\nThe base was empty. We knew before we got there \u2014 Hoosier knew. He didn't say it. None of us said it. You don't say the thing that makes it true.\n\nThe train was the real move. Everything else was theatre.\n\n\u2014 REEVER // FIELD LOG // DATE REDACTED",
+      "responseContent": "ARCHIVE FRAGMENT UNLOCKED // EP1 INTERCEPT LOG\n\nThe base was empty. We knew before we got there — Hoosier knew. He didn't say it. None of us said it. You don't say the thing that makes it true.\n\nThe train was the real move. Everything else was theatre.\n\n— REEVER // FIELD LOG // DATE REDACTED",
       "hint": "ARCHIVE FRAGMENT UNLOCKED // SIGNAL: EP1-INTERCEPT"
     },
     {
@@ -1396,7 +1481,7 @@ const SITE = {
       "triggerType": "konami",
       "triggerValue": "",
       "responseType": "glitch",
-      "responseContent": "SKULLBORN INTERNAL BROADCAST // PRIORITY ALPHA\n\nSubject HWK-07 remains uncontained. All units maintain hunt order. Ravok has been informed. The subject is not to be engaged directly \u2014 contain, do not engage.\n\nWhatever it has become, it is not to be destroyed. Not yet.\n\n// END TRANSMISSION",
+      "responseContent": "SKULLBORN INTERNAL BROADCAST // PRIORITY ALPHA\n\nSubject HWK-07 remains uncontained. All units maintain hunt order. Ravok has been informed. The subject is not to be engaged directly — contain, do not engage.\n\nWhatever it has become, it is not to be destroyed. Not yet.\n\n// END TRANSMISSION",
       "hint": "SKULLBORN FREQUENCY DETECTED // DECRYPTING..."
     },
     {
