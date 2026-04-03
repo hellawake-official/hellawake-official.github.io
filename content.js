@@ -1404,7 +1404,7 @@ const SITE = {
             "desc": "Reever, Flame, and squad leader Hoosier are dispatched on a reconnaissance mission when they uncover what looks like an abandoned Skullborn base. The group is suddenly ambushed — the Death Grins had set a trap. Hoosier and Flame stay behind to engage, while Reever breaks for headquarters. Taking the metro route, his journey is violently cut short when the train is bombed. A deadly assassin emerges, targeting Reever — nearly killing him before Bloopy and Vag arrive and drive the attacker off. Back at the forest, Hoosier and Flame subdue a Death Grin prisoner, but interrogation proves fruitless. More questions than answers."
           },
           {
-            "yt": "https://www.youtube.com/watch?v=7WeCVboDf1U",
+            "yt": "",
             "title": "Episode 2",
             "time": "??:??",
             "book": "wiki\\archives\\s1e1_book.pdf",
@@ -1412,27 +1412,91 @@ const SITE = {
             "desc": ""
           },
           {
-            "yt": "https://www.youtube.com/watch?v=7WeCVboDf1U",
+            "yt": "",
             "title": "NEW EPISODE",
-            "time": "00:00",
+            "time": "??:??",
             "book": "",
-            "comingSoon": false,
+            "comingSoon": true,
             "desc": ""
           },
           {
             "yt": "",
             "title": "NEW EPISODE",
-            "time": "00:00",
+            "time": "??:??",
             "book": "",
-            "comingSoon": false,
+            "comingSoon": true,
             "desc": ""
           },
           {
             "yt": "",
             "title": "NEW EPISODE",
-            "time": "00:00",
+            "time": "??:??",
             "book": "",
-            "comingSoon": false,
+            "comingSoon": true,
+            "desc": ""
+          },
+          {
+            "yt": "",
+            "title": "NEW EPISODE",
+            "time": "??:??",
+            "book": "",
+            "comingSoon": true,
+            "desc": ""
+          },
+          {
+            "yt": "",
+            "title": "NEW EPISODE",
+            "time": "??:??",
+            "book": "",
+            "comingSoon": true,
+            "desc": ""
+          },
+          {
+            "yt": "",
+            "title": "NEW EPISODE",
+            "time": "??:??",
+            "book": "",
+            "comingSoon": true,
+            "desc": ""
+          },
+          {
+            "yt": "",
+            "title": "NEW EPISODE",
+            "time": "??:??",
+            "book": "",
+            "comingSoon": true,
+            "desc": ""
+          },
+          {
+            "yt": "",
+            "title": "NEW EPISODE",
+            "time": "??:??",
+            "book": "",
+            "comingSoon": true,
+            "desc": ""
+          },
+          {
+            "yt": "",
+            "title": "NEW EPISODE",
+            "time": "??:??",
+            "book": "",
+            "comingSoon": true,
+            "desc": ""
+          },
+          {
+            "yt": "",
+            "title": "NEW EPISODE",
+            "time": "??:??",
+            "book": "",
+            "comingSoon": true,
+            "desc": ""
+          },
+          {
+            "yt": "",
+            "title": "NEW EPISODE",
+            "time": "??:??",
+            "book": "",
+            "comingSoon": true,
             "desc": ""
           }
         ]
