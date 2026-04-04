@@ -1405,15 +1405,7 @@ const SITE = {
           },
           {
             "yt": "",
-            "title": "Episode 2",
-            "time": "??:??",
-            "book": "wiki\\archives\\s1e1_book.pdf",
-            "comingSoon": true,
-            "desc": ""
-          },
-          {
-            "yt": "",
-            "title": "NEW EPISODE",
+            "title": "What’s Left Standing",
             "time": "??:??",
             "book": "",
             "comingSoon": true,
@@ -1421,7 +1413,7 @@ const SITE = {
           },
           {
             "yt": "",
-            "title": "NEW EPISODE",
+            "title": "Subject 289",
             "time": "??:??",
             "book": "",
             "comingSoon": true,
@@ -1429,7 +1421,7 @@ const SITE = {
           },
           {
             "yt": "",
-            "title": "NEW EPISODE",
+            "title": "Blood in the Snow",
             "time": "??:??",
             "book": "",
             "comingSoon": true,
@@ -1437,7 +1429,7 @@ const SITE = {
           },
           {
             "yt": "",
-            "title": "NEW EPISODE",
+            "title": "The Brother’s Keeper",
             "time": "??:??",
             "book": "",
             "comingSoon": true,
@@ -1445,7 +1437,7 @@ const SITE = {
           },
           {
             "yt": "",
-            "title": "NEW EPISODE",
+            "title": "The Devil’s Bargain",
             "time": "??:??",
             "book": "",
             "comingSoon": true,
@@ -1453,7 +1445,7 @@ const SITE = {
           },
           {
             "yt": "",
-            "title": "NEW EPISODE",
+            "title": "The Chamomile Room",
             "time": "??:??",
             "book": "",
             "comingSoon": true,
@@ -1461,7 +1453,7 @@ const SITE = {
           },
           {
             "yt": "",
-            "title": "NEW EPISODE",
+            "title": "The Shape of Cruelty",
             "time": "??:??",
             "book": "",
             "comingSoon": true,
@@ -1469,7 +1461,7 @@ const SITE = {
           },
           {
             "yt": "",
-            "title": "NEW EPISODE",
+            "title": "For a While",
             "time": "??:??",
             "book": "",
             "comingSoon": true,
@@ -1477,7 +1469,7 @@ const SITE = {
           },
           {
             "yt": "",
-            "title": "NEW EPISODE",
+            "title": "Something in the Eyes",
             "time": "??:??",
             "book": "",
             "comingSoon": true,
@@ -1485,7 +1477,7 @@ const SITE = {
           },
           {
             "yt": "",
-            "title": "NEW EPISODE",
+            "title": "All Roads",
             "time": "??:??",
             "book": "",
             "comingSoon": true,
@@ -1493,7 +1485,15 @@ const SITE = {
           },
           {
             "yt": "",
-            "title": "NEW EPISODE",
+            "title": "The Mask and the Man",
+            "time": "??:??",
+            "book": "",
+            "comingSoon": true,
+            "desc": ""
+          },
+          {
+            "yt": "",
+            "title": "Et Pater",
             "time": "??:??",
             "book": "",
             "comingSoon": true,
